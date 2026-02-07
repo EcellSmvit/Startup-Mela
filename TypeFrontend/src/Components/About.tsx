@@ -90,19 +90,19 @@ function About() {
           <img
             src={imageUrls[0]}
             alt=""
-            ref={el => (imageRefs.current[0] = el)}
+            ref={el => { imageRefs.current[0] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[1]}
             alt=""
-            ref={el => (imageRefs.current[1] = el)}
+            ref={el => { imageRefs.current[1] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[2]}
             alt=""
-            ref={el => (imageRefs.current[2] = el)}
+            ref={el => { imageRefs.current[2] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
         </div>
@@ -110,19 +110,19 @@ function About() {
           <img
             src={imageUrls[3]}
             alt=""
-            ref={el => (imageRefs.current[3] = el)}
+            ref={el => { imageRefs.current[3] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[4]}
             alt=""
-            ref={el => (imageRefs.current[4] = el)}
+            ref={el => { imageRefs.current[4] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[5]}
             alt=""
-            ref={el => (imageRefs.current[5] = el)}
+            ref={el => { imageRefs.current[5] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
         </div>
@@ -130,19 +130,19 @@ function About() {
           <img
             src={imageUrls[6]}
             alt=""
-            ref={el => (imageRefs.current[6] = el)}
+            ref={el => { imageRefs.current[6] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[7]}
             alt=""
-            ref={el => (imageRefs.current[7] = el)}
+            ref={el => { imageRefs.current[7] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
           <img
             src={imageUrls[8]}
             alt=""
-            ref={el => (imageRefs.current[8] = el)}
+            ref={el => { imageRefs.current[8] = el; }}
             className="rounded-lg shadow-lg object-cover"
           />
         </div>
