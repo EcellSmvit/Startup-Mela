@@ -1,4 +1,5 @@
 import './App.css'
+import EventSection from './Pagesection/EventSection'
 // import RandomShapeCard from './Components/Imagecard'
 import HeroSection from './Pagesection/HeroSection'
 import Horizontalpage from './Pagesection/Horizontalpage'
@@ -12,6 +13,7 @@ function App() {
       <NextSection/>
       {/* <RandomShapeCard/> */}
       <Horizontalpage/>
+      <EventSection/>
    </div>
   )
 }

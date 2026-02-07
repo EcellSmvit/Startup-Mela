@@ -54,7 +54,7 @@ function About() {
 
     imageRefs.current.forEach((img, i) => {
       if (!img) return;
-      const yVal = 60 + i * 10;
+      const yVal = 80 + i * 10;
       gsap.fromTo(
         img,
         { y: yVal },
