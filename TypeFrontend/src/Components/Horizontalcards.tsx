@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from 'lucide-react';
 
 interface HorizCardProps {
   variant: "Horizcard1" | "Horizcard2" | "Horizcard3" | "Horizcard4";
@@ -27,14 +28,23 @@ function Horizontalcards({ variant, texth1, textp }: HorizCardProps) {
     <div>
       <div
         className={
-          `${variantClassesHori[variant]} ${defaultstyle} ${
-            hovered ? "h-52" : "h-14"
-          }`
+          `${variantClassesHori[variant]} ${defaultstyle} ${hovered ? "h-52" : "h-14"}`
         }
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
+        <div className="flex items-center justify-center gap-8">
         <h1 className={defaulth1style}>{texth1}</h1>
+        <div className="bg-[#393E46] rounded-full mt-4"
+          style={{
+            transition: "transform 0.3s",
+            transform: hovered ? "rotate(180deg)" : "rotate(0deg)"
+          }}
+        >
+          <ChevronDown />
+        </div>
+        </div>
+        
         <p
           className={
             `${defaultpstyle} ${hovered ? "opacity-100 mt-2 " : "opacity-0 mt-0"}`
