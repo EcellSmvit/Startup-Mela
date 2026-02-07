@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Horizontalcards from "../Components/Horizontalcards";
-import Imagecard from "../Components/Imagecard";
+// import Imagecard from "../Components/Imagecard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,7 +87,7 @@ function HorizontalPage() {
           texth1="Culutural Program"
           textp="Experience a vibrant blend of music, dance, and traditions with our cultural program. Unwind after a day of innovation and networking while celebrating the spirit of entrepreneurship and community with performances, art displays, and interactive activities."
         />
-        <Imagecard/>
+        {/* <Imagecard/> */}
       </div>
     </section>
   );
