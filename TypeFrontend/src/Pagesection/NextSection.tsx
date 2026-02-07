@@ -32,12 +32,10 @@ function NextSection() {
   }, [])
 
   const words = [
-    "A ",
-    "Festival ",
-    "of ",
-    "Innovation ",
-    "&",
-    "Entrepreneurship."
+    "Designing",
+    "Ideas ",
+    "into ",
+    "Reality"
   ]
   // #222831
   return (

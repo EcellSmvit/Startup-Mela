@@ -45,11 +45,8 @@ function VideoCard({variant,url}:VideoProps) {
 
   return (
     <div>
-        <video ref={videoRef} className={variantVideoClasses[variant]+" "+defaultvideoCard} src={url} 
-        autoPlay
-        muted
-        loop>
-        </video>
+        <img ref={videoRef} className={variantVideoClasses[variant]+" "+defaultvideoCard} src={url} alt="Video card" />
+        
     </div>
   )
 }

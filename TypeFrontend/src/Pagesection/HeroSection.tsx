@@ -44,14 +44,14 @@ function HeroSection() {
          <Navbar/>
         <Sidebar/>
         <div className='flex items-center justify-center flex-col'>
-          <h1 ref={textRef} className='text-[11rem] text-[#EEEEEE] font-bold '>STA<span className='z-20 relative leading-none'>R</span>TUP</h1>
-          <h1 ref={rightRef} className='text-[11rem] text-[#EEEEEE] font-bold'>M<span className='z-20 relative'>E</span>LA</h1>
+          <h1 ref={textRef} className='text-[11rem] text-[#EEEEEE] font-bold '>BIK<span className='z-20 relative leading-none'>E</span>SH</h1>
+          <h1 ref={rightRef} className='text-[11rem] text-[#EEEEEE] font-bold'>KU<span className='z-20 relative'>M</span>AR</h1>
         </div>
-        <ColorfulCard variant='card1' text='Startup'/>
-        <ColorfulCard variant='card2' text='Innovation'/>
-        <ColorfulCard variant='card3' text='Ideas'/>
+        <ColorfulCard variant='card1' text='Entrepreneur'/>
+        <ColorfulCard variant='card2' text='Tech'/>
+        <ColorfulCard variant='card3' text='Innovation'/>
         <ColorfulCard variant='card4' text='Collaboration'/>
-        <VideoCard  variant='video1' url='https://ik.imagekit.io/es6xialea/Ecell.mov/ik-video.mp4?updatedAt=1763052632603'/>
+        <VideoCard  variant='video1' url='https://ik.imagekit.io/jwt52yyie/linkedinprofile.png?updatedAt=1770500826510'/>
         <h1 className='font-sans text-[#222831] font-bold text-2xl p-2 bg-[#92F090]'>27-28 March 2026</h1>
            
         
