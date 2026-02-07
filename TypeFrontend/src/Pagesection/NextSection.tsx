@@ -39,14 +39,15 @@ function NextSection() {
     "&",
     "Entrepreneurship."
   ]
-
+  // #222831
   return (
-    <div ref={sectionRef} className='bg-[#222831] w-screen h-[200vh] flex flex-col items-center justify-center'
+    
+    <div ref={sectionRef} className='bg-[#222831] w-screen h-[200vh] flex flex-col items-end justify-end'
       style={{
         backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.35) 1px, transparent 0)",
         backgroundSize: "40px 40px",
       }}>
-      <h1 className='font-sans text-[8rem] font-black text-[#eeeeee] text-center p-4'>
+      <h1 className='font-sans text-[8rem] font-black text-[#eeeeee] text-center p-4 '>
         {words.map((word, idx) => (
           <span
             key={idx}
