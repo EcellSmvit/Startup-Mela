@@ -52,7 +52,7 @@ function HeroSection() {
         <ColorfulCard variant='card3' text='Innovation'/>
         <ColorfulCard variant='card4' text='Collaboration'/>
         <VideoCard  variant='video1' url='https://ik.imagekit.io/jwt52yyie/linkedinprofile.png?updatedAt=1770500826510'/>
-        <h1 className='font-sans text-[#222831] font-bold text-2xl p-2 bg-[#92F090]'>27-28 March 2026</h1>
+        <h1 className='font-sans text-[#222831] font-bold text-2xl p-2 bg-[#92F090]'>Sir M. Visvesvaraya Institute of Technology</h1>
            
         
     </div>

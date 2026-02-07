@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Horizontalcards from "../Components/Horizontalcards";
-// import Imagecard from "../Components/Imagecard";
+import Imagecard from "../Components/Imagecard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,7 +87,15 @@ function HorizontalPage() {
           texth1="DSA With JAVA"
           textp="Experience a vibrant blend of music, dance, and traditions with our cultural program. Unwind after a day of innovation and networking while celebrating the spirit of entrepreneurship and community with performances, art displays, and interactive activities."
         />
-        {/* <Imagecard/> */}
+        <Imagecard variant="Img1" url="https://ik.imagekit.io/jwt52yyie/html.png"/>
+        <Imagecard variant="Img2" url="https://ik.imagekit.io/jwt52yyie/css.png"/>
+        <Imagecard variant="Img3" url="https://ik.imagekit.io/jwt52yyie/javascript.png"/>
+        <Imagecard variant="Img4" url="https://ik.imagekit.io/jwt52yyie/nodejs.png"/>
+        <Imagecard variant="Img5" url="https://ik.imagekit.io/jwt52yyie/git.png"/>
+        <Imagecard variant="Img6" url="https://ik.imagekit.io/jwt52yyie/react.png"/>
+        <Imagecard variant="Img7" url="https://ik.imagekit.io/jwt52yyie/mongo-db.png"/>
+        <Imagecard variant="Img8" url="https://ik.imagekit.io/jwt52yyie/typescript.png"/>
+        <Imagecard variant="Img9" url="https://ik.imagekit.io/jwt52yyie/java.png"/>
       </div>
     </section>
   );

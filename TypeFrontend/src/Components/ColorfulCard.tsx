@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from "gsap";
-//@ts-ignore
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable);
 
