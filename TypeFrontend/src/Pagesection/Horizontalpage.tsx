@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Horizontalcards from "../Components/Horizontalcards";
-import Imagecard from "../Components/Imagecard";
+import Imagecard from "../Components/ImageCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
