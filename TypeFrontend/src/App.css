@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
 body{
   font-family: "Rampart One", sans-serif;
+  margin: 0;
   overflow-x: hidden;
+  background: #222831;
 }
