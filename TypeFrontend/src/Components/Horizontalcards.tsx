@@ -8,7 +8,7 @@ interface HorizCardProps {
 }
 
 const variantClassesHori = {
-  Horizcard1: "bg-[#93F190] top-48",
+  Horizcard1: "bg-[#93F190] top-65",
   Horizcard2: "bg-[#FFB0C2] top-10 left-[20%]",
   Horizcard3: "bg-[#FF9001] bottom-10 left-1/2",
   Horizcard4: "bg-[#15B8A7] top-1/2 right-[10%]",

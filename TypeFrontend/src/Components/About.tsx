@@ -6,15 +6,15 @@ import { useEffect, useRef } from "react";
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 const imageUrls = [
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-  "https://plus.unsplash.com/premium_photo-1770416629652-962a91120bf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8"
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%204.57.31%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%204.56.36%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%204.48.00%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%204.52.35%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%205.00.29%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%205.02.57%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%205.05.09%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%205.06.52%20AM.jpeg",
+  "https://ik.imagekit.io/jwt52yyie/WhatsApp%20Image%202026-02-08%20at%205.10.24%20AM.jpeg"
 ];
 
 function About() {
@@ -54,7 +54,7 @@ function About() {
 
     imageRefs.current.forEach((img, i) => {
       if (!img) return;
-      const yVal = 80 + i * 10;
+      const yVal = 300 + i * 10;
       gsap.fromTo(
         img,
         { y: yVal },
@@ -79,7 +79,7 @@ function About() {
           ABOUT
         </h1>
         <p
-          className="font-sans text-white text-2xl text-justify"
+          className="font-sans text-white text-2xl text-justify font-medium"
           ref={textRef}
         >
           Startup Mela is the flagship entrepreneurial event of the E-Cell, Sir M. Visvesvaraya Institute of Technology (SMVIT), designed to inspire innovation, connect young founders with mentors and investors, and provide a platform to showcase ideas and startups.It brings together students, entrepreneurs, and industry experts through pitches, workshops, speaker sessions, and networking creating a launchpad for future innovators and ventures.
@@ -111,7 +111,7 @@ function About() {
             src={imageUrls[3]}
             alt=""
             ref={el => { imageRefs.current[3] = el; }}
-            className="rounded-lg shadow-lg object-cover"
+            className="rounded-lg shadow-lg object-fill"
           />
           <img
             src={imageUrls[4]}
