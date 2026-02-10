@@ -31,7 +31,7 @@ function About() {
       autoSplit: true,
       onSplit(self) {
         return gsap.from(self.words, {
-          duration: 0.5,
+          duration: 0.1,
           x: 100,
           autoAlpha: 0,
           stagger: 0.05,
@@ -82,7 +82,7 @@ function About() {
           className="font-sans text-white text-2xl text-justify font-medium"
           ref={textRef}
         >
-          Startup Mela is the flagship entrepreneurial event of the E-Cell, Sir M. Visvesvaraya Institute of Technology (SMVIT), designed to inspire innovation, connect young founders with mentors and investors, and provide a platform to showcase ideas and startups.It brings together students, entrepreneurs, and industry experts through pitches, workshops, speaker sessions, and networking creating a launchpad for future innovators and ventures.
+          I am a passionate developer and a 3rd-year Computer Science Engineering student, focused on building modern, scalable, and visually engaging digital products. With skills in frontend development, backend systems, 3D web experiences, and strong problem-solving through DSA in Java, I enjoy turning innovative ideas into real-world solutions. I continuously explore new technologies, improve my coding skills, and aim to create impactful products in the startup and tech ecosystem.
         </p>
       </div>
       <div className="w-1/2 h-84 overflow-hidden flex items-center justify-center gap-2">

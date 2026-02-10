@@ -58,7 +58,7 @@ function HorizontalPage() {
       className="relative w-screen h-screen overflow-hidden bg-[#222831]"
       style={{
         backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 1px, transparent 0)",
+          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0)",
         backgroundSize: "40px 40px",
       }}
     >
@@ -70,22 +70,22 @@ function HorizontalPage() {
         <Horizontalcards
           variant="Horizcard1"
           texth1="Frontend Developer"
-          textp="Engage in an intensive 2-day workshop designed to empower students with practical entrepreneurial skills, networking opportunities, and hands-on activities. Participants will collaborate on startup ideas, attend brainstorming sessions, and receive mentorship from experienced founders and industry experts."
+          textp="Frontend developer passionate about building modern, responsive, and high-performance web applications using React.js, Next.js, TypeScript, Tailwind CSS, and GSAP. I enjoy turning innovative ideas into smooth, user-focused digital experiences while continuously learning new technologies."
         />
         <Horizontalcards
           variant="Horizcard2"
           texth1="Backend Developer"
-          textp="Showcase your innovative ideas at our flagship startup competition! Pitch your concepts before a panel of judges, compete for exciting prizes, and gain invaluable feedback. The competition fosters creativity, teamwork, and a spirit of friendly rivalry among aspiring entrepreneurs."
+          textp="Backend developer focused on building secure, scalable, and efficient server-side applications using Node.js, Express.js, MongoDB, and REST APIs. I enjoy designing robust architectures, handling authentication, and powering seamless digital experiences behind the scenes."
         />
         <Horizontalcards
           variant="Horizcard3"
           texth1="3D and animation"
-          textp="Be inspired by renowned entrepreneurs, venture capitalists, and business leaders as they share their journeys, insights, and lessons learned. Get a chance to interact, ask questions, and gain unique perspectives on building a successful startup in today’s world."
+          textp="Creative developer focused on immersive 3D visuals and smooth web animations using Three.js, GSAP, and modern web technologies. I enjoy crafting interactive, visually engaging experiences that bring ideas and digital products to life."
         />
         <Horizontalcards
           variant="Horizcard4"
           texth1="DSA With JAVA"
-          textp="Experience a vibrant blend of music, dance, and traditions with our cultural program. Unwind after a day of innovation and networking while celebrating the spirit of entrepreneurship and community with performances, art displays, and interactive activities."
+          textp="Strong foundation in Data Structures and Algorithms using Java, focused on problem-solving, optimization, and writing efficient, scalable code. I enjoy tackling complex challenges and continuously improving logical thinking for real-world software development."
         />
         <Imagecard variant="Img1" url="https://ik.imagekit.io/jwt52yyie/html.png"/>
         <Imagecard variant="Img2" url="https://ik.imagekit.io/jwt52yyie/css.png"/>

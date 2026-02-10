@@ -15,7 +15,7 @@ const variantClassesHori = {
 };
 
 const defaultstyle =
-  "w-96 absolute rounded-2xl transition-all duration-400 overflow-hidden cursor-pointer flex items-center justify-between flex-col";
+  "w-96 z-10 absolute rounded-2xl transition-all duration-400 overflow-hidden cursor-pointer flex items-center justify-between flex-col";
 const defaulth1style =
   "text-2xl font-sans text-black text-center font-medium mt-2";
 const defaultpstyle =

@@ -139,10 +139,10 @@ function EventSection() {
 
   return (
     <div
-      className="relative w-screen h-[360vh] overflow-hidden bg-[#222831] m-0 p-0"
+      className="relative w-screen h-[320vh] overflow-hidden bg-[#222831] m-0 p-0"
       style={{
         backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 1px, transparent 0)",
+          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0)",
         backgroundSize: "40px 40px",
       }}
     >

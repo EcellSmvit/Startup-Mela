@@ -42,7 +42,7 @@ function NextSection() {
     
     <div ref={sectionRef} className='bg-[#222831] w-screen h-[200vh] flex flex-col items-end justify-end'
       style={{
-        backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.35) 1px, transparent 0)",
+        backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 1px, transparent 0)",
         backgroundSize: "40px 40px",
       }}>
       <h1 className='font-sans text-[8rem] font-black text-[#eeeeee] text-center p-4 '>
