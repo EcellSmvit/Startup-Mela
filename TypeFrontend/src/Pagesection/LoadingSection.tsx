@@ -23,7 +23,7 @@ function LoadingSection() {
   }, []);
 
   return (
-    <div className="relative flex items-center justify-center text-2xl text-white">
+    <div className="relative flex items-center justify-center text-2xl text-white pointer-events-none">
       <div className="absolute w-screen h-screen flex z-30 top-0">
         {[0, 1, 2, 3, 4].map((_, i) => (
           <div
