@@ -16,12 +16,12 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string;
-    role: string;
-  }
-}
+// declare module 'next-auth/jwt' {
+//   interface JWT {
+//     id: string;
+//     role: string;
+//   }
+// }
 
 export const{handlers,auth,signIn,signOut} = NextAuth({
     providers:[
@@ -37,13 +37,13 @@ export const{handlers,auth,signIn,signOut} = NextAuth({
                 }
 
                 const user = await prisma.user.findUnique({
-                    where:{email: credentials.email},
+                    where:{email: credentials.email as string},
                 })
 
                 if(!user) return null;
 
                 const isPasswordvalid = await bcrypt.compare(
-                    credentials.password,
+                    credentials.password as string,
                     user.password
                 );
 
