@@ -1,84 +1,61 @@
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import prisma from './prisma';
-import bcrypt from 'bcrypt'
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import prisma from "./prisma";
+import bcrypt from "bcrypt"
 
-declare module 'next-auth' {
-  interface User {
-    id: string;
-    role: string;
-  }
-  interface Session {
-    user: User & {
-      id: string;
-      role: string;
-    };
-  }
+declare module "next-auth" {
+    interface User {
+        role?: string;
+    }
+
+    interface Session {
+        user: {
+            id?: string;
+            role?: string;
+            name?: string | null;
+            email?: string | null;
+            image?: string | null;
+        };
+    }
 }
 
-// declare module 'next-auth/jwt' {
-//   interface JWT {
-//     id: string;
-//     role: string;
-//   }
-// }
-
-export const{handlers,auth,signIn,signOut} = NextAuth({
+export const{handlers,auth} = NextAuth({
     providers:[
         Credentials({
-            name:"Credentials",
-            credentials:{
-                email:{},
-                password:{},
-            },
-            async authorize(credentials) {
-                if(!credentials?.email || !credentials?.password){
-                    return null;
-                }
-
-                const user = await prisma.user.findUnique({
-                    where:{email: credentials.email as string},
+            async authorize(credentials){
+                const user = await prisma?.user.findUnique({
+                    where:{email:credentials.email as string}
                 })
+                if(!user) return null
 
-                if(!user) return null;
-
-                const isPasswordvalid = await bcrypt.compare(
+                const valid = await bcrypt.compare(
                     credentials.password as string,
                     user.password
-                );
+                )
 
-                if(!isPasswordvalid) return null;
+                if(!valid) return null
 
                 return{
-                    id: user.id,
+                    id:user.id,
                     name:user.name,
-                    email: user.email,
+                    email:user.email,
                     role:user.role
-                };
-            },
-        }),
+                }
+            }
+        })
     ],
-
-    session:{
-        strategy:"jwt",
-    },
-
     callbacks:{
         async jwt({token,user}){
             if(user){
-                token.id = user.id;
-                token.role = user.role;
+                token.role = user.role
+                token.id = user.id
             }
-            return token;
+            return token
         },
-
         async session({session,token}){
-            if(session.user){
-                session.user.id = token.id as string;
-                session.user.role = token.role as string;
-            }
-            return session;
-        },
-    },
-    secret: process.env.AUTH_SECRET,
+            session.user.id = token.id as string
+            session.user.role = token.role as string
+            return session
+        }
+    }
 })
