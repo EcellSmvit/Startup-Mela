@@ -14,18 +14,14 @@ export async function GET(req: Request) {
       name: true,
       email: true,
       role: true,
-      createdAt: true,
       purchases: {
         select: {
-          id: true,
           uniqueCode: true,
           verified: true,
-          PurchaseStatus: true,
+          purchaseStatus: true,
           pass: {
             select: {
-              id: true,
               title: true,
-              price: true
             }
           }
         }
