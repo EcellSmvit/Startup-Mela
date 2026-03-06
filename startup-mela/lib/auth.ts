@@ -1,61 +1,36 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "./prisma";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt"; // Use bcryptjs for better compatibility
+import { authConfig } from "./auth.config";
 
-declare module "next-auth" {
-    interface User {
-        role?: string;
-    }
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
+  providers: [
+    Credentials({
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null;
 
-    interface Session {
-        user: {
-            id?: string;
-            role?: string;
-            name?: string | null;
-            email?: string | null;
-            image?: string | null;
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email as string }
+        });
+
+        if (!user || !user.password) return null;
+
+        const isValid = await bcrypt.compare(
+          credentials.password as string,
+          user.password
+        );
+
+        if (!isValid) return null;
+
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role
         };
-    }
-}
-
-export const{handlers,auth} = NextAuth({
-    providers:[
-        Credentials({
-            async authorize(credentials){
-                const user = await prisma?.user.findUnique({
-                    where:{email:credentials.email as string}
-                })
-                if(!user) return null
-
-                const valid = await bcrypt.compare(
-                    credentials.password as string,
-                    user.password
-                )
-
-                if(!valid) return null
-
-                return{
-                    id:user.id,
-                    name:user.name,
-                    email:user.email,
-                    role:user.role
-                }
-            }
-        })
-    ],
-    callbacks:{
-        async jwt({token,user}){
-            if(user){
-                token.role = user.role
-                token.id = user.id
-            }
-            return token
-        },
-        async session({session,token}){
-            session.user.id = token.id as string
-            session.user.role = token.role as string
-            return session
-        }
-    }
-})
+      }
+    })
+  ],
+});
