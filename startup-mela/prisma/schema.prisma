@@ -35,7 +35,7 @@ model Purchase{
   userId          String
   passId          String
   uniqueCode      String  @unique
-  purchaseStatus  purchaseStatus  @default(PENDING)
+  purchaseStatus  PurchaseStatus  @default(PENDING)
   verified        Boolean @default(false)
   user            User    @relation(fields: [userId],references: [id])
   pass            Pass    @relation(fields: [passId],references: [id])
@@ -47,7 +47,7 @@ enum Role{
   ADMIN
 }
 
-enum purchaseStatus{
+enum PurchaseStatus{
   PENDING
   COMPLETED
   CANCELLED
