@@ -14,6 +14,6 @@ export async function POST(req:Request){
             password:hashed
         }
     })
-
-    return Response.json(user)
+    const { password: _, ...userWithoutPassword } = user;
+    return Response.json(userWithoutPassword)
 }

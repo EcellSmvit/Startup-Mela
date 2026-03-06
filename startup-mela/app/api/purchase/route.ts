@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma"
 import { auth } from "@/lib/auth"
+import { randomBytes } from "crypto"
 
 export async function POST(req: Request) {
 
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const uniqueCode = `${passId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
 
   const purchase = await prisma.purchase.create({
     data: {
