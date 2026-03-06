@@ -3,12 +3,10 @@ import { auth } from "@/lib/auth"
 import { randomBytes } from "crypto"
 
 export async function POST(req: Request) {
-
+  
   const session = await auth()
-
   if (!session)
     return Response.json({ error: "Unauthorized" }, { status: 401 })
-
   const userId = session.user?.id
 
   if (!userId)
