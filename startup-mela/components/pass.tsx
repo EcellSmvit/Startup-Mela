@@ -60,11 +60,11 @@ export default function Pass() {
     }
 
     return (
-        <div className="flex flex-wrap gap-6 p-10 justify-center">
+        <div className="flex flex-row gap-6 p-10 justify-center">
             {passes.map((pass: Pass) => (
                 <div 
                     key={pass.id} 
-                    className="bg-[#ececec] w-1/3 h-2/3 rounded-4xl p-7 flex flex-col justify-between shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                    className="bg-[#ececec] w-1/3  rounded-4xl p-7 flex flex-col justify-between shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
                 >
                     <div className="flex flex-col gap-5">
                         <h1 className="text-4xl font-bold text-[#262626] tracking-tight">

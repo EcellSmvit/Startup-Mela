@@ -70,7 +70,7 @@ export default function AdminPages() {
                 </h1>
 
                 <div className="flex items-center gap-4">
-                    <Button variant="secondary" text="Create Passes" />
+                    <Button variant="secondary" text="Create Passes" onClick={() => router.push("/admin/createpass")}/>
                     <Button variant="primary" text="Verify User" onClick={() => router.push("/admin/verify")}/>
                     <Button
                         variant="warning"

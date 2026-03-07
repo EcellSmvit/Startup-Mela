@@ -56,7 +56,7 @@ export default function Verify(){
 
                     <InputField
                         variant="primary"
-                        placeholder="Enter Unique Code (e.g., STARTUP-123)"
+                        placeholder="Enter Unique Code (e.g., MV1234)"
                         value={uniqueCode}
                         onChange={(e) => setUniqueCode(e.target.value)}
                         type="text"
