@@ -69,19 +69,12 @@ export default function Dashboard() {
                 </p>
 
               </div>
-
-
-              {/* Purchase Details */}
-
-
             </div>
               <div className="flex gap-6 flex-row items-center justify-center">
 
                 <PurchaseInfo/>
 
               </div>
-
-            {/* PASS SECTION */}
             <div className="flex flex-wrap gap-8 justify-center">
 
               <Pass/>
