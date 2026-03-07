@@ -2,49 +2,51 @@
 
 import Button from "@/components/button";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface UserInformation{
-    id:string;
-    name:string;
-    email:string;
-    role:string;
-    purchases:{
-        uniqueCode : string;
-        verified:string;
-        purchaseStatus:string;
+interface UserInformation {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    purchases: {
+        uniqueCode: string;
+        verified: string;
+        purchaseStatus: string;
     }[];
-    pass:{
-        title:string
+    pass: {
+        title: string;
     }[];
 }
 
-export default function AdminPages(){
-
-    const [userDetails,setUserDetails] = useState<UserInformation[]>([])
+export default function AdminPages() {
+    const router = useRouter();
+    const [userDetails, setUserDetails] = useState<UserInformation[]>([])
     const [loading, setLoading] = useState(true);
 
     const { data: session, status } = useSession();
 
-    useEffect(() =>{
-        const getuserInformation = async() =>{
-            try{
-                const response = await fetch("/api/stats",{
-                    method:"GET",
+    useEffect(() => {
+        const getuserInformation = async () => {
+            try {
+                const response = await fetch("/api/stats", {
+                    method: "GET",
                     headers: { "Content-Type": "application/json" },
                 });
 
                 const data = await response.json();
                 setUserDetails(data)
-            } catch(error){
-                console.error("fail to fetch user details",error);
-            }finally{
+
+            } catch (error) {
+                console.error("fail to fetch user details", error);
+            } finally {
                 setLoading(false);
             }
         };
 
         getuserInformation();
-    },[])
+    }, [])
 
     if (loading) {
         return (
@@ -58,7 +60,7 @@ export default function AdminPages(){
         return null;
     }
 
-    return(
+    return (
         <div className="min-h-screen bg-[#171716] text-[#ececec] p-8">
 
             {/* Header */}
@@ -68,14 +70,8 @@ export default function AdminPages(){
                 </h1>
 
                 <div className="flex items-center gap-4">
-                    <Button
-                        variant="secondary"
-                        text="Create Passes"
-                    />
-                    <Button
-                        variant="primary"
-                        text="Verify User"
-                    />
+                    <Button variant="secondary" text="Create Passes" />
+                    <Button variant="primary" text="Verify User" onClick={() => router.push("/admin/verify")}/>
                     <Button
                         variant="warning"
                         text="Logout"
@@ -84,56 +80,104 @@ export default function AdminPages(){
                 </div>
             </div>
 
-            {/* Users Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-                {userDetails.map((item) =>(
-                    <div
-                        key={item.id}
-                        className="bg-[#1f1f1f] border border-[#2d2d2d] rounded-2xl p-6 hover:border-yellow-500 transition"
-                    >
+            <div className="bg-[#1f1f1f] border border-[#2d2d2d] rounded-2xl overflow-hidden">
 
-                        {/* User Info */}
-                        <div className="mb-4">
-                            <h2 className="text-xl font-semibold">
-                                {item.name}
-                            </h2>
+                <div className="overflow-x-auto">
 
-                            <p className="text-sm text-gray-400">
-                                {item.email}
-                            </p>
+                    <table className="w-full text-sm">
+                        <thead className="bg-[#262626] text-gray-400 uppercase text-xs tracking-wider">
 
-                            <span className="inline-block mt-2 text-xs px-2 py-1 rounded bg-[#2d2d2d]">
-                                {item.role}
-                            </span>
-                        </div>
+                            <tr>
+                                <th className="px-6 py-4 text-left">User</th>
+                                <th className="px-6 py-4 text-left">Role</th>
+                                <th className="px-6 py-4 text-left">Purchases</th>
+                                <th className="px-6 py-4 text-left">Status</th>
+                            </tr>
 
-                        {/* Purchases */}
-                        <div className="space-y-3">
-                            {item.purchases.map((purchase, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-[#262626] rounded-lg p-3 text-sm flex flex-col gap-1"
+                        </thead>
+                        <tbody>
+
+                            {userDetails.map((item) => (
+
+                                <tr
+                                    key={item.id}
+                                    className="border-t border-[#2d2d2d] hover:bg-[#232323] transition"
                                 >
-                                    <span className="text-gray-300">
-                                        Code: {purchase.uniqueCode}
-                                    </span>
+                                    <td className="px-6 py-4">
+                                        <div className="flex flex-col">
+                                            <span className="font-medium">
+                                                {item.name}
+                                            </span>
 
-                                    <div className="flex gap-3 text-xs">
-                                        <span className="px-2 py-1 rounded bg-[#333]">
-                                            Verified: {purchase.verified}
+                                            <span className="text-xs text-gray-400">
+                                                {item.email}
+                                            </span>
+                                        </div>
+                                    </td>
+
+
+                                    {/* Role */}
+                                    <td className="px-6 py-4">
+
+                                        <span className="text-xs px-3 py-1 rounded-full bg-[#2d2d2d]">
+                                            {item.role}
                                         </span>
 
-                                        <span className="px-2 py-1 rounded bg-[#333]">
-                                            Status: {purchase.purchaseStatus}
-                                        </span>
-                                    </div>
-                                </div>
+                                    </td>
+
+
+                                    {/* Purchases */}
+                                    <td className="px-6 py-4 space-y-2">
+
+                                        {item.purchases.map((purchase, index) => (
+
+                                            <div
+                                                key={index}
+                                                className="flex items-center gap-3 text-xs"
+                                            >
+
+                                                <span className="px-2 py-1 bg-[#2d2d2d] rounded">
+                                                    {purchase.uniqueCode}
+                                                </span>
+
+                                            </div>
+
+                                        ))}
+
+                                    </td>
+
+
+                                    {/* Status */}
+                                    <td className="px-6 py-4 space-y-2">
+
+                                        {item.purchases.map((purchase, index) => (
+
+                                            <div key={index} className="flex gap-2 text-xs">
+
+                                                <span className="px-2 py-1 rounded bg-[#333]">
+                                                    Verified: {purchase.verified ? "True" : "False"}
+                                                </span>
+
+                                                <span className="px-2 py-1 rounded bg-[#333]">
+                                                    {purchase.purchaseStatus}
+                                                </span>
+
+                                            </div>
+
+                                        ))}
+
+                                    </td>
+
+                                </tr>
+
                             ))}
-                        </div>
 
-                    </div>
-                ))}
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
