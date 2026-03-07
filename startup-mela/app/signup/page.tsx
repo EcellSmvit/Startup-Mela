@@ -22,7 +22,7 @@ export default function SignupPage() {
     });
 
     if (res.ok) {
-      router.push("/dashboard");
+      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}`);
     } else {
       const data = await res.json();
       setError(data.error || "Something went wrong");
