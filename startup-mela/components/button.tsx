@@ -6,6 +6,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   link?: string;
+  disable?: string;
 }
 
 const variantClasses = {
