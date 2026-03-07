@@ -3,6 +3,7 @@ interface InputProps{
     placeholder:string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type:string;
+    value?:string;
 }
 
 const variantClasses={
@@ -12,8 +13,8 @@ const variantClasses={
 const defaultStyle="border border-[#ececec] py-2 px-2 rounded-2xl"
 
 
-export default function InputField({variant,placeholder,onChange,type}:InputProps){
+export default function InputField({variant,placeholder,onChange,type,value}:InputProps){
     return(
-        <input type={type} placeholder={placeholder} onChange={onChange} className={variantClasses[variant]+" "+defaultStyle}/>
+        <input value={value} type={type} placeholder={placeholder} onChange={onChange} className={variantClasses[variant]+" "+defaultStyle}/>
     )
 }

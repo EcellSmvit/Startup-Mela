@@ -4,6 +4,8 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import InputField from "@/components/input";
+import Button from "@/components/button";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -29,29 +31,31 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="bg-[#171716] w-screen h-screen text-[#ececec] flex items-center justify-center">
+      <form onSubmit={handleSubmit} className="bg-[#262626] h-1/2 w-1/4 rounded-2xl flex items-center justify-center flex-col gap-4 p-4">
         <h1>Login</h1>
         {error && <p>{error}</p>}
         
-        <input
+        <InputField
+          variant="primary"
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
-        <input
+        <InputField
+          variant="primary"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-        <button type="submit">
-          Sign In
-        </button>
-        <p>Don&apos;t have an account? <Link href="/signup">Sign up</Link>
+        <Button
+        variant="primary"
+        text="Sign In"
+        type="submit"
+        />
+        <p>Don&apos;t have an account? <Link href="/dashboard">Sign up</Link>
         </p>
       </form>
     </div>

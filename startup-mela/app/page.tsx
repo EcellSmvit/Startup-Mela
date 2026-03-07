@@ -1,14 +1,9 @@
-import Pass from "@/components/pass";
+import Herosection from "@/components/ui/Herosection";
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen bg-[#171716] flex items-center justify-center">
-      <Pass 
-      title="Two-day pass"
-      description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,"
-      slot={50}
-      price={1000}
-      />
+    <div>
+        <Herosection/>
     </div>
   );
 }
