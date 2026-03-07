@@ -3,8 +3,8 @@ import { auth } from "@/lib/auth"
 import { randomBytes } from "crypto"
 
 export async function POST(req: Request) {
-  
   const session = await auth()
+
   if (!session)
     return Response.json({ error: "Unauthorized" }, { status: 401 })
   const userId = session.user.id
@@ -36,7 +36,6 @@ export async function POST(req: Request) {
   }
 
   const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
-
   const purchase = await prisma.purchase.create({
     data: {
       userId,
@@ -44,7 +43,6 @@ export async function POST(req: Request) {
       uniqueCode
     }
   })
-
   await prisma.pass.update({
     where: { id: passId },
     data: {
@@ -53,6 +51,36 @@ export async function POST(req: Request) {
       }
     }
   })
-
   return Response.json(purchase)
+}
+
+
+export async function GET(req: Request){
+  const session = await auth();
+
+  if(!session) 
+    return Response.json({error: "Unauthorized"},{status:401})
+  const userId = session.user.id
+
+  if(!userId)
+    return Response.json({error:"User not found"},{status:401})
+
+  const purchaseDetails = await prisma.purchase.findMany({
+    where: {
+      userId: userId
+    },
+    select:{
+      uniqueCode: true,
+      pass: {
+        select:{
+          title: true,
+          price: true
+        }
+      }
+    }
+  })
+  if(!purchaseDetails)    return Response.json({error: "Purchase not found"},{status:404})
+
+  return Response.json(purchaseDetails)
+
 }

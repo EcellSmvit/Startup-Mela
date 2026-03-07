@@ -2,6 +2,7 @@
 
 import Button from "@/components/button";
 import Pass from "@/components/pass";
+import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
 
 export default function Dashboard() {
@@ -58,6 +59,7 @@ export default function Dashboard() {
 
           </div>
 
+          <PurchaseInfo/>
 
           {/* Pass Section */}
           <div className="flex justify-center mt-16 px-6 pb-20">
