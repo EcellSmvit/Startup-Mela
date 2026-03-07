@@ -1,12 +1,13 @@
 "use client"
 
+import AdminButton from "@/components/adminButton";
 import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
 
-export default function Dashboard() {
 
+export default function Dashboard() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -20,13 +21,10 @@ export default function Dashboard() {
   return (
     <div className="bg-[#171716] min-h-screen text-white relative overflow-hidden">
 
-      {/* Background Glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-500 opacity-10 blur-[200px] pointer-events-none"></div>
 
       {status === "authenticated" && (
         <>
-
-          {/* Navbar */}
           <div className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a] backdrop-blur-md">
 
             <h1 className="text-2xl font-semibold tracking-wide">
@@ -38,11 +36,9 @@ export default function Dashboard() {
               text="Logout"
               onClick={() => signOut()}
             />
-
+            <AdminButton/>
           </div>
 
-
-          {/* Hero Section */}
           <div className="flex flex-col items-center justify-center text-center mt-16 px-4">
 
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
@@ -61,7 +57,7 @@ export default function Dashboard() {
 
           <PurchaseInfo/>
 
-          {/* Pass Section */}
+
           <div className="flex justify-center mt-16 px-6 pb-20">
 
             <div className="
