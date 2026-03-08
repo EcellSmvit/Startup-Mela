@@ -35,6 +35,15 @@ export async function POST(req: Request) {
     )
   }
 
+  const userExists = await prisma.user.findUnique({
+  where: { id: userId }
+})
+
+if (!userExists) {
+  return Response.json({ error: "Session user does not exist in database. Please log out and back in." }, { status: 400 })
+}
+
+
   const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
   const purchase = await prisma.purchase.create({
     data: {
