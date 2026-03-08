@@ -57,7 +57,7 @@ export default function SignupPage() {
       });
 
       const data = await res.json();
-
+      console.log("API RESPONSE:", res.status, data);
       if (!res.ok) {
         throw new Error(data.error || "Signup failed");
       }
