@@ -5,72 +5,82 @@ import { randomBytes } from "crypto"
 export async function POST(req: Request) {
   const session = await auth()
 
-  if (!session || !session.user?.id) {
+  if (!session)
     return Response.json({ error: "Unauthorized" }, { status: 401 })
-  }
-  
   const userId = session.user.id
+
+  if (!userId)
+    return Response.json({ error: "User not found" }, { status: 401 })
+
   const { passId } = await req.json()
-  const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
 
-  try {
-    const purchase = await prisma.$transaction(async (tx) => {
-      const currentPass = await tx.pass.findUnique({
-        where: { id: passId },
-      });
-      if (!currentPass || currentPass.sold >= currentPass.limit) {
-        throw new Error("Pass Sold Out");
-      }
-      const newPurchase = await tx.purchase.create({
-        data: {
-          userId,
-          passId,
-          uniqueCode
-        }
-      });
-      await tx.pass.update({
-        where: { id: passId },
-        data: { sold: { increment: 1 } }
-      });
-
-      return newPurchase;
-    });
-
-    return Response.json(purchase);
-
-  } catch (error: unknown) {
-    if (error instanceof Error && error.message === "Pass Sold Out") {
-      return Response.json({ error: "Pass Sold Out" }, { status: 400 });
+  const pass = await prisma.pass.findUnique({
+    where: { id: passId },
+    select: {
+      id: true,
+      title: true,
+      price: true,
+      sold: true,
+      limit: true
     }
-    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+  })
+
+  if (!pass)
+    return Response.json({ error: "Pass not found" }, { status: 404 })
+
+  if (pass.sold >= pass.limit) {
+    return Response.json(
+      { error: "Pass Sold Out" },
+      { status: 400 }
+    )
   }
+
+  const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
+  const purchase = await prisma.purchase.create({
+    data: {
+      userId,
+      passId,
+      uniqueCode
+    }
+  })
+  await prisma.pass.update({
+    where: { id: passId },
+    data: {
+      sold: {
+        increment: 1
+      }
+    }
+  })
+  return Response.json(purchase)
 }
-export async function GET(req: Request) {
+
+
+export async function GET(req: Request){
   const session = await auth();
 
-  if (!session || !session.user?.id) 
-    return Response.json({ error: "Unauthorized" }, { status: 401 })
-
+  if(!session) 
+    return Response.json({error: "Unauthorized"},{status:401})
   const userId = session.user.id
+
+  if(!userId)
+    return Response.json({error:"User not found"},{status:401})
 
   const purchaseDetails = await prisma.purchase.findMany({
     where: {
       userId: userId
     },
-    select: {
+    select:{
       uniqueCode: true,
       pass: {
-        select: {
+        select:{
           title: true,
           price: true
         }
       }
     }
   })
-
-  if (!purchaseDetails) {
-    return Response.json({ error: "Purchase not found" }, { status: 404 })
-  }
+  if(!purchaseDetails)    return Response.json({error: "Purchase not found"},{status:404})
 
   return Response.json(purchaseDetails)
+
 }
