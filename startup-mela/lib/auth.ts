@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "./prisma";
-import bcrypt from "bcrypt"; // Use bcryptjs for better compatibility
+import bcrypt from "bcryptjs" // Use bcryptjs for better compatibility
 import { authConfig } from "./auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -23,6 +23,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         );
 
         if (!isValid) return null;
+        
+        if (!user.isVerified) {
+          throw new Error("Please verify your email before logging in.");
+        }
 
         return {
           id: user.id,

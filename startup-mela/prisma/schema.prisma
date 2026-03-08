@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String?
-  email       String  @unique
+  email       String    @unique
   password    String  
-  role        Role    @default(USER)
-  isVerified  Boolean  @default(false)
-  otp         String?
+  role        Role      @default(USER)
+  isVerified  Boolean   @default(false)
+  otp         String?   @unique
   otpExpiry   DateTime?
   purchases   Purchase[]
   createdAt   DateTime  @default(now())
