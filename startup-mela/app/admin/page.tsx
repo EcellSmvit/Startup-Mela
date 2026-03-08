@@ -61,17 +61,17 @@ export default function AdminPages() {
     }
 
     return (
-        <div className="min-h-screen bg-[#171716] text-[#ececec] p-8">
+        <div className="min-h-screen min-w-screen bg-[#171716] text-[#ececec] p-8">
 
             {/* Header */}
             <div className="flex items-center justify-between mb-10">
-                <h1 className="text-3xl font-bold tracking-wide">
-                    Admin Dashboard
+                <h1 className="text-md sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center sm:text-left">
+                   Dashboard
                 </h1>
 
                 <div className="flex items-center gap-4">
-                    <Button variant="secondary" text="Create Passes" onClick={() => router.push("/admin/createpass")}/>
-                    <Button variant="primary" text="Verify User" onClick={() => router.push("/admin/verify")}/>
+                    <Button variant="secondary" text="Passes" onClick={() => router.push("/admin/createpass")}/>
+                    <Button variant="primary" text="Verify" onClick={() => router.push("/admin/verify")}/>
                     <Button
                         variant="warning"
                         text="Logout"

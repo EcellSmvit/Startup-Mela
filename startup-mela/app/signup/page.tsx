@@ -7,45 +7,85 @@ import Button from "@/components/button";
 import InputField from "@/components/input";
 
 export default function SignupPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.password) {
+      return "All fields are required";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      return "Invalid email format";
+    }
+
+    if (formData.password.length < 6) {
+      return "Password must be at least 6 characters";
+    }
+
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError(null);
 
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
-    });
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
 
-    if (res.ok) {
-      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}`);
-    } else {
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       const data = await res.json();
-      setError(data.error || "Something went wrong");
+
+      if (!res.ok) {
+        throw new Error(data.error || "Signup failed");
+      }
+
+      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="bg-[#171716] w-screen h-screen text-[#ececec] flex items-center justify-center">
-      
       <form
         onSubmit={handleSubmit}
         className="bg-[#262626] w-[380px] rounded-3xl flex flex-col gap-6 p-10 shadow-2xl border border-[#333]"
       >
-        
         <div className="flex flex-col gap-1 text-center">
           <h1 className="text-2xl font-semibold">Create Account</h1>
-          <p className="text-sm text-gray-400">
-            Sign up to get started
-          </p>
+          <p className="text-sm text-gray-400">Sign up to get started</p>
         </div>
 
         {error && (
-          <p className="text-red-400 text-sm text-center">{error}</p>
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm p-3 rounded-lg text-center">
+            {error}
+          </div>
         )}
 
         <div className="flex flex-col gap-4">
@@ -79,7 +119,7 @@ export default function SignupPage() {
 
         <Button
           variant="primary"
-          text="Signup"
+          text={loading ? "Creating account..." : "Signup"}
           type="submit"
         />
 
