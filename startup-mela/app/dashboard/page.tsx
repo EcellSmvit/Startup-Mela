@@ -5,35 +5,12 @@ import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
-  interface UserUniqueCode{
-    uniqueUserCode:string;
-  }
 
 
 export default function Dashboard() {
 
   const { data: session, status } = useSession();
-  const[userUnqiuecode,setUserUnqiuecode] = useState<UserUniqueCode[]>([])
-
-  useEffect(() => {
-    const getUserunqiuecode = async () => {
-      try{
-        const response = await fetch("/api/signup",{
-          method:"GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json();
-        setUserUnqiuecode(data)
-      } catch(error){
-        console.error("fail to fetch unique details",error);
-      }
-    }
-
-    getUserunqiuecode();
-  },[])
+  const uniqueCode = session?.user?.uniqueUserCode;
 
   if (status === "loading") {
     return (
@@ -77,7 +54,12 @@ export default function Dashboard() {
                     {session.user?.name}
                   </span>
                 </h1>
-
+                  {uniqueCode && (
+          <div className="mt-4 p-4 border border-yellow-500/30 bg-yellow-500/10 rounded-lg inline-block">
+            <p className="text-sm text-yellow-500 uppercase tracking-widest font-bold">Your Unique Code</p>
+            <p className="text-2xl font-mono">{uniqueCode}</p>
+          </div>
+        )}
                 <p className="text-[#a1a1a1] mt-4 text-sm md:text-base max-w-xl">
                   Access and manage your Startup Mela passes. Explore events,
                   track your entries, and enjoy the experience.
@@ -95,13 +77,6 @@ export default function Dashboard() {
               <Pass/>
 
             </div>
-            {userUnqiuecode.map((item)=>(
-              <div
-                key={item.id}
-              >
-                
-              </div>
-            ))}
 
           </div>
 
