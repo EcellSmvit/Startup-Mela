@@ -2,6 +2,7 @@
 
 import AdminButton from "@/components/adminButton";
 import Button from "@/components/button";
+import InviteTeammate from "@/components/InviteTeammate";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
@@ -74,7 +75,7 @@ export default function Dashboard() {
                   explore available passes for the event.
                 </p>
               </div>
-
+              <InviteTeammate/>
               {/* Purchase Info */}
               <div className="flex justify-center md:justify-end">
                 <PurchaseInfo />
