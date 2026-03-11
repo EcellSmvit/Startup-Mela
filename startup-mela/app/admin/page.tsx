@@ -9,6 +9,7 @@ interface UserInformation {
     id: string;
     name: string;
     email: string;
+    Mobnumber:string;
     role: string;
     purchases: {
         uniqueCode: string;
@@ -62,8 +63,6 @@ export default function AdminPages() {
 
     return (
         <div className="min-h-screen min-w-screen bg-[#171716] text-[#ececec] p-8">
-
-            {/* Header */}
             <div className="flex items-center justify-between mb-10">
                 <h1 className="text-md sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center sm:text-left">
                    Dashboard
@@ -90,6 +89,7 @@ export default function AdminPages() {
 
                             <tr>
                                 <th className="px-6 py-4 text-left">User</th>
+                                <th className="px-6 py-4 text-left">Mobile Number</th>
                                 <th className="px-6 py-4 text-left">Role</th>
                                 <th className="px-6 py-4 text-left">Purchases</th>
                                 <th className="px-6 py-4 text-left">Status</th>
@@ -115,9 +115,15 @@ export default function AdminPages() {
                                             </span>
                                         </div>
                                     </td>
+                                    <td className="px-6 py-4">
 
+                                        <span className="text-xs px-3 py-1 rounded-full bg-[#2d2d2d]">
+                                            {item.Mobnumber}
+                                        </span>
 
-                                    {/* Role */}
+                                    </td>
+
+                                    
                                     <td className="px-6 py-4">
 
                                         <span className="text-xs px-3 py-1 rounded-full bg-[#2d2d2d]">

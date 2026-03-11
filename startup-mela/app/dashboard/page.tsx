@@ -5,10 +5,35 @@ import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+
+  interface UserUniqueCode{
+    uniqueUserCode:string;
+  }
+
 
 export default function Dashboard() {
 
   const { data: session, status } = useSession();
+  const[userUnqiuecode,setUserUnqiuecode] = useState<UserUniqueCode[]>([])
+
+  useEffect(() => {
+    const getUserunqiuecode = async () => {
+      try{
+        const response = await fetch("/api/signup",{
+          method:"GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        setUserUnqiuecode(data)
+      } catch(error){
+        console.error("fail to fetch unique details",error);
+      }
+    }
+
+    getUserunqiuecode();
+  },[])
 
   if (status === "loading") {
     return (
@@ -21,13 +46,10 @@ export default function Dashboard() {
   return (
     <div className="bg-[#171716] min-h-screen w-screen text-white relative overflow-hidden">
 
-      {/* Glow background */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-500 opacity-10 blur-[200px] pointer-events-none"></div>
 
       {status === "authenticated" && (
         <>
-        
-          {/* HEADER */}
           <div className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a] backdrop-blur-md">
 
             <h1 className="text-2xl font-semibold tracking-wide">
@@ -45,15 +67,8 @@ export default function Dashboard() {
             </div>
 
           </div>
-
-
-          {/* MAIN AREA */}
           <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
-
-            {/* WELCOME + PURCHASE SECTION */}
             <div className="grid md:grid-cols-2 gap-12 items-start">
-
-              {/* Welcome */}
               <div>
 
                 <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
@@ -80,6 +95,13 @@ export default function Dashboard() {
               <Pass/>
 
             </div>
+            {userUnqiuecode.map((item)=>(
+              <div
+                key={item.id}
+              >
+                
+              </div>
+            ))}
 
           </div>
 

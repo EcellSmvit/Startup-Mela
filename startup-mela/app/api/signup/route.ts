@@ -1,13 +1,17 @@
 import prisma from '@/lib/prisma'
 import bcrypt from "bcryptjs"
 import nodemailer from "nodemailer";
+import { randomBytes } from "crypto"
 
 export async function POST(req:Request){
     const{name , email , password , Mobnumber} = await req.json()
     const hashed = await bcrypt.hash(password,10)
 
+    const uniqueUserCode = `US${randomBytes(3).toString("hex").toUpperCase()}`
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
     const otpExpiry = new Date(Date.now() + 10 * 60 * 1000)
+
+
     try{
     const user = await prisma.user.create({
         data:{
@@ -17,11 +21,11 @@ export async function POST(req:Request){
             Mobnumber,
             otp,
             otpExpiry,
+            uniqueUserCode,
             isVerified: false
         }
     })
-
-    const transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
                 user: process.env.EMAIL_USER,
@@ -29,7 +33,7 @@ export async function POST(req:Request){
             },
         })
 
-await transporter.sendMail({
+    await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email,
             subject: "Startup Mela - Verify Your Email",
