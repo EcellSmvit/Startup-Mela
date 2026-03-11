@@ -6,7 +6,6 @@ import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
 
-
 export default function Dashboard() {
 
   const { data: session, status } = useSession();
@@ -21,65 +20,82 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-[#171716] min-h-screen w-screen text-white relative overflow-hidden">
+    <div className="bg-[#171716] min-h-screen w-screen text-white overflow-x-hidden">
 
+      {/* glow background */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-500 opacity-10 blur-[200px] pointer-events-none"></div>
 
       {status === "authenticated" && (
         <>
-          <div className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a] backdrop-blur-md">
+          {/* HEADER */}
+          <header className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a]">
 
             <h1 className="text-2xl font-semibold tracking-wide">
               Startup <span className="text-yellow-500">Mela</span>
             </h1>
 
             <div className="flex items-center gap-4">
-              <AdminButton/>
+
+              {uniqueCode && (
+                <div className="px-4 py-2 border border-yellow-500/30 bg-yellow-500/10 rounded-lg">
+                  <p className="text-lg font-mono font-bold">{uniqueCode}</p>
+                </div>
+              )}
+
+              <AdminButton />
 
               <Button
                 variant="warning"
                 text="Logout"
                 onClick={() => signOut()}
               />
+
             </div>
 
-          </div>
-          <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div>
+          </header>
 
+          {/* MAIN CONTENT */}
+          <main className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+
+            {/* TOP SECTION */}
+            <section className="grid md:grid-cols-2 gap-10 items-center">
+
+              {/* Welcome */}
+              <div>
                 <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
                   Welcome{" "}
                   <span className="text-yellow-500 italic">
                     {session.user?.name}
                   </span>
                 </h1>
-                  {uniqueCode && (
-          <div className="mt-4 p-4 border border-yellow-500/30 bg-yellow-500/10 rounded-lg inline-block">
-            <p className="text-sm text-yellow-500 uppercase tracking-widest font-bold">Your Unique Code</p>
-            <p className="text-2xl font-mono">{uniqueCode}</p>
-          </div>
-        )}
-                <p className="text-[#a1a1a1] mt-4 text-sm md:text-base max-w-xl">
-                  Access and manage your Startup Mela passes. Explore events,
-                  track your entries, and enjoy the experience.
+
+                <p className="text-gray-400 mt-4 max-w-md">
+                  Manage your Startup Mela passes, view purchase details and
+                  explore available passes for the event.
                 </p>
-
               </div>
-            </div>
-              <div className="flex gap-6 flex-row items-center justify-center">
 
-                <PurchaseInfo/>
-
+              {/* Purchase Info */}
+              <div className="flex justify-center md:justify-end">
+                <PurchaseInfo />
               </div>
-            <div className="flex flex-wrap gap-8 justify-center">
 
-              <Pass/>
+            </section>
 
-            </div>
+            {/* PASSES */}
+            <section>
 
-          </div>
+              <h2 className="text-2xl font-semibold mb-6 text-center">
+                Available Passes
+              </h2>
 
+              <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center">
+                <Pass />
+              </div>
+
+            </section>
+
+          </main>
         </>
       )}
 
