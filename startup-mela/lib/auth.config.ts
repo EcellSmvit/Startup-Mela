@@ -14,7 +14,6 @@ declare module "next-auth" {
       uniqueUserCode?: string;
     } & DefaultSession["user"];
   }
-  
 }
 
 export const authConfig = {
