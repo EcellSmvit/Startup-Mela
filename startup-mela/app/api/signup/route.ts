@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 import nodemailer from "nodemailer";
 
 export async function POST(req:Request){
-    const{name , email , password} = await req.json()
+    const{name , email , password , Mobnumber} = await req.json()
     const hashed = await bcrypt.hash(password,10)
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
@@ -14,6 +14,7 @@ export async function POST(req:Request){
             name,
             email,
             password:hashed,
+            Mobnumber,
             otp,
             otpExpiry,
             isVerified: false

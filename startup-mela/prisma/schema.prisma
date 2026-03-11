@@ -8,19 +8,28 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(cuid())
-  name        String?
-  email       String    @unique
-  password    String  
-  role        Role      @default(USER)
-  isVerified  Boolean   @default(false)
-  otp         String?   
-  otpExpiry   DateTime?
-  purchases   Purchase[]
-  createdAt   DateTime  @default(now())
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  password        String  
+  role            Role      @default(USER)
+  isVerified      Boolean   @default(true)
+  purchases       Purchase[]
+  createdAt       DateTime  @default(now())
+  Mobnumber       Int?      
+  uniqueUserCode  String? @unique
 
 }
 
+model PendingUser {
+  id              String    @id @default(cuid())
+  email           String
+  name            String?
+  password        String
+  otp             String
+  otpExpiry       DateTime
+  createAt        DateTime @default(now())
+}
 
 model Pass {
   id          String   @id @default(cuid())

@@ -11,6 +11,7 @@ export default function SignupPage() {
     name: "",
     email: "",
     password: "",
+    Mobnumber:"",
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +20,7 @@ export default function SignupPage() {
   const router = useRouter();
 
   const validateForm = () => {
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.name || !formData.email || !formData.password || !formData.Mobnumber) {
       return "All fields are required";
     }
 
@@ -106,7 +107,14 @@ export default function SignupPage() {
               setFormData({ ...formData, email: e.target.value })
             }
           />
-
+          <InputField
+            variant="primary"
+            type="number"
+            placeholder="Number"
+            onChange={(e) =>
+              setFormData({...formData,Mobnumber:e.target.value})
+            }
+          />
           <InputField
             variant="primary"
             type="password"
