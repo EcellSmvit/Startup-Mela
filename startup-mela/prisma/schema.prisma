@@ -14,9 +14,11 @@ model User {
   password        String  
   role            Role      @default(USER)
   isVerified      Boolean   @default(true)
+  otp             String? 
+  otpExpiry       DateTime?
+  Mobnumber       String?
   purchases       Purchase[]
-  createdAt       DateTime  @default(now())
-  Mobnumber       Int?      
+  createdAt       DateTime  @default(now())     
   uniqueUserCode  String? @unique
 
 }

@@ -14,7 +14,7 @@ export async function POST(req:Request){
             name,
             email,
             password:hashed,
-            Mobnumber,
+            Mobnumber: parseInt(Mobnumber),
             otp,
             otpExpiry,
             isVerified: false
