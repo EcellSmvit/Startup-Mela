@@ -13,7 +13,7 @@ export default function InviteTeammate() {
     setStatus(null);
 
     try {
-      const response = await fetch("/api/team/invite", {
+      const response = await fetch("/api/invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ inviteCode: code.toUpperCase().trim() }),
