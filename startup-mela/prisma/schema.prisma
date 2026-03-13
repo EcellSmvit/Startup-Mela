@@ -13,17 +13,27 @@ model User {
   email           String    @unique
   password        String  
   role            Role      @default(USER)
-  isVerified      Boolean   @default(true)
-  otp             String? 
-  otpExpiry       DateTime?
-  Mobnumber       String?
   purchases       Purchase[]
   createdAt       DateTime  @default(now())     
   uniqueUserCode  String? @unique
+  accounts        Account[]
+}
 
-  leaderId        String?
-  leader          User?       @relation("TeamMembers",fields: [leaderId],references: [id])
-  teammates       User[]      @relation("TeamMembers")
+model Account {
+  id        String @id @default(cuid())
+  userId    String
+  type      String
+  provider  String
+  providerAccountId String
+  refresh_token  String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
 }
 
 

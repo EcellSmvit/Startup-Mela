@@ -3,14 +3,14 @@ import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
   interface User {
-     id: string;
+    id?: string;
     role?: string;
     uniqueUserCode?: string;
   }
   interface Session {
     user: {
       id: string;
-      role?: string;
+      role: string;
       uniqueUserCode?: string;
     } & DefaultSession["user"];
   }
@@ -43,16 +43,16 @@ export const authConfig = {
 
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;  
-        token.role = user.role;
+        token.role = user.role ?? "USER";
         token.uniqueUserCode = user.uniqueUserCode;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      if (session.user && token) {
         session.user.id = token.id as string; 
         session.user.role = token.role as string;
         session.user.uniqueUserCode = token.uniqueUserCode as string;
