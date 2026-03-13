@@ -18,7 +18,7 @@ declare module "next-auth" {
 
 export const authConfig = {
   pages: {
-    signIn: "/userdetails",
+    signIn: "/signup",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
