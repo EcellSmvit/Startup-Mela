@@ -4,161 +4,151 @@ import InputField from "@/components/input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
-export default function userdetails(){
-    const[formData,setFormData] = useState({
-        USN:"",
-        mobilenumber:"",
-        collegename:"",
-        year:""
+export default function UserDetails() {
+    const [formData, setFormData] = useState({
+        USN: "",
+        mobilenumber: "",
+        collegename: "",
+        year: ""
     });
 
-    const[error,setError] = useState("");
-    const[loading,setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = async(e:React.FormEvent) =>{
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        if(!formData.USN.trim()){
-            setError("USN is required")
-            return;
-        }
-
-        if(!formData.mobilenumber.trim()){
-            setError("Mobile number is required")
-            return;
-        }
-        if(!formData.collegename.trim()){
-            setError("College name is required")
-            return;
-        }
-        if(!formData.year.trim()){
-            setError("Year is required")
+        
+        // Basic validation
+        if (!formData.USN.trim() || !formData.mobilenumber.trim() || !formData.collegename.trim() || !formData.year.trim()) {
+            setError("All fields are required");
             return;
         }
 
         setLoading(true);
-
-        try{
-            const res = await fetch("/api/userdetails",{
-                method:"POST",
+        try {
+            const res = await fetch("/api/userdetails", {
+                method: "POST",
                 body: JSON.stringify(formData),
-                headers:{"Content-Type":"application/json"}
+                headers: { "Content-Type": "application/json" }
             });
 
-            if(res.ok){
+            if (res.ok) {
                 router.push("/dashboard");
-            }else{
+            } else {
                 let message = "Something went wrong";
-                try{
+                try {
                     const data = await res.json();
                     message = data.error || message;
-                }catch{}
+                } catch { }
                 setError(message);
             }
-        } catch(err){
+        } catch (err) {
             console.error(err);
             setError("Network error. Please check your connection.")
         }
         setLoading(false)
-
     }
-    useEffect(() => {
-    const checkExisting = async () => {
-        const res = await fetch("/api/userdetails");
-        const data = await res.json();
-        if (data && data.id) {
-            router.push("/dashboard"); // Redirect if details already exist
-        }
-    };
-    checkExisting();
-}, [router]);
-    return(
-        <div className="bg-[#171716] w-screen min-h-screen flex items-center justify-center text-white px-4">
 
-            <div className="w-full max-w-lg bg-[#1f1f1f] border border-[#2a2a2a] rounded-2xl p-8 shadow-xl">
-                <h1 className="text-2xl font-semibold mb-2 text-center">
-                   Fill Your details
-                </h1>
-                <p className="text-sm text-gray-400 text-center mb-6">
-                    Create User Information 
-                </p>
-                {error && (
-                    <p className="text-red-500 text-sm mb-4 text-center bg-red-500/10 py-2 rounded-lg">
-                        {error}
+    useEffect(() => {
+        const checkExisting = async () => {
+            const res = await fetch("/api/userdetails");
+            const data = await res.json();
+            if (data && data.id) {
+                router.push("/dashboard");
+            }
+        };
+        checkExisting();
+    }, [router]);
+
+    return (
+        <div className="bg-[#171716] w-screen min-h-screen flex items-center justify-center text-white px-4">
+            <div className="w-full max-w-xl bg-[#1f1f1f] border border-[#2a2a2a] rounded-3xl p-8 md:p-12 shadow-2xl">
+                {/* Header */}
+                <div className="text-center mb-10">
+                    <h1 className="text-3xl font-bold tracking-tight mb-2">
+                        Complete Your Profile
+                    </h1>
+                    <p className="text-sm text-gray-400">
+                        We need a few more details to set up your account
                     </p>
+                </div>
+
+                {error && (
+                    <div className="flex items-center gap-2 text-red-500 text-sm mb-6 bg-red-500/10 p-4 rounded-xl border border-red-500/20">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        {error}
+                    </div>
                 )}
-                <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col gap-4"
-                >
-                    <div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Top Row: USN and Mobile */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">USN / Roll No</label>
+                            <InputField
+                                variant="primary"
+                                type="text"
+                                placeholder="e.g. 1MV23CS000"
+                                onChange={(e) => setFormData({ ...formData, USN: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Phone Number</label>
+                            <InputField
+                                variant="primary"
+                                type="number"
+                                placeholder="10-digit number"
+                                onChange={(e) => setFormData({ ...formData, mobilenumber: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Middle Row: College Name */}
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">College / Institution</label>
                         <InputField
                             variant="primary"
                             type="text"
-                            placeholder="Enter Your unviresty seat number"
-                            onChange={(e) => 
-                                setFormData({...formData,USN:e.target.value})
-                            }
+                            placeholder="Enter your full college name"
+                            onChange={(e) => setFormData({ ...formData, collegename: e.target.value })}
                         />
-                        <p className="text-xs text-gray-400 mt-1">
-                            Example: 1MV23CS000
-                        </p>
                     </div>
-                    <div>
-                        <InputField
-                            variant="primary"
-                            type="number"
-                            placeholder="Enter Your Mobile Number"
-                            onChange={(e)=> setFormData({...formData,mobilenumber:e.target.value})}
-                        />
-                        <p className="text-xs text-gray-400 mt-1">
-                            Enter your mobile number
-                        </p>
-                    </div>
-                    <div>
+
+                    {/* Bottom Row: Academic Year */}
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Current Year</label>
                         <InputField
                             variant="primary"
                             type="text"
-                            placeholder="Enter Your college Name"
-                            onChange={(e)=> setFormData({...formData,collegename:e.target.value})}
+                            placeholder="e.g. 2nd Year"
+                            onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                         />
-                        <p className="text-xs text-gray-400 mt-1">
-                            Enter your college name
-                        </p>
                     </div>
-                    <div>
-                        <InputField
-                            variant="primary"
-                            type="text"
-                            placeholder="Enter Your college Name"
-                            onChange={(e)=> setFormData({...formData,year:e.target.value})}
-                        />
-                        <p className="text-xs text-gray-400 mt-1">
-                            ex:1nd year , 2nd year ,3rd year, 4th year
-                        </p>
-                    </div>
+
                     <button
                         type="submit"
                         disabled={loading}
-                        className="mt-4 w-full py-3 rounded-xl bg-yellow-500 text-black font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-2"
+                        className="mt-8 w-full py-4 rounded-2xl bg-yellow-500 text-black font-bold text-sm uppercase tracking-widest transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center gap-3 shadow-lg shadow-yellow-500/10"
                     >
                         {loading ? (
                             <>
-                                <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
-                                Creating...
+                                <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                                Processing...
                             </>
                         ) : (
-                            "Create"
+                            "Finalize Registration"
                         )}
                     </button>
-
                 </form>
-                <p className="text-xs text-gray-500 text-center mt-6">
-                    After creating the pass, it will appear on the dashboard where users can purchase it.
-                </p>
-            </div>
 
+                <div className="mt-10 pt-6 border-t border-[#2a2a2a] text-center">
+                    <p className="text-[10px] text-gray-500 uppercase tracking-tighter leading-relaxed">
+                        Secure registration • Powered by E-Cell SMVIT
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }

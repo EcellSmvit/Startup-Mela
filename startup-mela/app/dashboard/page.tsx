@@ -34,12 +34,6 @@ export default function Dashboard() {
 
             <div className="flex items-center gap-4">
 
-              {uniqueCode && (
-                <div className="px-4 py-2 border border-yellow-500/30 bg-yellow-500/10 rounded-lg">
-                  <p className="text-lg font-mono font-bold">{uniqueCode}</p>
-                </div>
-              )}
-
               <AdminButton />
 
               <Button
@@ -54,17 +48,7 @@ export default function Dashboard() {
           <main className="max-w-7xl mx-auto px-6 py-12 space-y-14">
             <section className="grid md:grid-cols-2 gap-10 items-center">
               <div>
-                <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
-                  Welcome{" "}
-                  <span className="text-yellow-500 italic">
-                    {session.user?.name}
-                  </span>
-                </h1>
                 <Userdetails/>
-                <p className="text-gray-400 mt-4 max-w-md">
-                  Manage your Startup Mela passes, view purchase details and
-                  explore available passes for the event.
-                </p>
               </div>
               <div className="flex justify-center md:justify-end">
                 <PurchaseInfo />

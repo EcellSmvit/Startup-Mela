@@ -11,7 +11,8 @@ model User {
   id              String    @id @default(cuid())
   name            String?
   email           String    @unique
-  image           String?  
+  image           String?
+  emailVerified   DateTime? 
   role            Role      @default(USER)
   purchases       Purchase[]
   createdAt       DateTime  @default(now())     
@@ -23,7 +24,7 @@ model User {
 model UserDetails{
   id                  String @id @default(cuid())
   USN             String
-  mobilenumber    Int
+  mobilenumber    String
   collegename     String
   year            String
   userId       String @unique

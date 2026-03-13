@@ -30,7 +30,7 @@ export async function POST(req:Request){
     const details = await prisma?.userDetails.create({
         data:{
             USN: USN,
-            mobilenumber:mobilenumber,
+            mobilenumber: mobilenumber,
             collegename:collegename,
             year:year,
             userId:session.user.id
@@ -39,6 +39,7 @@ export async function POST(req:Request){
 
     return Response.json(details)
     } catch(error:any){
+        console.error("DEBUG: Prisma Error Details ->", error);
         if (error.code === 'P2002') {
             return Response.json({ error: "USN already registered" }, { status: 400 });
         }
