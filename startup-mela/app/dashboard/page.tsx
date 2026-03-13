@@ -4,6 +4,7 @@ import AdminButton from "@/components/adminButton";
 import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
+import Userdetails from "@/components/userdetails";
 import { signOut, useSession } from "next-auth/react";
 
 export default function Dashboard() {
@@ -21,13 +22,10 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[#171716] min-h-screen w-screen text-white overflow-x-hidden">
-
-      {/* glow background */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-500 opacity-10 blur-[200px] pointer-events-none"></div>
 
       {status === "authenticated" && (
         <>
-          {/* HEADER */}
           <header className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a]">
 
             <h1 className="text-2xl font-semibold tracking-wide">
@@ -53,14 +51,8 @@ export default function Dashboard() {
             </div>
 
           </header>
-
-          {/* MAIN CONTENT */}
           <main className="max-w-7xl mx-auto px-6 py-12 space-y-14">
-
-            {/* TOP SECTION */}
             <section className="grid md:grid-cols-2 gap-10 items-center">
-
-              {/* Welcome */}
               <div>
                 <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
                   Welcome{" "}
@@ -68,20 +60,17 @@ export default function Dashboard() {
                     {session.user?.name}
                   </span>
                 </h1>
-
+                <Userdetails/>
                 <p className="text-gray-400 mt-4 max-w-md">
                   Manage your Startup Mela passes, view purchase details and
                   explore available passes for the event.
                 </p>
               </div>
-              {/* Purchase Info */}
               <div className="flex justify-center md:justify-end">
                 <PurchaseInfo />
               </div>
 
             </section>
-
-            {/* PASSES */}
             <section>
 
               <h2 className="text-2xl font-semibold mb-6 text-center">

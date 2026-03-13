@@ -1,10 +1,8 @@
 import prisma from '@/lib/prisma'
-import bcrypt from "bcryptjs"
 import { randomBytes } from "crypto"
 
 export async function POST(req:Request){
-    const{name , email , password } = await req.json()
-    const hashed = await bcrypt.hash(password,10)
+    const{name , email } = await req.json()
 
     const uniqueUserCode = `US${randomBytes(3).toString("hex").toUpperCase()}`
     try{
@@ -12,7 +10,6 @@ export async function POST(req:Request){
         data:{
             name,
             email,
-            password:hashed,
             uniqueUserCode,
         }
     })

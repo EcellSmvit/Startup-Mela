@@ -2,7 +2,7 @@
 
 import InputField from "@/components/input";
 import { useRouter } from "next/navigation";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function userdetails(){
     const[formData,setFormData] = useState({
@@ -63,6 +63,16 @@ export default function userdetails(){
         setLoading(false)
 
     }
+    useEffect(() => {
+    const checkExisting = async () => {
+        const res = await fetch("/api/userdetails");
+        const data = await res.json();
+        if (data && data.id) {
+            router.push("/dashboard"); // Redirect if details already exist
+        }
+    };
+    checkExisting();
+}, [router]);
     return(
         <div className="bg-[#171716] w-screen min-h-screen flex items-center justify-center text-white px-4">
 
