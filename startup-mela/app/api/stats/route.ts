@@ -13,7 +13,6 @@ export async function GET(req: Request) {
       id: true,
       name: true,
       email: true,
-      Mobnumber:true,
       uniqueUserCode:true,
       role: true,
       purchases: {

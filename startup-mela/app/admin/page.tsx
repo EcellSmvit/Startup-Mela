@@ -9,7 +9,6 @@ interface UserInformation {
     id: string;
     name: string;
     email: string;
-    Mobnumber:string;
     role: string;
     purchases: {
         uniqueCode: string;
@@ -89,7 +88,6 @@ export default function AdminPages() {
 
                             <tr>
                                 <th className="px-6 py-4 text-left">User</th>
-                                <th className="px-6 py-4 text-left">Mobile Number</th>
                                 <th className="px-6 py-4 text-left">Role</th>
                                 <th className="px-6 py-4 text-left">Purchases</th>
                                 <th className="px-6 py-4 text-left">Status</th>
@@ -115,15 +113,6 @@ export default function AdminPages() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
-
-                                        <span className="text-xs px-3 py-1 rounded-full bg-[#2d2d2d]">
-                                            {item.Mobnumber}
-                                        </span>
-
-                                    </td>
-
-                                    
                                     <td className="px-6 py-4">
 
                                         <span className="text-xs px-3 py-1 rounded-full bg-[#2d2d2d]">
