@@ -13,6 +13,7 @@ export async function POST(req:Request){
             uniqueUserCode,
         }
     })
+    return Response.json({ user }, { status: 201 })
     }catch(error){
         return Response.json({ error: "User already exists or email failed" }, { status: 400 })
     }
