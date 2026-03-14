@@ -13,21 +13,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      checks: ['pkce', 'state'],
     }),
   ],
-  // 1. Add callbacks to log specific steps in the console
   callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log("SIGNIN_ATTEMPT:", { email: user.email, provider: account?.provider });
+    async signIn() {
       return true;
     },
     async session({ session, token }) {
-      console.log("SESSION_CALLBACK:", { user: session.user?.email });
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
       return session;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
   },
-  // 2. Enable debug mode for detailed logs
-  debug: true, 
+  debug: false,
   events: {
     async createUser({ user }) {
       try {
@@ -36,10 +42,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { id: user.id },
           data: { uniqueUserCode },
         });
-        console.log("USER_CREATED_SUCCESS:", user.id);
       } catch (error) {
-        // 3. Catch and log database errors specifically
-        console.error("USER_CREATION_EVENT_ERROR:", error);
+        console.error("Error creating user with unique code:", error);
       }
     },
   },

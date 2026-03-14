@@ -38,11 +38,8 @@ export async function POST(req:Request){
     })
 
     return Response.json(details)
-    } catch(error:any){
+    } catch(error){
         console.error("DEBUG: Prisma Error Details ->", error);
-        if (error.code === 'P2002') {
-            return Response.json({ error: "USN already registered" }, { status: 400 });
-        }
         return Response.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
