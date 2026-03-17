@@ -35,7 +35,6 @@ export async function POST(req:Request){
             mobilenumber: mobilenumber,
             collegename:collegename,
             year:year,
-            userId:session.user.id
         },
         create: {
             USN: USN,

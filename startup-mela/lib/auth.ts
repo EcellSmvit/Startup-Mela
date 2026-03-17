@@ -19,11 +19,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // async signIn() {
     //   return true;
     // },
-    async jwt({token,user}){
+    async jwt({token,user,trigger}){
       if(user){
         token.id = user.id;
         token.role = (user as { role: string }).role;
         token.uniqueUserCode = (user as { uniqueUserCode: string }).uniqueUserCode;
+      }
+
+      if(token.id && !token.hasDetails){
+        const details = await prisma.userDetails.findUnique({
+          where:{ userId: token.id as string },
+          select:{ id: true }
+        });
+        token.hasDetails = !!details;
       }
       return token;
     },
@@ -32,6 +40,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.uniqueUserCode = token.uniqueUserCode as string;
+        //@ts-ignore
+        session.user.hasDetails = token.hasDetails as boolean;
       }
       return session;
     },

@@ -32,12 +32,12 @@ model Session {
 
 model UserDetails{
   id                  String @id @default(cuid())
-  USN             String
-  mobilenumber    String
-  collegename     String
-  year            String
-  userId       String @unique
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  USN                 String
+  mobilenumber        String
+  collegename         String
+  year                String
+  userId              String @unique
+  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
