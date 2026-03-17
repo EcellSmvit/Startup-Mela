@@ -13,7 +13,7 @@ declare module "next-auth" {
       id: string;
       role: string;
       uniqueUserCode?: string;
-      userDetails?: string;
+      hasDetails?: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -27,48 +27,31 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const isAdminRoute = nextUrl.pathname.startsWith('/admin');
       const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
-      const isPublicRoute = ["/login", "/signup", "/"].includes(nextUrl.pathname);
+      const isPublicRoute = ["/signup", "/"].includes(nextUrl.pathname);
       const isUserDetailsRoute = nextUrl.pathname.startsWith("/userdetails");
 
       if (isApiAuthRoute) return true;
 
       if (isAdminRoute) {
         if (isLoggedIn && auth.user.role === 'ADMIN') return true;
-        if (isLoggedIn) {
-          return Response.redirect(new URL('/', nextUrl));
-        }
+        if (isLoggedIn) return Response.redirect(new URL('/', nextUrl));
         return false;
       }
 
-      if (!isPublicRoute && !isLoggedIn) {
-        return false; 
+      if (!isPublicRoute && !isLoggedIn) return false; 
+
+      // Force users to complete details if they haven't yet
+      if (isLoggedIn && !auth.user.hasDetails && !isUserDetailsRoute && !isPublicRoute) {
+        return Response.redirect(new URL("/userdetails", nextUrl));
       }
 
-      if (isLoggedIn && !auth.user.hasDetails && !isUserDetailsRoute) {
-      return Response.redirect(new URL("/userdetails", nextUrl));
-    }
+      // Prevent users who have details from going back to the userdetails form
+      if (isLoggedIn && auth.user.hasDetails && isUserDetailsRoute) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
+      }
 
-     if (isLoggedIn && auth.user.hasDetails && isUserDetailsRoute) {
-      return Response.redirect(new URL("/dashboard", nextUrl));
-    }
       return true;
     },
-    async jwt({ token, user, trigger, session }) {
-      if (user) {
-        token.id = user.id;  
-        token.role = user.role ?? "USER";
-        token.uniqueUserCode = user.uniqueUserCode;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user && token) {
-        session.user.id = token.id as string; 
-        session.user.role = token.role as string;
-        session.user.uniqueUserCode = token.uniqueUserCode as string;
-      }
-      return session;
-    },
   },
-  providers: [],
+  providers: [], // Providers are defined in lib/auth.ts
 } satisfies NextAuthConfig;
