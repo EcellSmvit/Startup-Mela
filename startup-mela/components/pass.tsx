@@ -10,6 +10,7 @@ interface Pass {
   limit: number;
   sold: number;
   price: number;
+  teamSize: number;
 }
 
 export default function Pass() {
@@ -17,7 +18,6 @@ export default function Pass() {
   const [passes, setPasses] = useState<Pass[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState<string | null>(null);
-  const [friendCode, setFriendCode] = useState("");
 
   const handleBuy = async (passId: string) => {
     const code = prompt("Please enter your friend's Unique User Code to proceed:");
@@ -114,6 +114,10 @@ export default function Pass() {
                   <p className="text-gray-400 text-sm leading-relaxed">
                     {pass.description}
                   </p>
+                  <p className="text-gray-400 text-sm">
+                    Team Size: {pass.teamSize}
+                  </p>
+
 
                   <div className="flex items-center justify-between bg-black/30 px-4 py-3 rounded-xl border border-white/5">
 

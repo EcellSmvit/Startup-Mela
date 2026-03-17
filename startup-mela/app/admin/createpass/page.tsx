@@ -10,7 +10,8 @@ export default function Createpass(){
         title:"",
         description:"",
         price:0,
-        limit:0
+        limit:0,
+        teamSize:1
     });
 
     const [error , setError] = useState("");
@@ -40,6 +41,10 @@ export default function Createpass(){
 
         if(formData.limit <= 0){
             setError("Limit must be greater than 0");
+            return;
+        }
+        if(formData.teamSize <= 0){
+            setError("Team size must be greater than 0");
             return;
         }
 
@@ -122,7 +127,19 @@ export default function Createpass(){
                             Short description of what this pass includes
                         </p>
                     </div>
-
+                    <div>
+                        <InputField
+                            variant="primary"
+                            type="number"
+                            placeholder="Team Size"
+                            onChange={(e)=>
+                                setFormData({...formData,teamSize:Number(e.target.value)})
+                            }
+                        />
+                        <p className="text-xs text-gray-400 mt-1">
+                            Number of team members allowed with this pass
+                        </p>
+                    </div>
                     <div>
                         <InputField
                             variant="primary"

@@ -17,7 +17,7 @@ export async function POST(req:Request){
     const {title,description,price,limit} = await req.json()
 
     const pass = await prisma.pass.create({
-        data:{title,description,price,limit}
+        data:{title,description,price,limit,teamSize:1}
     })
 
     return Response.json(pass)

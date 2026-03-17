@@ -64,6 +64,7 @@ model Pass {
   description String
   price       Int
   limit       Int
+  teamSize    Int
   sold        Int      @default(0)
   purchases   Purchase[]
   createdAt   DateTime @default(now())
