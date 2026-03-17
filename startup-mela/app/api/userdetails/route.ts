@@ -6,6 +6,9 @@ export async function GET(){
     if (!session || !session.user?.id) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    console.log("SESSION USER ID:", session.user.id);
+
     const userInfo = await prisma.userDetails.findUnique({
         where: { userId: session.user.id }
     })

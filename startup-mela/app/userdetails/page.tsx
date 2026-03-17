@@ -33,6 +33,7 @@ export default function UserDetails() {
             });
 
             if (res.ok) {
+                router.refresh();
                 router.push("/dashboard");
             } else {
                 let message = "Something went wrong";
