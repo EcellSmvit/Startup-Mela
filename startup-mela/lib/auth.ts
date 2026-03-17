@@ -16,20 +16,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    // async signIn() {
-    //   return true;
-    // },
-    async jwt({token,user,trigger}){
-      if(user){
+    async jwt({ token, user, trigger }) {
+      if (user) {
         token.id = user.id;
         token.role = (user as { role: string }).role;
         token.uniqueUserCode = (user as { uniqueUserCode: string }).uniqueUserCode;
       }
 
-      if(token.id && token.hasDetails === undefined){
+      // Check if user has details every time the token is accessed/refreshed
+      if (token.id) {
         const details = await prisma.userDetails.findUnique({
-          where:{ userId: token.id as string },
-          select:{ id: true }
+          where: { userId: token.id as string },
+          select: { id: true }
         });
         token.hasDetails = !!details;
       }
@@ -46,7 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   events: {
-    async createUser({ user}){
+    async createUser({ user }) {
       const uniqueUserCode = `SM-${randomBytes(3).toString("hex").toUpperCase()}`;
       await prisma.user.update({
         where: { id: user.id },
