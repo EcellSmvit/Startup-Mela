@@ -6,7 +6,7 @@ declare module "next-auth" {
     id?: string;
     role?: string;
     uniqueUserCode?: string;
-    hasDetails?: boolean;
+    // REMOVED: hasDetails
   }
 
   interface Session {
@@ -14,7 +14,7 @@ declare module "next-auth" {
       id: string;
       role: string;
       uniqueUserCode?: string;
-      hasDetails?: boolean;
+      // REMOVED: hasDetails
     } & DefaultSession["user"];
   }
 }
@@ -26,37 +26,23 @@ export const authConfig = {
 
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-
-      const isLoggedIn = !!auth?.user
-      const pathname = nextUrl.pathname
+      const isLoggedIn = !!auth?.user;
+      const pathname = nextUrl.pathname;
 
       const isPublicRoute =
         pathname === "/" ||
-        pathname === "/signup"
-
-      const isUserDetailsRoute = pathname.startsWith("/userdetails")
+        pathname === "/signup";
 
       if (!isLoggedIn) {
-        return isPublicRoute
+        return isPublicRoute;
       }
 
-      if (isLoggedIn && pathname === "/") {
-        if (auth.user?.hasDetails) {
-          return Response.redirect(new URL("/dashboard", nextUrl))
-        } else {
-          return Response.redirect(new URL("/userdetails", nextUrl))
-        }
+      // Logic for logged-in users
+      if (isLoggedIn && (pathname === "/" || pathname === "/signup")) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
       }
 
-      if (!auth.user?.hasDetails && !isUserDetailsRoute) {
-        return Response.redirect(new URL("/userdetails", nextUrl))
-      }
-
-      if (auth.user?.hasDetails && isUserDetailsRoute) {
-        return Response.redirect(new URL("/dashboard", nextUrl))
-      }
-
-      return true
+      return true;
     },
   },
 

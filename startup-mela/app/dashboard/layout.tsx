@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
+// REMOVED: import prisma from "@/lib/prisma"; (No longer needed here)
 
 export default async function DashboardLayout({
   children,
@@ -9,17 +9,13 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
 
+  // Keep the authentication check to ensure only logged-in users access the dashboard
   if (!session?.user?.id) {
     redirect("/signup");
   }
 
-  const details = await prisma.userDetails.findUnique({
-    where: { userId: session.user.id },
-  });
-
-  if (!details) {
-    redirect("/userdetails");
-  }
+  // REMOVED: The prisma.userDetails.findUnique query
+  // REMOVED: The redirect to "/userdetails"
 
   return <>{children}</>;
 }

@@ -37,14 +37,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.uniqueUserCode = uniqueCode;
       }
 
-      if (token.id) {
-        const details = await prisma.userDetails.findUnique({
-          where: { userId: token.id as string },
-          select: { id: true },
-        });
-
-        token.hasDetails = !!details;
-      }
+      // REMOVED: The database check for prisma.userDetails.findUnique
+      // and the assignment of token.hasDetails
 
       return token;
     },
@@ -54,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.uniqueUserCode = token.uniqueUserCode as string;
-        session.user.hasDetails = token.hasDetails as boolean;
+        // REMOVED: session.user.hasDetails
       }
 
       return session;

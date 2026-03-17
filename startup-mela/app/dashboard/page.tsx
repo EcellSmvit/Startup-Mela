@@ -4,7 +4,6 @@ import AdminButton from "@/components/adminButton";
 import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
-import Userdetails from "@/components/userdetails";
 import { signOut } from "next-auth/react";
 
 export default function Dashboard() {
@@ -29,7 +28,6 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto px-6 py-12 space-y-14">
 
         <section className="grid md:grid-cols-2 gap-10 items-center">
-          <Userdetails />
           <PurchaseInfo />
         </section>
 

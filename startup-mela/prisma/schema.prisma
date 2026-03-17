@@ -19,7 +19,7 @@ model User {
   sessions        Session[]
   purchases       Purchase[]
   createdAt       DateTime  @default(now())     
-  userDetails     UserDetails?
+  // userDetails     UserDetails?
 }
 
 model Session {
@@ -30,15 +30,15 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model UserDetails{
-  id                  String @id @default(cuid())
-  USN                 String
-  mobilenumber        String
-  collegename         String
-  year                String
-  userId              String @unique
-  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model UserDetails{
+//   id                  String @id @default(cuid())
+//   USN                 String
+//   mobilenumber        String
+//   collegename         String
+//   year                String
+//   userId              String @unique
+//   user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
 model Account {
   id        String @id @default(cuid())
