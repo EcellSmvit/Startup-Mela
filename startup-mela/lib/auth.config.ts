@@ -6,7 +6,7 @@ declare module "next-auth" {
     id?: string;
     role?: string;
     uniqueUserCode?: string;
-
+    hasDetails?: boolean;
   }
   interface Session {
     user: {
@@ -28,6 +28,7 @@ export const authConfig = {
       const isAdminRoute = nextUrl.pathname.startsWith('/admin');
       const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
       const isPublicRoute = ["/login", "/signup", "/"].includes(nextUrl.pathname);
+      const isUserDetailsRoute = nextUrl.pathname.startsWith("/userdetails");
 
       if (isApiAuthRoute) return true;
 
@@ -43,6 +44,13 @@ export const authConfig = {
         return false; 
       }
 
+      if (isLoggedIn && !auth.user.hasDetails && !isUserDetailsRoute) {
+      return Response.redirect(new URL("/userdetails", nextUrl));
+    }
+
+     if (isLoggedIn && auth.user.hasDetails && isUserDetailsRoute) {
+      return Response.redirect(new URL("/dashboard", nextUrl));
+    }
       return true;
     },
     async jwt({ token, user, trigger, session }) {

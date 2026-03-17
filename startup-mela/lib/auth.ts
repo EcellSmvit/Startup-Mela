@@ -26,7 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.uniqueUserCode = (user as { uniqueUserCode: string }).uniqueUserCode;
       }
 
-      if(token.id && !token.hasDetails){
+      if(token.id && token.hasDetails === undefined){
         const details = await prisma.userDetails.findUnique({
           where:{ userId: token.id as string },
           select:{ id: true }
@@ -40,7 +40,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.uniqueUserCode = token.uniqueUserCode as string;
-        //@ts-ignore
         session.user.hasDetails = token.hasDetails as boolean;
       }
       return session;
