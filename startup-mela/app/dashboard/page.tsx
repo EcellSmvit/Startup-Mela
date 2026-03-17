@@ -5,47 +5,17 @@ import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import Userdetails from "@/components/userdetails";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { signOut } from "next-auth/react";
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    // 1. If loading is finished and no session exists, go to signup
-    if (status === "unauthenticated") {
-      router.push("/signup");
-    }
-
-    // 2. If authenticated but missing details, go to userdetails form
-    if (status === "authenticated" && !session?.user?.hasDetails) {
-      router.push("/userdetails");
-    }
-  }, [status, session, router]);
-
-  if (status === "loading") {
-    return (
-      <div className="bg-[#171716] w-screen h-screen text-white flex items-center justify-center text-lg tracking-wide">
-        Loading please wait...
-      </div>
-    );
-  }
-
-  // Final safety check to prevent rendering dashboard content before redirection
-  if (!session || !session.user?.hasDetails) {
-    return null; 
-  }
-
   return (
     <div className="bg-[#171716] min-h-screen w-screen text-white overflow-x-hidden">
-      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-yellow-500 opacity-10 blur-[200px] pointer-events-none"></div>
 
       <header className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a]">
         <h1 className="text-2xl font-semibold tracking-wide">
           Startup <span className="text-yellow-500">Mela</span>
         </h1>
+
         <div className="flex items-center gap-4">
           <AdminButton />
           <Button
@@ -57,23 +27,22 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+
         <section className="grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <Userdetails />
-          </div>
-          <div className="flex justify-center md:justify-end">
-            <PurchaseInfo />
-          </div>
+          <Userdetails />
+          <PurchaseInfo />
         </section>
 
         <section>
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Available Passes
           </h2>
+
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center">
             <Pass />
           </div>
         </section>
+
       </main>
     </div>
   );

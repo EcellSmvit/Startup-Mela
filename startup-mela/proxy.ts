@@ -4,6 +4,5 @@ import { authConfig } from "./lib/auth.config";
 export default NextAuth(authConfig).auth;
 
 export const config = {
-  // Protects all routes except static files and auth APIs
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login|signup|verify-otp).*)",],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signup).*)"],
 };

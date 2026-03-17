@@ -8,6 +8,7 @@ declare module "next-auth" {
     uniqueUserCode?: string;
     hasDetails?: boolean;
   }
+
   interface Session {
     user: {
       id: string;
@@ -22,31 +23,42 @@ export const authConfig = {
   pages: {
     signIn: "/signup",
   },
+
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
-      const isPublicRoute = ["/signup", "/"].includes(nextUrl.pathname);
-      const isUserDetailsRoute = nextUrl.pathname.startsWith("/userdetails");
 
-      if (isApiAuthRoute) return true;
+      const isLoggedIn = !!auth?.user
+      const pathname = nextUrl.pathname
+
+      const isPublicRoute =
+        pathname === "/" ||
+        pathname === "/signup"
+
+      const isUserDetailsRoute = pathname.startsWith("/userdetails")
 
       if (!isLoggedIn) {
-        return isPublicRoute;
+        return isPublicRoute
       }
 
-      // If logged in but no details, force them to userdetails unless they are already there
-      if (!auth.user.hasDetails && !isUserDetailsRoute) {
-        return Response.redirect(new URL("/userdetails", nextUrl));
+      if (isLoggedIn && pathname === "/") {
+        if (auth.user?.hasDetails) {
+          return Response.redirect(new URL("/dashboard", nextUrl))
+        } else {
+          return Response.redirect(new URL("/userdetails", nextUrl))
+        }
       }
 
-      // If logged in and has details, don't let them go back to userdetails
-      if (auth.user.hasDetails && isUserDetailsRoute) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
+      if (!auth.user?.hasDetails && !isUserDetailsRoute) {
+        return Response.redirect(new URL("/userdetails", nextUrl))
       }
 
-      return true;
+      if (auth.user?.hasDetails && isUserDetailsRoute) {
+        return Response.redirect(new URL("/dashboard", nextUrl))
+      }
+
+      return true
     },
   },
-  providers: [], 
+
+  providers: [],
 } satisfies NextAuthConfig;

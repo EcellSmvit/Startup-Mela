@@ -8,16 +8,18 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  if (!session || !session.user) {
+
+  if (!session?.user?.id) {
     redirect("/signup");
   }
-  const userDetails = await prisma.userDetails.findUnique({
+
+  const details = await prisma.userDetails.findUnique({
     where: { userId: session.user.id },
   });
 
-  if (!userDetails) {
+  if (!details) {
     redirect("/userdetails");
   }
 
-  return <section>{children}</section>;
+  return <>{children}</>;
 }
