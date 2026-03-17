@@ -6,11 +6,19 @@ import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import Userdetails from "@/components/userdetails";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Dashboard() {
 
   const { data: session, status } = useSession();
-  const uniqueCode = session?.user?.uniqueUserCode;
+  const router = useRouter();
+
+  useEffect(() =>{
+    if( status === "authenticated"&& session?.user && !session.user.userDetails){
+      router.push("/userdetails");
+    }
+  },[session,status,router])
 
   if (status === "loading") {
     return (
@@ -19,6 +27,8 @@ export default function Dashboard() {
       </div>
     );
   }
+
+
 
   return (
     <div className="bg-[#171716] min-h-screen w-screen text-white overflow-x-hidden">

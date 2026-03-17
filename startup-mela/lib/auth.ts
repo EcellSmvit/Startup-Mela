@@ -13,12 +13,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
-      checks: ['pkce', 'state'],
     }),
   ],
   callbacks: {
-    async signIn() {
-      return true;
+    // async signIn() {
+    //   return true;
+    // },
+    async jwt({token,user}){
+      if(user){
+        token.id = user.id;
+        token.role = (user as { role: string }).role;
+        token.uniqueUserCode = (user as { uniqueUserCode: string }).uniqueUserCode;
+      }
+      return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
@@ -28,25 +35,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session;
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id;
-      }
-      return token;
-    },
   },
-  debug: false,
   events: {
-    async createUser({ user }) {
-      try {
-        const uniqueUserCode = `US${randomBytes(3).toString("hex").toUpperCase()}`;
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { uniqueUserCode },
-        });
-      } catch (error) {
-        console.error("Error creating user with unique code:", error);
-      }
-    },
+    async createUser({ user}){
+      const uniqueUserCode = `SM-${randomBytes(3).toString("hex").toUpperCase()}`;
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { uniqueUserCode },
+      });
+    }
   },
 });

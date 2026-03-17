@@ -11,14 +11,23 @@ model User {
   id              String    @id @default(cuid())
   name            String?
   email           String    @unique
-  image           String?
   emailVerified   DateTime? 
+  image           String?
   role            Role      @default(USER)
+  uniqueUserCode  String?   @unique
+  accounts        Account[]
+  sessions        Session[]
   purchases       Purchase[]
   createdAt       DateTime  @default(now())     
-  uniqueUserCode  String? @unique
-  accounts        Account[]
   userDetails     UserDetails?
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserDetails{

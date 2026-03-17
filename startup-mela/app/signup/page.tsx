@@ -13,7 +13,7 @@ export default function LoginPage() {
           Sign in to access your Startup Mela dashboard
         </p>
         <button
-          onClick={() => signIn("google", { callbackUrl: "/userdetails" })}
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           className="w-full flex items-center justify-center gap-4 px-6 py-4 bg-white text-black font-semibold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg"
         >
           <img
