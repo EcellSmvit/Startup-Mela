@@ -15,6 +15,7 @@ export default function UserDetails() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const [isChecking, setIsChecking] = useState(true);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,17 +52,26 @@ export default function UserDetails() {
         setLoading(false)
     }
 
-    useEffect(() => {
+useEffect(() => {
         const checkExisting = async () => {
-            const res = await fetch("/api/userdetails");
-            const data = await res.json();
-            if (data && data.id) {
-                router.push("/dashboard");
+            try {
+                const res = await fetch("/api/userdetails");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.userId) {
+                        router.push("/dashboard");
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error("Error checking user details", err);
+            } finally {
+                setIsChecking(false);
             }
         };
         checkExisting();
     }, [router]);
-
+if (isChecking) return <div>Loading...</div>;
     return (
         <div className="bg-[#171716] w-screen min-h-screen flex items-center justify-center text-white px-4">
             <div className="w-full max-w-xl bg-[#1f1f1f] border border-[#2a2a2a] rounded-3xl p-8 md:p-12 shadow-2xl">

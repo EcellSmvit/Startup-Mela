@@ -9,6 +9,7 @@ export async function GET(){
     const userInfo = await prisma.userDetails.findUnique({
         where: { userId: session.user.id }
     })
+    if (!userInfo) return Response.json(null);
     return Response.json(userInfo)
 }
 
