@@ -27,8 +27,16 @@ export async function POST(req:Request){
         return Response.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const details = await prisma?.userDetails.create({
-        data:{
+    const details = await prisma.userDetails.upsert({
+        where: { userId: session.user.id },
+        update: {
+            USN: USN,
+            mobilenumber: mobilenumber,
+            collegename:collegename,
+            year:year,
+            userId:session.user.id
+        },
+        create: {
             USN: USN,
             mobilenumber: mobilenumber,
             collegename:collegename,

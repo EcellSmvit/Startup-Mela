@@ -17,8 +17,14 @@ export default function Pass() {
   const [passes, setPasses] = useState<Pass[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [friendCode, setFriendCode] = useState("");
 
   const handleBuy = async (passId: string) => {
+    const code = prompt("Please enter your friend's Unique User Code to proceed:");
+    if (!code) {
+      alert("A friend's code is required to complete this purchase.");
+      return;
+    }
 
     setLoadingId(passId);
 
@@ -29,7 +35,7 @@ export default function Pass() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ passId }),
+        body: JSON.stringify({ passId,friendCode: code }),
       });
 
       const data = await res.json();

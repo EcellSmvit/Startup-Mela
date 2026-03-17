@@ -8,11 +8,28 @@ export async function POST(req: Request) {
   if (!session)
     return Response.json({ error: "Unauthorized" }, { status: 401 })
   const userId = session.user.id
-
+  
   if (!userId)
     return Response.json({ error: "User not found" }, { status: 401 })
 
-  const { passId } = await req.json()
+  const { passId, friendCode } = await req.json()
+
+  if (!friendCode) {
+    return Response.json({ error: "Friend code is required" }, { status: 400 })
+  }
+
+  const friend = await prisma.user.findUnique({
+    where: { uniqueUserCode: friendCode }
+  })
+
+  if (!friend) {
+    return Response.json({ error: "Invalid friend code. User not found." }, { status: 404 })
+  }
+
+  if (friend.id === userId) {
+    return Response.json({ error: "You cannot use your own code." }, { status: 400 })
+  }
+
 
   const pass = await prisma.pass.findUnique({
     where: { id: passId },
@@ -49,7 +66,8 @@ if (!userExists) {
     data: {
       userId,
       passId,
-      uniqueCode
+      uniqueCode,
+      referredBy: friend.id
     }
   })
   await prisma.pass.update({
