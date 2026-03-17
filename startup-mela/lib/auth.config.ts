@@ -25,33 +25,28 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isAdminRoute = nextUrl.pathname.startsWith('/admin');
       const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
       const isPublicRoute = ["/signup", "/"].includes(nextUrl.pathname);
       const isUserDetailsRoute = nextUrl.pathname.startsWith("/userdetails");
 
       if (isApiAuthRoute) return true;
 
-      if (isAdminRoute) {
-        if (isLoggedIn && auth.user.role === 'ADMIN') return true;
-        if (isLoggedIn) return Response.redirect(new URL('/', nextUrl));
-        return false;
+      if (!isLoggedIn) {
+        return isPublicRoute;
       }
 
-      if (!isPublicRoute && !isLoggedIn) return false; 
-
-      // Force users to complete details if they haven't yet
-      if (isLoggedIn && !auth.user.hasDetails && !isUserDetailsRoute && !isPublicRoute) {
+      // If logged in but no details, force them to userdetails unless they are already there
+      if (!auth.user.hasDetails && !isUserDetailsRoute) {
         return Response.redirect(new URL("/userdetails", nextUrl));
       }
 
-      // Prevent users who have details from going back to the userdetails form
-      if (isLoggedIn && auth.user.hasDetails && isUserDetailsRoute) {
+      // If logged in and has details, don't let them go back to userdetails
+      if (auth.user.hasDetails && isUserDetailsRoute) {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
 
       return true;
     },
   },
-  providers: [], // Providers are defined in lib/auth.ts
+  providers: [], 
 } satisfies NextAuthConfig;

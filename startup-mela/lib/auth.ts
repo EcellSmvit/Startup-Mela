@@ -16,15 +16,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // Logic for initial sign-in / signup
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: string }).role || "USER";
         
-        // Check if uniqueUserCode exists, if not (new user), generate and save it
         let uniqueCode = (user as { uniqueUserCode?: string }).uniqueUserCode;
-        
         if (!uniqueCode) {
           uniqueCode = `SM-${randomBytes(3).toString("hex").toUpperCase()}`;
           await prisma.user.update({
@@ -35,8 +32,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.uniqueUserCode = uniqueCode;
       }
 
-      // Check for user details to handle redirection logic
-      if (token.id && token.hasDetails === undefined) {
+      // Re-check database if this is a manual update trigger or if hasDetails is unknown
+      if (token.id && (trigger === "update" || token.hasDetails === undefined)) {
         const details = await prisma.userDetails.findUnique({
           where: { userId: token.id as string },
           select: { id: true }
@@ -56,5 +53,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  // Removed the 'events' block to prevent database update race conditions
 });
