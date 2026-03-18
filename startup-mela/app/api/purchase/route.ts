@@ -73,8 +73,6 @@ export async function POST(req: Request) {
 
       return Response.json(purchase)
     }
-
-    // Fallback for single person passes
     const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
     const purchase = await prisma.purchase.create({
       data: {
@@ -92,14 +90,14 @@ export async function POST(req: Request) {
 
     return Response.json(purchase)
 
-  } catch (error) { // Added catch block
-    console.error("PURCHASE_POST_ERROR:", error); // Logs error to your terminal
+  } catch (error) {
+    console.error("PURCHASE_POST_ERROR:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
 export async function GET(req: Request) {
-  try { // Added try block
+  try { 
     const session = await auth();
 
     if (!session || !session.user?.id)
@@ -127,8 +125,8 @@ export async function GET(req: Request) {
     })
 
     return Response.json(purchaseDetails)
-  } catch (error) { // Added catch block
-    console.error("PURCHASE_GET_ERROR:", error); // Logs error to your terminal
+  } catch (error) {
+    console.error("PURCHASE_GET_ERROR:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

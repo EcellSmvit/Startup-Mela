@@ -18,8 +18,7 @@ export default function Pass() {
   const [passes, setPasses] = useState<Pass[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState<string | null>(null);
-  
-  // Track which pass is being purchased to show the teammate invite screen
+
   const [selectedPass, setSelectedPass] = useState<Pass | null>(null);
 
   useEffect(() => {
@@ -47,7 +46,8 @@ export default function Pass() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           passId: selectedPass.id, 
-          teammateCodes 
+          teammateCodes,
+          friendCode
         }),
       });
 
