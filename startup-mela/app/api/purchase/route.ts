@@ -5,15 +5,14 @@ import { randomBytes } from "crypto"
 export async function POST(req: Request) {
   const session = await auth()
 
-  if (!session)
+  if (!session || !session.user?.id)
     return Response.json({ error: "Unauthorized" }, { status: 401 })
-  const userId = session.user.id
   
-  if (!userId)
-    return Response.json({ error: "User not found" }, { status: 401 })
+  const userId = session.user.id
 
-  const { passId, friendCode } = await req.json()
+  const { passId, friendCode, teammateCodes } = await req.json() // teammateCodes is string[]
 
+  // 1. Basic Validations
   if (!friendCode) {
     return Response.json({ error: "Friend code is required" }, { status: 400 })
   }
@@ -23,91 +22,105 @@ export async function POST(req: Request) {
   })
 
   if (!friend) {
-    return Response.json({ error: "Invalid friend code. User not found." }, { status: 404 })
+    return Response.json({ error: "Invalid friend code." }, { status: 404 })
   }
-
-  if (friend.id === userId) {
-    return Response.json({ error: "You cannot use your own code." }, { status: 400 })
-  }
-
 
   const pass = await prisma.pass.findUnique({
-    where: { id: passId },
-    select: {
-      id: true,
-      title: true,
-      price: true,
-      sold: true,
-      limit: true
-    }
+    where: { id: passId }
   })
 
-  if (!pass)
-    return Response.json({ error: "Pass not found" }, { status: 404 })
+  if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
+  if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
-  if (pass.sold >= pass.limit) {
-    return Response.json(
-      { error: "Pass Sold Out" },
-      { status: 400 }
-    )
+  // 2. Teammate Logic: teamSize includes the buyer, so we need (teamSize - 1) teammate codes
+  const requiredTeammates = (pass.teamSize || 1) - 1;
+  
+  if (requiredTeammates > 0) {
+    if (!teammateCodes || teammateCodes.length !== requiredTeammates) {
+      return Response.json({ error: `Exactly ${requiredTeammates} teammate(s) required.` }, { status: 400 });
+    }
+
+    // Verify all teammate codes exist and are not the buyer
+    const teammates = await prisma.user.findMany({
+      where: {
+        uniqueUserCode: { in: teammateCodes },
+        NOT: { id: userId }
+      }
+    });
+
+    if (teammates.length !== requiredTeammates) {
+      return Response.json({ error: "One or more teammate codes are invalid or duplicates." }, { status: 400 });
+    }
+
+    // 3. Create Purchase with Teammates
+    const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
+    const purchase = await prisma.purchase.create({
+      data: {
+        userId,
+        passId,
+        uniqueCode,
+        referredBy: friend.id,
+        teammates: {
+          connect: teammates.map(t => ({ id: t.id }))
+        }
+      }
+    })
+
+    await prisma.pass.update({
+      where: { id: passId },
+      data: { sold: { increment: 1 } }
+    })
+
+    return Response.json(purchase)
   }
 
-  const userExists = await prisma.user.findUnique({
-  where: { id: userId }
-})
-
-if (!userExists) {
-  return Response.json({ error: "Session user does not exist in database. Please log out and back in." }, { status: 400 })
-}
-
-
+  // Fallback for single person passes
   const uniqueCode = `MV${randomBytes(2).toString("hex").toUpperCase()}`
   const purchase = await prisma.purchase.create({
     data: {
       userId,
       passId,
       uniqueCode,
-      referredBy: friend.id
+      referredBy: friend.id,
     }
   })
+
   await prisma.pass.update({
     where: { id: passId },
-    data: {
-      sold: {
-        increment: 1
-      }
-    }
+    data: { sold: { increment: 1 } }
   })
+
   return Response.json(purchase)
 }
 
 
-export async function GET(req: Request){
+export async function GET(req: Request) {
   const session = await auth();
 
-  if(!session) 
-    return Response.json({error: "Unauthorized"},{status:401})
+  if (!session || !session.user?.id)
+    return Response.json({ error: "Unauthorized" }, { status: 401 })
+  
   const userId = session.user.id
 
-  if(!userId)
-    return Response.json({error:"User not found"},{status:401})
-
   const purchaseDetails = await prisma.purchase.findMany({
-    where: {
-      userId: userId
-    },
-    select:{
+    where: { userId: userId },
+    select: {
       uniqueCode: true,
       pass: {
-        select:{
+        select: {
           title: true,
           price: true
+        }
+      },
+      // Include teammate details for the UI
+      teammates: {
+        select: {
+          name: true,
+          uniqueUserCode: true
         }
       }
     }
   })
-  if(!purchaseDetails)    return Response.json({error: "Purchase not found"},{status:404})
 
   return Response.json(purchaseDetails)
-
 }

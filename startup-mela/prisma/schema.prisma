@@ -17,9 +17,10 @@ model User {
   uniqueUserCode  String?   @unique
   accounts        Account[]
   sessions        Session[]
-  purchases       Purchase[]
+  purchases       Purchase[]  @relation("Buyer")
   createdAt       DateTime  @default(now())     
   // userDetails     UserDetails?
+  teammateAt       Purchase[] @relation("Teammates")
 }
 
 model Session {
@@ -78,9 +79,10 @@ model Purchase{
   referredBy      String?
   purchaseStatus  PurchaseStatus  @default(PENDING)
   verified        Boolean @default(false)
-  user            User    @relation(fields: [userId],references: [id])
+  user            User           @relation("Buyer", fields: [userId], references: [id])
   pass            Pass    @relation(fields: [passId],references: [id])
   createdAt       DateTime @default(now())
+  teammates       User[]         @relation("Teammates")
 }
 
 enum Role{
