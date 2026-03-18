@@ -7,9 +7,11 @@ export default function Herosection() {
       className="absolute inset-0 z-0"
       style={{
         backgroundImage: `
-          radial-gradient(circle at 50% 100%, rgba(255, 99, 71, 0.6) 0%, transparent 60%),
-          radial-gradient(circle at 50% 100%, rgba(255, 215, 0, 0.4) 0%, transparent 70%),
-          radial-gradient(circle at 50% 100%, rgba(60, 179, 113, 0.3) 0%, transparent 80%)`,
+          radial-gradient(circle at 50% 100%, rgba(109, 77, 254, 0.7) 0%, transparent 55%),
+          radial-gradient(circle at 50% 100%, rgba(129, 102, 255, 0.5) 0%, transparent 65%),
+          radial-gradient(circle at 50% 100%, rgba(180, 170, 255, 0.35) 0%, transparent 80%)
+        `,
+        filter: "blur(20px)"
       }}
     />
     <div
@@ -25,25 +27,22 @@ export default function Herosection() {
           "radial-gradient(ellipse 40% 60% at 50% 100%, #000 60%, transparent 100%)",
       }}
     />
-      <div className="relative z-10 w-screen h-screen flex items-center justify-center flex-col gap-8">
-        <div className='flex items-center justify-center'>
-          <h1 className=" text-8xl text-[#ececec] font-bold">
-            Dream.{" "}
-            Dominate.
-          </h1>
+      <div className='flex items-center justify-center flex-col w-screen h-screen relative z-10 text-[#ececec] gap-4'>
+        <h1 className='font-black text-9xl uppercase'>Startup Mela 2026</h1>
+        <h1 className='font-bold text-4xl uppercase'>Pitch. Validate. Connect.</h1>
+        <h1 className='font-medium text-md'>SMVIT biggest student startup event - 2 days of competitions, VC meets, speaker sessions, and real startup exposure.
+        </h1>
+        <div className='flex items-center justify-center gap-8'>
+          <Button
+          link='/signup'
+          variant='primary'
+          text='Register Now'
+          />
+          <Button
+          variant='secondary'
+          text='Explore Events'
+          />
         </div>
-        <p className="text-[#ececec] text-2xl font-medium">
-          Showcase your innovation to investors who believe in{" "}
-          <span className="bg-gradient-to-t from-yellow-300 to-yellow-700 bg-clip-text text-transparent font-medium">
-            bold ideas.
-          </span>{" "}
-        </p>
-        <Button
-        link='/signup'
-        variant='primary'
-        text="Regsiter now"
-        />
-        <p className="text-[#ececec] text-3xl font-bold">27 - 28 March 2026</p>
       </div>
     </div>
   );

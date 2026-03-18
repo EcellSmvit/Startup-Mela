@@ -18,8 +18,8 @@ export default function Pass() {
   const [passes, setPasses] = useState<Pass[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState<string | null>(null);
-
   const [selectedPass, setSelectedPass] = useState<Pass | null>(null);
+  const [friendCode, setFriendCode] = useState("");
 
   useEffect(() => {
     const fetchPasses = async () => {
@@ -84,6 +84,7 @@ export default function Pass() {
         </button>
         
         <div className="bg-[#262626] border border-white/10 rounded-3xl p-8 mb-8">
+        
           <h2 className="text-xl font-bold text-white mb-2">Checkout: {selectedPass.title}</h2>
           <p className="text-gray-400 text-sm">Amount: ₹{selectedPass.price}</p>
         </div>

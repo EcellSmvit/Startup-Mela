@@ -10,8 +10,8 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  primary: "bg-yellow-500 text-[#262626]",
-  secondary: "border-yellow-500 border text-[#ececec]",
+  primary: "bg-[#6D4DFE] text-[#ececec]",
+  secondary: "border-[#6D4DFE] border text-[#ececec]",
   warning: "bg-red-500 text-[#ececec]",
 };
 
