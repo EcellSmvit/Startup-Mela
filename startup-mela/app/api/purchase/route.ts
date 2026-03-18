@@ -112,7 +112,6 @@ export async function GET(req: Request) {
           price: true
         }
       },
-      // Include teammate details for the UI
       teammates: {
         select: {
           name: true,
