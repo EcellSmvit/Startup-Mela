@@ -39,13 +39,6 @@ export default function Pass() {
   
   const handleFinalPurchase = async (teammateCodes: string[]) => {
     if (!selectedPass) return;
-
-    const friendCode = prompt("Please enter your friend's Unique User Code (Referral):");
-    if (!friendCode) {
-      alert("A referral code is required to complete this purchase.");
-      return;
-    }
-
     setLoadingId(selectedPass.id);
 
     try {
@@ -54,7 +47,6 @@ export default function Pass() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           passId: selectedPass.id, 
-          friendCode, 
           teammateCodes 
         }),
       });
@@ -81,8 +73,6 @@ export default function Pass() {
       </div>
     );
   }
-
-  // REDIRECT LOGIC: If a pass is selected, show the InviteTeammate component
   if (selectedPass) {
     return (
       <div className="w-full max-w-2xl mx-auto py-10">
@@ -147,7 +137,7 @@ export default function Pass() {
                   <Button
                     variant="primary"
                     text={soldOut ? "Sold Out" : "Buy Pass"}
-                    onClick={() => setSelectedPass(pass)} // Trigger Redirect to Invite View
+                    onClick={() => setSelectedPass(pass)} 
                   />
                 </div>
               </div>
