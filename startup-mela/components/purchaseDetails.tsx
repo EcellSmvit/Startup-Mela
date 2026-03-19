@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 
-// Updated interface to include teammate details fetched from the API
 interface PurchaseDetailsProps {
   uniqueCode: string;
   pass: {
     title: string;
     price: number;
   };
-
   teammates: {
     name: string | null;
     uniqueUserCode: string;
@@ -23,11 +21,7 @@ export default function PurchaseInfo() {
   useEffect(() => {
     const getPurchaseDetails = async () => {
       try {
-        const response = await fetch("/api/purchase", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
+        const response = await fetch("/api/purchase");
         const data = await response.json();
         setPurchaseDetails(data);
       } catch (error) {
@@ -49,60 +43,89 @@ export default function PurchaseInfo() {
   }
 
   return (
-    <div className="w-full flex flex-wrap gap-6 p-6 justify-center">
+    <div className="w-full flex flex-wrap gap-8 p-8 justify-center">
       {purchaseDetails.map((item) => (
         <div
           key={item.uniqueCode}
-          className="w-[300px] bg-[#1f1f1f] border border-white/10 rounded-2xl p-6 
-          shadow-lg hover:shadow-yellow-500/20 transition-all duration-300 
-          hover:-translate-y-1"
+          className="
+          relative w-[320px] rounded-2xl p-[1px]
+          bg-gradient-to-br from-yellow-500/30 via-purple-500/20 to-transparent
+          hover:from-yellow-400/50 hover:via-purple-500/40
+          transition-all duration-300
+        "
         >
-          <div className="flex flex-col gap-3">
-            
-            <div className="text-xs text-gray-400 uppercase tracking-wider">
-              Pass Code
+          {/* Glass Card */}
+          <div
+            className="
+            bg-[#111111]/80 backdrop-blur-xl rounded-2xl p-6
+            border border-white/10
+            hover:shadow-[0_10px_40px_rgba(255,215,0,0.15)]
+            transition-all duration-300 hover:-translate-y-1
+          "
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center mb-4">
+              <div className="text-xs text-gray-400 uppercase tracking-wider">
+                Pass Code
+              </div>
+              <div className="text-[10px] bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded-full">
+                ACTIVE
+              </div>
             </div>
 
-            <div className="text-lg font-semibold text-yellow-400">
+            <div className="text-lg font-semibold text-yellow-400 mb-3 tracking-wide">
               {item.uniqueCode}
             </div>
 
-            <div className="h-[1px] bg-white/10 my-2" />
+            <div className="h-[1px] bg-white/10 my-3" />
 
-            <div className="text-sm text-gray-400">Pass Type</div>
-
-            <div className="text-xl font-bold text-white">
-              {item.pass.title}
+            {/* Pass Info */}
+            <div className="flex flex-col gap-1">
+              <span className="text-sm text-gray-400">Pass Type</span>
+              <span className="text-xl font-bold text-white">
+                {item.pass.title}
+              </span>
+              <span className="text-[#6D4DFE] font-semibold text-lg">
+                ₹{item.pass.price}
+              </span>
             </div>
 
-            <div className="text-yellow-400 font-semibold text-lg">
-              ₹{item.pass.price}
-            </div>
-
-            {/* Teammates Section: Only displays if there are teammates assigned */}
-            {item.teammates && item.teammates.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-white/5">
-                <div className="text-xs text-gray-400 uppercase tracking-wider mb-2">
-                  Teammates
+            {/* Teammates */}
+            {item.teammates?.length > 0 && (
+              <div className="mt-5 pt-4 border-t border-white/10">
+                <div className="text-xs text-gray-400 uppercase tracking-wider mb-3">
+                  Team Members
                 </div>
-                <div className="flex flex-col gap-2">
+
+                <div className="flex flex-col gap-3">
                   {item.teammates.map((tm) => (
-                    <div 
-                      key={tm.uniqueUserCode} 
-                      className="bg-black/20 p-2 rounded-lg border border-white/5"
+                    <div
+                      key={tm.uniqueUserCode}
+                      className="
+                      flex justify-between items-center
+                      bg-white/5 hover:bg-white/10
+                      p-3 rounded-xl border border-white/10
+                      transition-all duration-200
+                    "
                     >
-                      <div className="text-sm text-white font-medium">
-                        {tm.name || "User"}
+                      <div>
+                        <div className="text-sm text-white font-medium">
+                          {tm.name || "User"}
+                        </div>
+                        <div className="text-[10px] text-gray-400 font-mono">
+                          {tm.uniqueUserCode}
+                        </div>
                       </div>
-                      <div className="text-[10px] text-gray-500 font-mono">
-                        ID: {tm.uniqueUserCode}
+
+                      {/* Avatar Circle */}
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-purple-500 flex items-center justify-center text-black text-xs font-bold">
+                        {tm.name?.charAt(0) || "U"}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-
           </div>
         </div>
       ))}

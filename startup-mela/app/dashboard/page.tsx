@@ -8,13 +8,9 @@ import { signOut } from "next-auth/react";
 
 export default function Dashboard() {
   return (
-    <div className="bg-[#171716] min-h-screen w-screen text-white overflow-x-hidden">
+    <div className="bg-[#171716] min-h-screen w-full text-white overflow-x-hidden">
 
-      <header className="flex items-center justify-between px-10 py-6 border-b border-[#2a2a2a]">
-        <h1 className="text-2xl font-semibold tracking-wide">
-          Startup <span className="text-yellow-500">Mela</span>
-        </h1>
-
+      <header className="flex items-center justify-end px-10 py-6">
         <div className="flex items-center gap-4">
           <AdminButton />
           <Button
