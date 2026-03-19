@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function CompleteProfile() {
-  const router = useRouter();
+    const { update } = useSession();
 
   const [formData, setFormData] = useState({
     usn: "",
@@ -63,8 +63,8 @@ export default function CompleteProfile() {
       if (!res.ok) {
         throw new Error(data?.error || "Something went wrong");
       }
-
-      router.push("/dashboard");
+      await update();
+      window.location.href = "/dashboard";
     } catch (err) {
       setError((err as Error).message || "Failed to submit");
     } finally {
