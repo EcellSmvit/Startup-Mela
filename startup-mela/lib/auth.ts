@@ -22,6 +22,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: string }).role || "USER";
+        const details = await prisma.userDetails.findUnique({
+          where:{userId:user.id}
+        });
+        token.hasDetails = !!details;
 
         let uniqueCode = (user as { uniqueUserCode?: string }).uniqueUserCode;
 
@@ -36,10 +40,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         token.uniqueUserCode = uniqueCode;
       }
-
-      // REMOVED: The database check for prisma.userDetails.findUnique
-      // and the assignment of token.hasDetails
-
       return token;
     },
 
@@ -48,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.uniqueUserCode = token.uniqueUserCode as string;
-        // REMOVED: session.user.hasDetails
+        session.user.hasDetails = token.hasDetails as boolean;
       }
 
       return session;

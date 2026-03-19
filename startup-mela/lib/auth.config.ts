@@ -6,7 +6,7 @@ declare module "next-auth" {
     id?: string;
     role?: string;
     uniqueUserCode?: string;
-    // REMOVED: hasDetails
+    hasDetails?: boolean;
   }
 
   interface Session {
@@ -14,7 +14,7 @@ declare module "next-auth" {
       id: string;
       role: string;
       uniqueUserCode?: string;
-      // REMOVED: hasDetails
+      hasDetails: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -36,8 +36,6 @@ export const authConfig = {
       if (!isLoggedIn) {
         return isPublicRoute;
       }
-
-      // Logic for logged-in users
       if (isLoggedIn && (pathname === "/" || pathname === "/signup")) {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }

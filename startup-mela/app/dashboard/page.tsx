@@ -5,14 +5,27 @@ import Button from "@/components/button";
 import Pass from "@/components/pass";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Dashboard() {
-  const { data: session } = useSession();
+  const { data: session ,status} = useSession();
+  const router = useRouter();
+
+useEffect(() => {
+    // Wait for the session to finish loading before checking details
+    if (status === "authenticated") {
+      if (!session?.user?.hasDetails) {
+        router.push("/complete-profile");
+      }
+    } else if (status === "unauthenticated") {
+      router.push("/signup");
+    }
+  }, [session, status, router]);
 
   return (
     <div className="bg-[#171716] min-h-screen w-full text-white overflow-x-hidden">
       <header className="flex items-center justify-between px-10 py-6 border-b border-white/5">
-        {/* Welcome Message */}
         <div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Welcome, {session?.user?.name || "Innovator"}!
@@ -34,8 +47,6 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-10">
-          
-          {/* Left Side: Available Passes (Takes up 2/3 of space) */}
           <section className="lg:col-span-2 space-y-8">
             <h2 className="text-xl font-semibold border-l-4 border-yellow-500 pl-4">
               Available Passes
@@ -44,8 +55,6 @@ export default function Dashboard() {
               <Pass />
             </div>
           </section>
-
-          {/* Right Side: Purchase Details (Takes up 1/3 of space) */}
           <aside className="space-y-8">
             <h2 className="text-xl font-semibold border-l-4 border-purple-500 pl-4">
               Your Subscriptions
