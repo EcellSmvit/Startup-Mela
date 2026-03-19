@@ -10,13 +10,12 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  primary: "bg-[#6D4DFE] text-[#ececec]",
+  primary: "bg-[#014E87] text-white",
   secondary: "border-[#ffffff] border text-[#ececec]",
   warning: "bg-red-500 text-[#ececec]",
 };
 
-const defaultStyle =
-  "font-semibold px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer inline-block";
+const defaultStyle = "font-semibold px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer inline-block";
 
 export default function Button({
   variant,
