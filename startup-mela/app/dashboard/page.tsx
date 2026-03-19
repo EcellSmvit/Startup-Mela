@@ -13,15 +13,24 @@ export default function Dashboard() {
   const router = useRouter();
 
 useEffect(() => {
-    // Wait for the session to finish loading before checking details
-    if (status === "authenticated") {
-      if (!session?.user?.hasDetails) {
-        router.push("/complete-profile");
-      }
-    } else if (status === "unauthenticated") {
-      router.push("/signup");
+  if (status === "loading") return;
+
+  if (status === "unauthenticated") {
+    router.push("/signup");
+    return;
+  }
+
+  const checkDetails = async () => {
+    const res = await fetch("/api/details/check");
+    const data = await res.json();
+
+    if (!data.hasDetails) {
+      router.push("/complete-profile");
     }
-  }, [session, status, router]);
+  };
+
+  checkDetails();
+}, [status]);
 
   return (
     <div className="bg-[#171716] min-h-screen w-full text-white overflow-x-hidden">
