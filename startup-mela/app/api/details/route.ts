@@ -15,7 +15,12 @@ export async function POST(req: Request) {
       where: { userId: session.user.id }
     });
 
-    if (existing) return new NextResponse("Details already set", { status: 400 });
+   if (existing) {
+  return NextResponse.json(
+    { error: "Details already set" }, 
+    { status: 400 }
+  ); 
+}
 
     await prisma.userDetails.create({
       data: {
