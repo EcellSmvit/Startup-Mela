@@ -3,6 +3,7 @@
 import AdminButton from "@/components/adminButton";
 import Button from "@/components/button";
 import Pass from "@/components/pass";
+import ProfileCard from "@/components/profileCard";
 import PurchaseInfo from "@/components/purchaseDetails";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -36,7 +37,7 @@ useEffect(() => {
     <div className="bg-[#171716] min-h-screen w-full text-white overflow-x-hidden">
       <header className="flex items-center justify-between px-10 py-6 border-b border-white/5">
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold text-white">
             Welcome, {session?.user?.name || "Innovator"}!
           </h1>
           <p className="text-gray-400 text-sm font-mono mt-1">
@@ -55,9 +56,12 @@ useEffect(() => {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        <div>
+          <ProfileCard/>
+        </div>
         <div className="grid lg:grid-cols-3 gap-10">
           <section className="lg:col-span-2 space-y-8">
-            <h2 className="text-xl font-semibold border-l-4 border-yellow-500 pl-4">
+            <h2 className="text-xl font-semibold border-l-4 border-[#014E87] pl-4">
               Available Passes
             </h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">

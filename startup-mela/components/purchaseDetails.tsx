@@ -49,31 +49,27 @@ export default function PurchaseInfo() {
           key={item.uniqueCode}
           className="
           relative w-[320px] rounded-2xl p-[1px]
-          bg-gradient-to-br from-yellow-500/30 via-purple-500/20 to-transparent
-          hover:from-yellow-400/50 hover:via-purple-500/40
-          transition-all duration-300
+          bg-[#014E87] to-transparent
+          
         "
         >
-          {/* Glass Card */}
           <div
             className="
             bg-[#111111]/80 backdrop-blur-xl rounded-2xl p-6
             border border-white/10
-            hover:shadow-[0_10px_40px_rgba(255,215,0,0.15)]
-            transition-all duration-300 hover:-translate-y-1
+            
           "
           >
-            {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <div className="text-xs text-gray-400 uppercase tracking-wider">
                 Pass Code
               </div>
-              <div className="text-[10px] bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded-full">
+              <div className="text-[10px] bg-yellow-400/10 text-green-500 px-2 py-1 rounded-full">
                 ACTIVE
               </div>
             </div>
 
-            <div className="text-lg font-semibold text-yellow-400 mb-3 tracking-wide">
+            <div className="text-lg font-bold text-white mb-3 tracking-wide">
               {item.uniqueCode}
             </div>
 
@@ -85,7 +81,7 @@ export default function PurchaseInfo() {
               <span className="text-xl font-bold text-white">
                 {item.pass.title}
               </span>
-              <span className="text-[#6D4DFE] font-semibold text-lg">
+              <span className="text-white font-semibold text-lg">
                 ₹{item.pass.price}
               </span>
             </div>
@@ -116,9 +112,7 @@ export default function PurchaseInfo() {
                           {tm.uniqueUserCode}
                         </div>
                       </div>
-
-                      {/* Avatar Circle */}
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-purple-500 flex items-center justify-center text-black text-xs font-bold">
+                      <div className="w-8 h-8 rounded-full bg-[#014E87] flex items-center justify-center text-black text-xs font-bold">
                         {tm.name?.charAt(0) || "U"}
                       </div>
                     </div>
