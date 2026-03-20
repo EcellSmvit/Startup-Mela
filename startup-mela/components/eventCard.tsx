@@ -1,46 +1,55 @@
+"use client";
+
 interface CardProps {
   eventType: string;
-  eventName: string;
   eventDetails: string;
-  buttonText: string;
-  eventCat: string;
 }
 
 export default function Eventcard({
   eventType,
-  eventName,
   eventDetails,
-  buttonText,
-  eventCat,
 }: CardProps) {
   return (
-
-    
-    <div className="group relative w-full max-w-sm">
-      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 blur-xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
-
-      <div className="relative h-full rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 p-6 flex flex-col justify-between overflow-hidden transition-all duration-300 group-hover:scale-[1.04] group-hover:border-[#014E87]/40">
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent opacity-70"></div>
-        <span className="text-xs font-semibold text-[#014E87] bg-[#014E87]/10 px-3 py-1 rounded-full w-fit border border-[#014E87]/20 tracking-wide">
-          {eventType}
-        </span>
-        <h2 className="mt-4 text-xl font-bold text-white leading-snug transition group-hover:text-[#014E87]">
-          {eventName}
-        </h2>
-        <p className="mt-2 text-sm text-gray-400 leading-relaxed line-clamp-3">
-          {eventDetails}
-        </p>
-        <div className="mt-6 flex items-center justify-between">
-          <button className="relative overflow-hidden text-sm font-medium text-white px-5 py-2 rounded-lg bg-[#014E87] transition-all duration-300 hover:bg-[#0163aa] shadow-md hover:shadow-[#014E87]/40">
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition duration-700"></span>
-            
-            <span className="relative z-10">{buttonText}</span>
-          </button>
-          <span className="text-xs text-gray-500 group-hover:text-[#014E87] transition">
-            {eventCat}
+    <div className="group relative w-full max-w-sm h-[420px] rounded-2xl overflow-hidden z-20">
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-black/90 to-[#014E87]/20" />
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
+      <div className="relative h-full rounded-2xl bg-black/60 backdrop-blur-2xl border border-white/10 p-6 flex flex-col justify-between overflow-hidden transition-all duration-300 group-hover:scale-[1.04] group-hover:border-[#014E87]/40">
+        <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:18px_18px]"></div>
+        <div className="absolute top-5 left-1/2 -translate-x-1/2 z-10">
+          <span className="px-4 py-1 text-[10px] tracking-widest border border-white/30 text-white/80 backdrop-blur-md">
+            {eventType.toUpperCase()}
           </span>
         </div>
-        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 rotate-90">
+          <p className="text-[10px] tracking-[0.4em] text-white/30">
+            STARTUPMELA
+          </p>
+        </div>
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2">
+          <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+          <div className="w-1 h-1 bg-white/70 rounded-full"></div>
+          <div className="w-1 h-1 bg-white/20 rounded-full"></div>
+        </div>
+        <div className="flex flex-col gap-3 relative z-10 mt-auto">
+
+          <h2 className="text-xl font-semibold text-white tracking-wide">
+            {eventType}
+          </h2>
+
+          <p className="text-sm text-white/70 leading-relaxed line-clamp-3">
+            {eventDetails}
+          </p>
+
+          <button className="mt-4 px-4 py-2 border text-white border-white/30 text-xs tracking-wider hover:bg-white hover:text-black transition w-fit">
+            EXPLORE NOW
+          </button>
+        </div>
+
+        {/* ✨ Top Line */}
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent opacity-80"></div>
+
+        {/* ✨ Bottom Line */}
+        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87]/70 to-transparent opacity-60"></div>
       </div>
     </div>
   );

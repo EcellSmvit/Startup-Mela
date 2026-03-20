@@ -7,8 +7,8 @@ export default function EventHighlights() {
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, #d1d5db 1px, transparent 1px),
-            linear-gradient(to bottom, #d1d5db 1px, transparent 1px)
+            linear-gradient(to right, #dadada 0.5px, transparent 0.5px),
+            linear-gradient(to bottom, #dadada 0.5px, transparent 0.5px)
           `,
           backgroundSize: "32px 32px",
           WebkitMaskImage:
@@ -18,7 +18,7 @@ export default function EventHighlights() {
         }}
       />
       <div className="relative z-10 flex justify-center pt-10">
-        <span className="font-black text-4xl uppercase bg-[#014E87] px-4 py-2 text-white rounded-md shadow-lg">
+        <span className="font-black text-4xl uppercase bg-[#014E87] px-4 py-2 text-white">
           Event Highlights
         </span>
       </div>
@@ -27,37 +27,32 @@ export default function EventHighlights() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
           
           <Eventcard
-            eventType="Competition"
-            eventName="Live Pitch Competition"
-            eventDetails="Pitch to a jury of real investors across structured rounds."
-            buttonText="Register"
-            eventCat="Startup Event"
+            eventType="Competitions"
+            eventDetails="Four business competitions across strategy, consulting, investment and live auctions. Rs. 80,000 in prize money across all events."
           />
 
           <Eventcard
-            eventType="Exhibition"
-            eventName="Startup Exhibition Stalls"
-            eventDetails="Showcase your product to students, mentors, and VCs all day."
-            buttonText="Register"
-            eventCat="Startup Event"
+            eventType="Startup Exhibition"
+            eventDetails="Startups from across the city exhibiting on campus across both days. Meet founders, explore products and find opportunities you would not find in a classroom"
           />
 
           <Eventcard
-            eventType="VC Meet"
-            eventName="Invite-Only VC Meet"
+            eventType="Investor and Mentor"
             eventDetails="A closed-door session connecting startups directly with investors."
-            buttonText="Register"
-            eventCat="Startup Event"
           />
 
           <Eventcard
             eventType="Speaker Sessions"
-            eventName="Speaker Sessions"
-            eventDetails="Two parallel sessions per day on fundraising, product, and growth."
-            buttonText="Register"
-            eventCat="Startup Event"
+            eventDetails="Sessions by founders and industry leaders covering what actually matters when building a startup."
           />
-
+          <Eventcard
+            eventType="Panel Discussions"
+            eventDetails="Open-format panels with mentors and founders, followed by live audience Q&A."
+          />
+          <Eventcard
+            eventType="Startup Ecosystem Access"
+            eventDetails="Two days of direct access to the people, ideas and conversations that do not happen inside a college campus."
+          />
         </div>
       </div>
     </div>

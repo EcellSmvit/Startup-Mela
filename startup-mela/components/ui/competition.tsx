@@ -1,43 +1,49 @@
+import PremiumEventCard from "../PremiumEventCard";
+
 export default function Competition() {
   return (
-    <div className="w-auto h-screen bg-black">
-            <div className="w-full max-w-sm rounded-2xl overflow-hidden bg-black/70 backdrop-blur-xl border border-white/10 shadow-lg hover:scale-[1.02] transition duration-300">
-      <div className="h-48 w-full overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1559526324-593bc073d938"
-          alt="Startup Survival Game"
-          className="w-full h-full object-cover"
+    <div className="w-full min-h-screen bg-black flex flex-col items-center px-6 py-12 gap-10">
+      <span className="font-black text-4xl uppercase bg-[#014E87] px-6 py-3 text-white">
+        Competition
+      </span>
+
+      <div className="w-full max-w-7xl flex flex-wrap justify-center gap-8">
+        <PremiumEventCard
+          title="Startup Survival Game"
+          description="Run a startup. Face a crisis. Survive."
+          category="Competitions"
+          type="Technical"
+          phase="Rs 22,000"
+          image="https://images.unsplash.com/photo-1581092335397-9583eb92d232"
+        />
+
+        <PremiumEventCard
+          title="REBOOTX"
+          description="A failed business. A second chance. Your strategy"
+          category="Competitions"
+          type="Technical"
+          phase="Rs 22,000"
+          image="https://plus.unsplash.com/premium_photo-1675432656807-216d786dd468?w=600&auto=format&fit=crop&q=60"
+        />
+
+        <PremiumEventCard
+          title="The Investor's Dilemma"
+          description="Rs. 100 Crore to invest. Every rupee must earn its place."
+          category="Competitions"
+          type="Technical"
+          phase="Rs 22,000"
+          image="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&auto=format&fit=crop&q=60"
+        />
+
+        <PremiumEventCard
+          title="IPL Auction"
+          description="Bid smart. Build the strongest portfolio in the room."
+          category="Competitions"
+          type="Technical"
+          phase="Rs 14,000"
+          image="https://images.unsplash.com/photo-1565787154274-c8d076ad34e7?w=600&auto=format&fit=crop&q=60"
         />
       </div>
-
-      {/* Content Section */}
-      <div className="p-5 flex flex-col justify-between">
-
-        <span className="text-xs font-semibold text-indigo-300 bg-indigo-500/10 px-3 py-1 rounded-full w-fit">
-          Competition
-        </span>
-
-        <h2 className="mt-3 text-xl font-bold text-white leading-tight">
-          Startup Survival Game
-        </h2>
-
-        <p className="mt-2 text-sm text-gray-400">
-          Run a startup. Face unexpected crises. Make decisions under pressure and survive the chaos.
-        </p>
-
-        <div className="mt-5 flex items-center justify-between">
-          <button className="text-sm font-medium text-white bg-[#6D4DFE] hover:bg-indigo-500 transition px-4 py-2 rounded-lg">
-            Register
-          </button>
-
-          <span className="text-xs text-gray-500">
-            High Intensity
-          </span>
-        </div>
-
-      </div>
     </div>
-    </div>
-
   );
 }

@@ -27,22 +27,20 @@ export default function Herosection() {
         />
         <Button variant="primary" text="Register" link="/signup" />
       </div>
-
-      {/* 🔥 Content */}
-      <div className="relative z-30 flex items-center justify-center w-full h-screen flex-col gap-4 text-center px-4 pointer-events-none">
+      <div className="relative z-30 flex items-center justify-center w-full h-screen flex-col gap-6 text-center px-4 pointer-events-none">
         
-        <h1 className="text-5xl md:text-8xl font-black uppercase flex flex-wrap justify-center leading-tight">
-          <span className="text-white">Pitch.&nbsp;</span>
-          <span className="text-[#014E87]">Validate.&nbsp;</span>
-          <span className="text-white">Connect.</span>
+        <h1 className="text-5xl md:text-7xl font-black uppercase flex flex-wrap justify-center leading-tight">
+          <span className="text-white">Innovate.&nbsp;</span>
+          <span className="text-[#014E87]">Connect.&nbsp;</span>
+          <span className="text-white">Elevate.</span>
         </h1>
-        <p className="text-white font-bold">SMVIT biggest student startup event - 2 days of competitions, VC meets, speaker sessions, and real startup exposure</p>
+        <p className="text-white font-bold">SMVIT’s biggest startup event - 2 days of competitions, mentor/investor meets, speaker sessions and startup exposure.</p>
         <div className="relative z-20 pointer-events-auto flex items-center justify-center gap-4">
-          <Button variant="primary" text="Register" link="/signup" />
-          <Button variant="secondary" text="Explore" link="/signup" />
+          <Button variant="primary" text="Register Now" link="/signup" />
+          <Button variant="secondary" text="View Competitions" link="/signup" />
         </div>
-        <h2 className="text-white uppercase font-bold text-sm md:text-xl bg-[#014E87] p-2">
-          10-11 April | Sir M. Visvesvaraya Institute of Technology | Offline
+        <h2 className="text-white uppercase font-semibold text-sm md:text-xl bg-[#014E87] p-2">
+          2 Days  |  4 Competitions  |  Rs. 80,000 in Prizes  |  Open to All Colleges
         </h2>
 
       </div>
