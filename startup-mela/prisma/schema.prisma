@@ -8,82 +8,83 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String            @id @default(cuid())
   name            String?
-  email           String    @unique
+  email           String            @unique
   emailVerified   DateTime? 
   image           String?
-  role            Role      @default(USER)
-  uniqueUserCode  String?   @unique
+  role            Role              @default(USER)
+  uniqueUserCode  String?           @unique
   accounts        Account[]
   sessions        Session[]
-  purchases       Purchase[]  @relation("Buyer")
-  createdAt       DateTime  @default(now())     
+  purchases       Purchase[]        @relation("Buyer")
+  createdAt       DateTime          @default(now())     
   userDetails     UserDetails?
-  teammateAt       Purchase[] @relation("Teammates")
+  teammateAt      Purchase[]        @relation("Teammates")
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+  id           String     @id @default(cuid())
+  sessionToken String     @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserDetails {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   usn          String
   mobileNumber String
-  isSmvit      Boolean  @default(true)
+  isSmvit      Boolean    @default(true)
   collegeName  String   
   year         String
-  userId       String @unique
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String     @unique
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
-  id        String @id @default(cuid())
-  userId    String
-  type      String
-  provider  String
-  providerAccountId String
-  refresh_token  String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String    @id @default(cuid())
+  userId                String
+  type                  String
+  provider              String
+  providerAccountId     String
+  refresh_token         String?   @db.Text
+  access_token          String?   @db.Text
+  expires_at            Int?
+  token_type            String?
+  scope                 String?
+  id_token              String?   @db.Text
+  session_state         String?
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
 
 
 model Pass {
-  id          String   @id @default(cuid())
+  id          String            @id @default(cuid())
   title       String
   description String
   price       Int
   limit       Int
   teamSize    Int
-  sold        Int      @default(0)
+  sold        Int               @default(0)
+  forSmvit    Boolean           @default(true)
   purchases   Purchase[]
-  createdAt   DateTime @default(now())
+  createdAt   DateTime          @default(now())
 }
 
 model Purchase{
-  id              String  @id @default(cuid())
+  id              String            @id @default(cuid())
   userId          String
   passId          String
-  uniqueCode      String  @unique
+  uniqueCode      String            @unique
   referredBy      String?
-  purchaseStatus  PurchaseStatus  @default(PENDING)
-  verified        Boolean @default(false)
-  user            User           @relation("Buyer", fields: [userId], references: [id])
-  pass            Pass    @relation(fields: [passId],references: [id])
-  createdAt       DateTime @default(now())
-  teammates       User[]         @relation("Teammates")
+  purchaseStatus  PurchaseStatus    @default(PENDING)
+  verified        Boolean           @default(false)
+  user            User              @relation("Buyer", fields: [userId], references: [id])
+  pass            Pass              @relation(fields: [passId],references: [id])
+  createdAt       DateTime          @default(now())
+  teammates       User[]            @relation("Teammates")
 }
 
 enum Role{

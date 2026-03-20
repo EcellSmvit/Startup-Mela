@@ -2,8 +2,21 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
 export async function GET(){
-    const passes = await prisma.pass.findMany()
-    return Response.json(passes)
+    const session = await auth();
+    if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+    const userDetails = await prisma.userDetails.findUnique({
+        where: { userId: session.user.id }
+    });
+    if (!userDetails) return Response.json([]);
+
+
+const passes = await prisma.pass.findMany({
+        where: {
+            forSmvit: userDetails.isSmvit
+        }
+    });
+    
+    return Response.json(passes);
 }
 
 
@@ -14,10 +27,10 @@ export async function POST(req:Request){
         return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    const {title,description,price,limit} = await req.json()
+    const {title,description,price,limit,forSmvit} = await req.json()
 
     const pass = await prisma.pass.create({
-        data:{title,description,price,limit,teamSize:1}
+        data:{title,description,price,limit,teamSize:1,forSmvit}
     })
 
     return Response.json(pass)

@@ -11,7 +11,8 @@ export default function Createpass(){
         description:"",
         price:0,
         limit:0,
-        teamSize:1
+        teamSize:1,
+        forSmvit: true
     });
 
     const [error , setError] = useState("");
@@ -167,7 +168,19 @@ export default function Createpass(){
                             Maximum number of passes available
                         </p>
                     </div>
-
+                            <div>
+            <label className="flex items-center gap-2 mb-4 cursor-pointer">
+                <input 
+                    type="checkbox"
+                    className="w-4 h-4 rounded border-gray-300"
+                    checked={formData.forSmvit}
+                    onChange={(e) => setFormData({...formData, forSmvit: e.target.checked})}
+                />
+                <span className="text-sm text-gray-300">
+                    This pass is for SMVIT students only
+                </span>
+            </label>
+        </div>
                     <button
                         type="submit"
                         disabled={loading}
