@@ -5,43 +5,48 @@ import Button from "../button";
 export default function Herosection() {
   return (
     <div className="w-full h-screen bg-black relative overflow-hidden">
-      
-      {/* 🔥 Background Pattern */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
-          `,
-          backgroundSize: "40px 40px",
-        }}
-      />
-      <div className="absolute z-20 flex items-center justify-between w-full p-4">
-        <img
-        className="w-[12vw] "
-        src="https://ik.imagekit.io/es6xialea/Logo.svg"
-        alt=""
-      />
-      <Button
-      variant="primary"
-      text="Register"
-      link="/signup"
-      />
+      <div className="absolute inset-0 z-0 grid grid-cols-40 grid-rows-24">
+        {[...Array(1000)].map((_, i) => (
+          <div
+            key={i}
+            className="
+              border border-white/5
+              bg-transparent
+              hover:bg-[#014E87]/40
+              
+              transition-all duration-300
+            "
+          />
+        ))}
       </div>
-      
+      <div className="absolute z-20 flex items-center justify-between w-full p-4 pointer-events-auto">
+        <img
+          className="w-[12vw]"
+          src="https://ik.imagekit.io/es6xialea/Logo.svg"
+          alt="logo"
+        />
+        <Button variant="primary" text="Register" link="/signup" />
+      </div>
 
-      <div className="relative z-10 flex items-center pl-4 justify-center w-full h-screen flex-col gap-4">
-        <h1 className="text-8xl font-black uppercase flex flex-row">
-          <span className="text-white">Pitch.</span>
-          <span className="text-[#014E87]">Validate.</span>
+      {/* 🔥 Content */}
+      <div className="relative z-30 flex items-center justify-center w-full h-screen flex-col gap-4 text-center px-4 pointer-events-none">
+        
+        <h1 className="text-5xl md:text-8xl font-black uppercase flex flex-wrap justify-center leading-tight">
+          <span className="text-white">Pitch.&nbsp;</span>
+          <span className="text-[#014E87]">Validate.&nbsp;</span>
           <span className="text-white">Connect.</span>
         </h1>
-        <div>
-
+        <p className="text-white font-bold">SMVIT biggest student startup event - 2 days of competitions, VC meets, speaker sessions, and real startup exposure</p>
+        <div className="relative z-20 pointer-events-auto flex items-center justify-center gap-4">
+          <Button variant="primary" text="Register" link="/signup" />
+          <Button variant="secondary" text="Explore" link="/signup" />
         </div>
+        <h2 className="text-white uppercase font-bold text-sm md:text-xl bg-[#014E87] p-2">
+          10-11 April | Sir M. Visvesvaraya Institute of Technology | Offline
+        </h2>
+
       </div>
-        
+
     </div>
   );
 }
