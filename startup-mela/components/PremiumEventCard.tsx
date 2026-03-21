@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 interface EventCardProps {
   title: string;
   description: string;
@@ -7,6 +7,7 @@ interface EventCardProps {
   type: string;
   phase: string;
   image: string;
+  link: string;
 }
 
 export default function PremiumEventCard({
@@ -16,7 +17,9 @@ export default function PremiumEventCard({
   type,
   phase,
   image,
+  link,
 }: EventCardProps) {
+  const router = useRouter();
   return (
     <div className="relative w-[350px] h-[500px] rounded-2xl overflow-hidden group">
       <img
@@ -59,7 +62,7 @@ export default function PremiumEventCard({
             </p>
           </div>
 
-          <button className="px-5 py-2 border border-white/30 text-sm tracking-wide hover:bg-white hover:text-black transition">
+          <button onClick={() => router.push(link)} className="px-5 py-2 border border-white/30 text-sm tracking-wide hover:bg-white hover:text-black transition">
             EXPLORE NOW
           </button>
         </div>
