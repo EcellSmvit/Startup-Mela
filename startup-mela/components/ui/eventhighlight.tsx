@@ -7,8 +7,8 @@ export default function EventHighlights() {
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, #dadada 0.5px, transparent 0.5px),
-            linear-gradient(to bottom, #dadada 0.5px, transparent 0.5px)
+            linear-gradient(to right, rgba(1, 78, 135, 0.4) 0.5px, transparent 0.5px),
+            linear-gradient(to bottom, rgba(1, 78, 135, 0.4) 0.5px, transparent 0.5px)
           `,
           backgroundSize: "32px 32px",
           WebkitMaskImage:
