@@ -41,7 +41,7 @@ export default function Verify(){
     }
 
     return(
-        <div className="w-screen h-screen bg-[#1f1f1f] text-[#ececec] flex items-center justify-center p-6">
+        <div className="w-full h-screen bg-black text-[#ececec] flex items-center justify-center p-6">
 
             <div className="w-full max-w-xl bg-[#262626] rounded-3xl p-10 shadow-xl border border-[#333]">
                 <div className="text-center mb-10">

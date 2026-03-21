@@ -34,7 +34,7 @@ useEffect(() => {
 }, [status]);
 
   return (
-    <div className="bg-[#171716] min-h-screen w-full text-white overflow-x-hidden">
+    <div className="bg-black min-h-screen w-full text-white overflow-x-hidden">
       <header className="flex items-center justify-between px-10 py-6 border-b border-white/5">
         <div>
           <h1 className="text-2xl font-bold text-white">

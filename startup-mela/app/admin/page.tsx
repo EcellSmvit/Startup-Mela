@@ -54,7 +54,7 @@ export default function AdminPages() {
     }
 
     return (
-        <div className="min-h-screen min-w-screen bg-[#171716] text-[#ececec] p-8">
+        <div className="min-h-screen min-w-full bg-black text-[#ececec] p-8">
             <div className="flex items-center justify-between mb-10">
                 <h1 className="text-3xl font-bold tracking-wide">Admin Dashboard</h1>
                 <div className="flex items-center gap-4">
