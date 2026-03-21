@@ -44,7 +44,7 @@ export default function PremiumEventCard({
         <div className="w-1 h-1 bg-white/60 rounded-full"></div>
         <div className="w-1 h-1 bg-white/20 rounded-full"></div>
       </div>
-      <div className="absolute bottom-0 p-6 text-white pointer-events-none">
+      <div className="absolute bottom-0 p-6 text-white">
         
         <h2 className="text-2xl font-semibold tracking-wide">
           {title}
