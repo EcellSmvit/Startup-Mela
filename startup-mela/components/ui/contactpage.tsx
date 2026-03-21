@@ -32,8 +32,8 @@ export default function ContactPage() {
               </h3>
 
               {[
-                { role: "Events Head", name: "—", contact: "—" },
-                { role: "Corporate Relations / Startups Head", name: "—", contact: "—" },
+                { role: "Events Head", name: "Bhoomi", contact: "9008708350" },
+                { role: "Corporate Relations / Startups Head", name: "Satvik Gupta", contact: "7338620007" },
                 { role: "Technical Head", name: "Bikesh Kumar", contact: "7903897660" },
               ].map((item, i) => (
                 <div key={i} className="flex justify-between text-sm text-white/70">
