@@ -26,7 +26,7 @@ export default function InviteTeammate({
   const isComplete = codes.every((code) => code.length > 0);
   if (requiredTeammates === 0) {
     return (
-      <div className="relative rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 text-center shadow-[0_0_30px_rgba(1,78,135,0.1)]">
+      <div className="relative rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 text-center shadow-[0_0_30px_rgba(1,78,135,0.1)] z-20">
         <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 blur-xl opacity-40"></div>
 
         <p className="text-white text-lg font-medium mb-4">
@@ -46,7 +46,7 @@ export default function InviteTeammate({
 
   return (
     <div className="relative flex flex-col gap-5 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 shadow-[0_0_30px_rgba(1,78,135,0.1)]">
-      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 blur-xl opacity-40"></div>
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 blur-xl opacity-40 pointer-events-none"></div>
       <div className="flex justify-between items-center">
         <h3 className="text-white font-semibold tracking-wide">
           Add Teammates
