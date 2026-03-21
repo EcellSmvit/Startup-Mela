@@ -27,24 +27,24 @@ export default function PremiumEventCard({
         alt={title}
         className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-125 transition duration-700 pointer-events-none"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
-      <div className="absolute inset-0 rounded-2xl border border-white/10 " />
-      <div className="absolute top-5 left-1/2 -translate-x-1/2">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90 pointer-events-none" />
+      <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none " />
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 pointer-events-none">
         <span className="px-4 py-1 text-xs tracking-widest border border-white/30 text-white/80 backdrop-blur-md">
           {category.toUpperCase()}
         </span>
       </div>
-      <div className="absolute right-3 top-1/2 -translate-y-1/2 rotate-90">
+      <div className="absolute right-3 top-1/2 -translate-y-1/2 rotate-90 pointer-events-none">
         <p className="text-xs tracking-[0.4em] text-white/40">
           {type.toUpperCase()}
         </p>
       </div>
-      <div className="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2">
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 pointer-events-none">
         <div className="w-1 h-1 bg-white/40 rounded-full"></div>
         <div className="w-1 h-1 bg-white/60 rounded-full"></div>
         <div className="w-1 h-1 bg-white/20 rounded-full"></div>
       </div>
-      <div className="absolute bottom-0 p-6 text-white">
+      <div className="absolute bottom-0 p-6 text-white pointer-events-none">
         
         <h2 className="text-2xl font-semibold tracking-wide">
           {title}
@@ -67,7 +67,7 @@ export default function PremiumEventCard({
           </button>
         </div>
       </div>
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 border border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.1)]" />
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 border border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.1)] pointer-events-none" />
     </div>
   );
 }
