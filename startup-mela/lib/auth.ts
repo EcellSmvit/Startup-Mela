@@ -19,19 +19,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   callbacks: {
     async jwt({ token, user, trigger }) {
-      // 🔹 On first login
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: string }).role || "USER";
-
-        // Check details
         const details = await prisma.userDetails.findUnique({
           where: { userId: user.id },
         });
 
         token.hasDetails = !!details;
-
-        // Unique code generation
         let uniqueCode = (user as { uniqueUserCode?: string }).uniqueUserCode;
 
         if (!uniqueCode) {
@@ -45,8 +40,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         token.uniqueUserCode = uniqueCode;
       }
-
-      // 🔥 IMPORTANT: Runs after update()
       if (trigger === "update") {
         const details = await prisma.userDetails.findUnique({
           where: { userId: token.id as string },
