@@ -31,7 +31,12 @@ export const authConfig = {
 
       const isPublicRoute =
         pathname === "/" ||
-        pathname === "/signup";
+        pathname === "/signup" ||
+        pathname === "/competition/StartupSurvival"||
+        pathname === "/competition/InvestorDilemma"||
+        pathname === "/competition/IPLAuction"||
+        pathname === "/competition/Rebootx"||
+        pathname === "/competition/eventschedule";
 
       if (!isLoggedIn) {
         return isPublicRoute;
