@@ -25,7 +25,7 @@ export default function PremiumEventCard({
       <img
         src={image}
         alt={title}
-        className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-125 transition duration-700"
+        className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-125 transition duration-700 pointer-events-none"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
       <div className="absolute inset-0 rounded-2xl border border-white/10 " />
