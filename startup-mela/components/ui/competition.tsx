@@ -43,6 +43,14 @@ export default function Competition() {
           phase="Rs 14,000"
           image="https://images.unsplash.com/photo-1565787154274-c8d076ad34e7?w=600&auto=format&fit=crop&q=60"
         />
+        <PremiumEventCard
+          title="IPL Auction"
+          description="Bid smart. Build the strongest portfolio in the room."
+          category="Speaker Session"
+          type="Technical"
+          phase="Rs 14,000"
+          image="https://images.unsplash.com/photo-1565787154274-c8d076ad34e7?w=600&auto=format&fit=crop&q=60"
+        />
       </div>
     </div>
   );
