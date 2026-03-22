@@ -1,15 +1,16 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { 
-  Rocket, 
-  GraduationCap, 
-  Phone, 
-  School, 
-  Calendar, 
+import {
+  Rocket,
+  GraduationCap,
+  Phone,
+  School,
+  Calendar,
   AlertCircle,
-  Loader2 
+  Loader2,
 } from "lucide-react";
 
 export default function CompleteProfile() {
@@ -21,13 +22,12 @@ export default function CompleteProfile() {
     mobile: "",
     isSmvit: "true",
     otherCollege: "",
-    year: ""
+    year: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Redirect if details are already present
   useEffect(() => {
     if (status === "authenticated" && session?.user?.hasDetails) {
       router.push("/dashboard");
@@ -36,9 +36,10 @@ export default function CompleteProfile() {
 
   const validateForm = () => {
     if (!formData.usn.trim()) return "USN is required";
-    if (!/^[0-9]{10}$/.test(formData.mobile)) return "Enter a valid 10-digit mobile number";
+    if (!/^[0-9]{10}$/.test(formData.mobile)) return "Enter valid mobile";
     if (!formData.year) return "Select your year";
-    if (formData.isSmvit === "false" && !formData.otherCollege.trim()) return "College name is required";
+    if (formData.isSmvit === "false" && !formData.otherCollege.trim())
+      return "College name is required";
     return "";
   };
 
@@ -47,10 +48,7 @@ export default function CompleteProfile() {
     setError("");
 
     const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
+    if (validationError) return setError(validationError);
 
     try {
       setLoading(true);
@@ -62,22 +60,20 @@ export default function CompleteProfile() {
           usn: formData.usn,
           mobileNumber: formData.mobile,
           isSmvit: formData.isSmvit === "true",
-          collegeName: formData.isSmvit === "true" 
-            ? "Sir M. Visvesvaraya Institute of Technology" 
-            : formData.otherCollege,
-          year: formData.year
+          collegeName:
+            formData.isSmvit === "true"
+              ? "Sir M. Visvesvaraya Institute of Technology"
+              : formData.otherCollege,
+          year: formData.year,
         }),
       });
 
-      const data = await res.json();
+      if (!res.ok) throw new Error("Something went wrong");
 
-      if (!res.ok) {
-        throw new Error(data?.error || "Something went wrong");
-      }
       await update();
       router.push("/dashboard");
     } catch (err) {
-      setError((err as Error).message || "Failed to submit");
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -85,123 +81,135 @@ export default function CompleteProfile() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-yellow-500 animate-spin" />
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#014E87] animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 text-zinc-200 relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-500/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-500/5 blur-[120px] rounded-full" />
+    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-6 text-white">
+
+      {/* 🔲 Grid */}
+      <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:26px_26px]"></div>
+
+      {/* 🔥 Glow */}
+      <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[#014E87]/20 blur-[140px] rounded-full"></div>
 
       <div className="w-full max-w-md relative z-10">
+
+        {/* 🧊 Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-zinc-900/50 border border-zinc-800 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-6"
+          className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-3xl space-y-6 shadow-[0_0_40px_rgba(1,78,135,0.1)]"
         >
+
+          {/* Glow Border */}
+          <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 blur-xl opacity-40 pointer-events-none"></div>
+
+          {/* Header */}
           <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
-              Finish Setup <Rocket className="w-6 h-6 text-yellow-500" />
+            <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
+              Finish Setup <Rocket className="w-6 h-6 text-[#014E87]" />
             </h1>
-            <p className="text-sm text-zinc-500">Provide your details to access the dashboard.</p>
+            <p className="text-sm text-white/50">
+              Complete your profile to continue
+            </p>
           </div>
 
+          {/* Error */}
           {error && (
             <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl text-sm">
               <AlertCircle className="w-4 h-4" /> {error}
             </div>
           )}
 
+          {/* Inputs */}
           <div className="space-y-4">
+
             {/* USN */}
             <div className="relative group">
-              <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 group-focus-within:text-yellow-500 transition-colors" />
+              <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-[#014E87]" />
               <input
                 type="text"
-                placeholder="USN (e.g., 1MV21CS001)"
-                className="w-full pl-11 pr-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all placeholder:text-zinc-600"
-                onChange={(e) => setFormData({ ...formData, usn: e.target.value })}
+                placeholder="USN"
+                className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-[#014E87] outline-none"
+                onChange={(e) =>
+                  setFormData({ ...formData, usn: e.target.value })
+                }
               />
             </div>
 
             {/* Mobile */}
             <div className="relative group">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 group-focus-within:text-yellow-500 transition-colors" />
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-[#014E87]" />
               <input
                 type="tel"
-                placeholder="10-Digit Mobile Number"
-                className="w-full pl-11 pr-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all placeholder:text-zinc-600"
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                placeholder="Mobile Number"
+                className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-[#014E87]"
+                onChange={(e) =>
+                  setFormData({ ...formData, mobile: e.target.value })
+                }
               />
             </div>
 
-            {/* College Toggle */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-zinc-800/50 rounded-xl border border-zinc-700">
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, isSmvit: "true" })}
-                className={`py-2 rounded-lg text-sm font-medium transition-all ${
-                  formData.isSmvit === "true" 
-                  ? "bg-yellow-500 text-black shadow-md" 
-                  : "text-zinc-400 hover:text-white"
-                }`}
-              >
-                SMVIT Student
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, isSmvit: "false" })}
-                className={`py-2 rounded-lg text-sm font-medium transition-all ${
-                  formData.isSmvit === "false" 
-                  ? "bg-yellow-500 text-black shadow-md" 
-                  : "text-zinc-400 hover:text-white"
-                }`}
-              >
-                Other College
-              </button>
+            {/* Toggle */}
+            <div className="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/10">
+              {["true", "false"].map((val, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() =>
+                    setFormData({ ...formData, isSmvit: val })
+                  }
+                  className={`py-2 rounded-lg text-sm ${
+                    formData.isSmvit === val
+                      ? "bg-[#014E87] text-white"
+                      : "text-white/50"
+                  }`}
+                >
+                  {val === "true" ? "SMVIT" : "Other"}
+                </button>
+              ))}
             </div>
 
-            {/* Other College Input */}
+            {/* Other College */}
             {formData.isSmvit === "false" && (
-              <div className="relative group animate-in slide-in-from-top-2 duration-200">
-                <School className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 group-focus-within:text-yellow-500" />
-                <input
-                  type="text"
-                  placeholder="Enter College Name"
-                  className="w-full pl-11 pr-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all placeholder:text-zinc-600"
-                  onChange={(e) => setFormData({ ...formData, otherCollege: e.target.value })}
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="College Name"
+                className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-[#014E87]"
+                onChange={(e) =>
+                  setFormData({ ...formData, otherCollege: e.target.value })
+                }
+              />
             )}
 
-            {/* Year Select */}
-            <div className="relative group">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 group-focus-within:text-yellow-500 pointer-events-none" />
-              <select
-                className="w-full pl-11 pr-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all appearance-none text-zinc-300"
-                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-              >
-                <option value="">Select Academic Year</option>
-                <option value="1">1st Year</option>
-                <option value="2">2nd Year</option>
-                <option value="3">3rd Year</option>
-                <option value="4">4th Year</option>
-              </select>
-            </div>
+            {/* Year */}
+            <select
+              className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-[#014E87]"
+              onChange={(e) =>
+                setFormData({ ...formData, year: e.target.value })
+              }
+            >
+              <option value="">Select Year</option>
+              <option value="1">1st Year</option>
+              <option value="2">2nd Year</option>
+              <option value="3">3rd Year</option>
+              <option value="4">4th Year</option>
+            </select>
           </div>
 
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-yellow-500 hover:bg-yellow-400 disabled:bg-zinc-700 disabled:text-zinc-500 text-black font-bold rounded-xl transition-all transform active:scale-[0.98] shadow-lg shadow-yellow-500/10 flex items-center justify-center gap-2"
+            className="w-full py-4 bg-[#014E87] hover:opacity-90 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Saving Details...
+                Saving...
               </>
             ) : (
               "Save & Continue"

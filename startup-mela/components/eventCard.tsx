@@ -40,15 +40,8 @@ export default function Eventcard({
             {eventDetails}
           </p>
 
-          <button className="mt-4 px-4 py-2 border text-white border-white/30 text-xs tracking-wider hover:bg-white hover:text-black transition w-fit">
-            EXPLORE NOW
-          </button>
         </div>
-
-        {/* ✨ Top Line */}
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent opacity-80"></div>
-
-        {/* ✨ Bottom Line */}
         <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87]/70 to-transparent opacity-60"></div>
       </div>
     </div>
