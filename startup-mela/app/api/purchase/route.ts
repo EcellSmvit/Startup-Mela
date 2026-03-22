@@ -105,10 +105,10 @@ export async function POST(req: Request) {
         }
       }
     })
-    await prisma.pass.update({
-      where: { id: passId },
-      data: { sold: { increment: 1 } }
-    })
+    // await prisma.pass.update({
+    //   where: { id: passId },
+    //   data: { sold: { increment: 1 } }
+    // })
 
     return Response.json({
       orderId:razorpayOrder.id,

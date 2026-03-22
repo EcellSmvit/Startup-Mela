@@ -41,35 +41,50 @@ export default function Pass() {
     fetchPasses();
   }, []);
 
-  const handleFinalPurchase = async (teammateCodes: string[]) => {
-    if (!selectedPass) return;
-    setLoadingId(selectedPass.id);
+const handleFinalPurchase = async (teammateCodes: string[]) => {
+  if (!selectedPass) return;
 
-    try {
-      const res = await fetch("/api/purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          passId: selectedPass.id,
-          teammateCodes,
-          friendCode,
-        }),
-      });
+  setLoadingId(selectedPass.id);
 
-      const orderData = await res.json();
+  try {
+    const res = await fetch("/api/purchase", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        passId: selectedPass.id,
+        teammateCodes,
+        friendCode,
+      }),
+    });
 
-      if (!res.ok) {
-        alert(orderData.error || "Failed to initialize purchase");
-        return;
-      }
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: orderData.amount, 
-        currency: "INR",
-        name: "Startup Mela",
-        description: `Purchase for ${selectedPass.title}`,
-        order_id: orderData.orderId,
-        handler: async function (response: any) {
+    const orderData = await res.json();
+
+    if (!res.ok) {
+      alert(orderData.error || "Failed to initialize purchase");
+      return;
+    }
+    if (typeof window === "undefined") {
+      alert("Window not available");
+      return;
+    }
+    console.log("Razorpay object:", (window as any).Razorpay);
+
+    const Razorpay = (window as any).Razorpay;
+
+    if (!Razorpay) {
+      alert("Razorpay SDK not loaded. Please refresh.");
+      return;
+    }
+    const options = {
+      key: process.env.RAZORPAY_KEY_ID,
+      amount: orderData.amount,
+      currency: "INR",
+      name: "Startup Mela",
+      description: `Purchase for ${selectedPass.title}`,
+      order_id: orderData.orderId,
+
+      handler: async function (response: any) {
+        try {
           const verifyRes = await fetch("/api/purchase/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -81,32 +96,40 @@ export default function Pass() {
             }),
           });
 
+          const verifyData = await verifyRes.json();
+
           if (verifyRes.ok) {
-            alert("Payment Successful! Check your dashboard for details.");
+            alert("✅ Payment Successful!");
             window.location.reload();
           } else {
-            const errorData = await verifyRes.json();
-            alert(errorData.error || "Payment verification failed.");
+            alert(verifyData.error || "Payment verification failed.");
           }
-        },
-        prefill: {
-          name: "",
-          email: "",
-        },
-        theme: {
-          color: "#014E87",
-        },
-      };
+        } catch (err) {
+          console.error("Verification error:", err);
+          alert("Verification failed.");
+        }
+      },
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error("Purchase error:", error);
-      alert("Something went wrong during purchase.");
-    } finally {
-      setLoadingId(null);
-    }
-  };
+      prefill: {
+        name: "",
+        email: "",
+      },
+
+      theme: {
+        color: "#014E87",
+      },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (error) {
+    console.error("Purchase error:", error);
+    alert("Something went wrong during purchase.");
+  } finally {
+    setLoadingId(null);
+  }
+};
 
   if (loading) {
     return (
