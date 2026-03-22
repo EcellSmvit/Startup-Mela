@@ -17,8 +17,6 @@ export async function POST(req: Request) {
     
     const userId = session.user.id
     const { passId, friendCode, teammateCodes } = await req.json()
-
-    // 1. Validate Pass
     const pass = await prisma.pass.findUnique({
       where: { id: passId }
     })
@@ -27,7 +25,7 @@ export async function POST(req: Request) {
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
       const razorpayOrder = await razorpay.orders.create({
-        amount: pass.price*100,
+        amount: Math.round(pass.price * 100),
         currency:"INR",
         receipt:`receipt_${Date.now()}`
       })
