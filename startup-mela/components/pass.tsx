@@ -76,7 +76,7 @@ const handleFinalPurchase = async (teammateCodes: string[]) => {
       return;
     }
     const options = {
-      key: process.env.RAZORPAY_KEY_ID,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: orderData.amount,
       currency: "INR",
       name: "Startup Mela",
