@@ -1,9 +1,14 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import Button from "./button";
 import InviteTeammate from "./InviteTeammate";
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 interface Pass {
   id: string;
   title: string;
@@ -35,7 +40,7 @@ export default function Pass() {
     };
     fetchPasses();
   }, []);
-  
+
   const handleFinalPurchase = async (teammateCodes: string[]) => {
     if (!selectedPass) return;
     setLoadingId(selectedPass.id);
@@ -44,22 +49,59 @@ export default function Pass() {
       const res = await fetch("/api/purchase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          passId: selectedPass.id, 
+        body: JSON.stringify({
+          passId: selectedPass.id,
           teammateCodes,
-          friendCode
+          friendCode,
         }),
       });
 
-      const data = await res.json();
+      const orderData = await res.json();
 
-      if (res.ok) {
-        alert("Purchase successful! Check your dashboard for details.");
-        window.location.reload();
-      } else {
-        alert(data.error || "Purchase Failed");
+      if (!res.ok) {
+        alert(orderData.error || "Failed to initialize purchase");
+        return;
       }
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderData.amount, 
+        currency: "INR",
+        name: "Startup Mela",
+        description: `Purchase for ${selectedPass.title}`,
+        order_id: orderData.orderId,
+        handler: async function (response: any) {
+          const verifyRes = await fetch("/api/purchase/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              purchaseId: orderData.purchaseId,
+            }),
+          });
+
+          if (verifyRes.ok) {
+            alert("Payment Successful! Check your dashboard for details.");
+            window.location.reload();
+          } else {
+            const errorData = await verifyRes.json();
+            alert(errorData.error || "Payment verification failed.");
+          }
+        },
+        prefill: {
+          name: "",
+          email: "",
+        },
+        theme: {
+          color: "#014E87",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
+      console.error("Purchase error:", error);
       alert("Something went wrong during purchase.");
     } finally {
       setLoadingId(null);
@@ -73,25 +115,27 @@ export default function Pass() {
       </div>
     );
   }
+
   if (selectedPass) {
     return (
       <div className="w-full max-w-2xl mx-auto py-10">
-        <button 
+        <button
           onClick={() => setSelectedPass(null)}
           className="text-gray-400 hover:text-white mb-6 flex items-center gap-2 transition-colors"
         >
           ← Back to Passes
         </button>
-        
+
         <div className="bg-[#262626] border border-white/10 rounded-3xl p-8 mb-8">
-        
-          <h2 className="text-xl font-bold text-white mb-2">Checkout: {selectedPass.title}</h2>
+          <h2 className="text-xl font-bold text-white mb-2">
+            Checkout: {selectedPass.title}
+          </h2>
           <p className="text-gray-400 text-sm">Amount: ₹{selectedPass.price}</p>
         </div>
 
-        <InviteTeammate 
-          teamSize={selectedPass.teamSize} 
-          onComplete={handleFinalPurchase} 
+        <InviteTeammate
+          teamSize={selectedPass.teamSize}
+          onComplete={handleFinalPurchase}
         />
       </div>
     );
@@ -123,7 +167,11 @@ export default function Pass() {
 
                   <div className="flex items-center justify-between bg-black/30 px-4 py-3 rounded-xl border border-white/5">
                     <span className="text-gray-400 text-sm">Slots Remaining</span>
-                    <span className={`font-semibold ${soldOut ? "text-red-400" : "text-green-400"}`}>
+                    <span
+                      className={`font-semibold ${
+                        soldOut ? "text-red-400" : "text-green-400"
+                      }`}
+                    >
                       {soldOut ? "Sold Out" : slotsLeft}
                     </span>
                   </div>
@@ -132,13 +180,22 @@ export default function Pass() {
                 <div className="flex items-center justify-between mt-8">
                   <div>
                     <p className="text-gray-500 text-sm">Price</p>
-                    <p className="text-3xl font-bold text-white">₹{pass.price}</p>
+                    <p className="text-3xl font-bold text-white">
+                      ₹{pass.price}
+                    </p>
                   </div>
 
                   <Button
                     variant="primary"
-                    text={soldOut ? "Sold Out" : "Buy Pass"}
-                    onClick={() => setSelectedPass(pass)} 
+                    text={
+                      loadingId === pass.id
+                        ? "Processing..."
+                        : soldOut
+                        ? "Sold Out"
+                        : "Buy Pass"
+                    }
+                    onClick={() => setSelectedPass(pass)}
+                    // disabled={soldOut || loadingId !== null}
                   />
                 </div>
               </div>
