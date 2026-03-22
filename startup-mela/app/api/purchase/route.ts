@@ -131,7 +131,8 @@ export async function GET() {
 
     const purchases = await prisma.purchase.findMany({
       where: {
-        userId: session.user.id
+        userId: session.user.id,
+        purchaseStatus: "COMPLETED",
       },
       include: {
         pass: {

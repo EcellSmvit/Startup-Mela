@@ -120,7 +120,14 @@ const handleFinalPurchase = async (teammateCodes: string[]) => {
       },
     };
 
-    const rzp = new Razorpay(options);
+    const rzp = new window.Razorpay(options);
+    rzp.on("payment.failed", async function(response: any){
+      await fetch("/api/purchase/fail",{
+        method:"POST",
+        body: JSON.stringify({ purchaseId: orderData.purchaseId }),
+      });
+      alert("payment failed: " + response.error.description);
+    })
     rzp.open();
 
   } catch (error) {
