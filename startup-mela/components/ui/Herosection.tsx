@@ -20,8 +20,6 @@ export default function Herosection() {
           />
         ))}
       </div>
-
-      {/* Navbar */}
       <div className="absolute z-20 flex items-center justify-between w-full p-4 pointer-events-auto">
         <img
           className="w-[12vw]"
@@ -46,7 +44,7 @@ export default function Herosection() {
 
         <div className="relative z-20 pointer-events-auto flex items-center justify-center gap-4">
           <Button variant="primary" text="Register Now" link="/signup" />
-          <Button variant="secondary" text="View Competitions" link="/signup" />
+          <Button variant="secondary" text="View Competitions" link="#competitions" />
         </div>
 
         <h2 className="text-white uppercase font-semibold text-sm md:text-xl bg-[#014E87] px-4 py-2 tracking-wide">

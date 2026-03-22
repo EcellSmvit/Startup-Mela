@@ -2,7 +2,7 @@ import PremiumEventCard from "../PremiumEventCard";
 
 export default function Competition() {
   return (
-    <div className="w-full min-h-screen bg-black flex flex-col items-center px-6 py-12 gap-10">
+    <div id="competitions" className="w-full min-h-screen bg-black flex flex-col items-center px-6 py-12 gap-10">
       <span className="font-black text-4xl uppercase bg-[#014E87] px-6 py-3 text-white">
         Competition
       </span>
