@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { randomBytes } from "crypto"
+import Razorpay from "razorpay";
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+});
 
 export async function POST(req: Request) {
   try {
@@ -20,7 +26,12 @@ export async function POST(req: Request) {
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
-    // 2. Handle Friend Code (OPTIONAL)
+      const razorpayOrder = await razorpay.orders.create({
+        amount: pass.price*100,
+        currency:"INR",
+        receipt:`receipt_${Date.now()}`
+      })
+
     let friend = null
 
     if (friendCode) {
@@ -36,8 +47,6 @@ export async function POST(req: Request) {
         return Response.json({ error: "You cannot refer yourself." }, { status: 400 })
       }
     }
-
-    // 3. Teammate Logic
     const requiredTeammates = (pass.teamSize || 1) - 1
     let teammateConnect: { id: string }[] = []
 
@@ -48,8 +57,6 @@ export async function POST(req: Request) {
           { status: 400 }
         )
       }
-
-      // ❌ Duplicate check
       const uniqueCodes = new Set(teammateCodes)
       if (uniqueCodes.size !== teammateCodes.length) {
         return Response.json(
@@ -57,16 +64,12 @@ export async function POST(req: Request) {
           { status: 400 }
         )
       }
-
-      // ❌ Prevent self
       if (teammateCodes.includes(session.user.uniqueUserCode)) {
         return Response.json(
           { error: "You cannot add yourself as teammate." },
           { status: 400 }
         )
       }
-
-      // ❌ Prevent friend as teammate
       if (friendCode && teammateCodes.includes(friendCode)) {
         return Response.json(
           { error: "Friend cannot be a teammate." },
@@ -89,30 +92,29 @@ export async function POST(req: Request) {
 
       teammateConnect = teammates.map(t => ({ id: t.id }))
     }
-
-    // 4. Generate Strong Unique Code
     const uniqueCode = `MV${randomBytes(4).toString("hex").toUpperCase()}`
-
-    // 5. Create Purchase
     const purchase = await prisma.purchase.create({
       data: {
         userId,
         passId,
         uniqueCode,
         referredBy: friend?.id,
+        purchaseStatus:"PENDING",
         teammates: {
           connect: teammateConnect
         }
       }
     })
-
-    // 6. Update Sold Count
     await prisma.pass.update({
       where: { id: passId },
       data: { sold: { increment: 1 } }
     })
 
-    return Response.json(purchase)
+    return Response.json({
+      orderId:razorpayOrder.id,
+      amount: razorpayOrder.amount,
+      purchaseId: purchase.id
+    })
 
   } catch (error) {
     console.error("PURCHASE_POST_ERROR:", error)
