@@ -18,12 +18,15 @@ export async function POST(req: Request) {
       where: { id: purchaseId },
     });
 
-    if (!purchase || purchase.purchaseId !== orderId) {
+    if (!purchase || purchase.paymentId !== orderId) {
       return Response.json({ error: "Invalid purchase" }, { status: 400 });
     }
 
     // 💳 Fetch payment
-    const response = await cashfree.PGOrderFetchPayments(orderId);
+    const response = await cashfree.PGOrderFetchPayments(
+  "2023-08-01",
+  orderId
+);
 
     const payments = response.data || [];
 
@@ -37,8 +40,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    // ✅ Update DB
     await prisma.$transaction(async (tx) => {
       const updatedPurchase = await tx.purchase.update({
         where: { id: purchaseId },

@@ -29,6 +29,11 @@ interface CashfreeOrderRequest {
 
 export async function POST(req: Request) {
   try {
+    console.log("ENV CHECK:", {
+      appId: process.env.CASHFREE_APP_ID,
+      secret: process.env.CASHFREE_SECRET_KEY,
+      env: process.env.CASHFREE_ENV,
+    });
     const session = await auth()
 
     if (!session || !session.user?.id)
@@ -57,11 +62,11 @@ export async function POST(req: Request) {
           customer_email: session.user.email || ""
         },
         order_meta: {
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/purchase/verify?purchase_id={order_id}`
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?order_id={order_id}`
       }
       }
-            const cfResponse = await cashfree.PGCreateOrder(orderRequest);
-      const orderData = cfResponse.data
+            const cfResponse =  cashfree.PGCreateOrder(orderRequest);
+            const orderData = cfResponse.data
     let friend = null
 
     if (friendCode) {
@@ -130,7 +135,7 @@ export async function POST(req: Request) {
         uniqueCode,
         referredBy: friend?.id,
         purchaseStatus:"PENDING",
-        paymentId: orderData.cf_order_id,
+        paymentId: orderData.order_id,
         teammates: {
           connect: teammateConnect
         }
@@ -148,7 +153,7 @@ export async function POST(req: Request) {
     })
 
   } catch (error) {
-    console.error("CASHFREE_ORDER_ERROR:", error)
+   console.error("CASHFREE FULL ERROR:", error.response?.data || error);
     return Response.json({ error: "Payment initiation failed" }, { status: 500 })
   }
 }

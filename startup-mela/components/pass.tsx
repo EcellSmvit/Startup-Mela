@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Button from "./button";
 import InviteTeammate from "./InviteTeammate";
+//@ts-ignore
 import { load } from "@cashfreepayments/cashfree-js";
 
 interface Pass {

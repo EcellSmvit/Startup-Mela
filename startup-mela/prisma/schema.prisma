@@ -79,6 +79,7 @@ model Purchase{
   passId          String
   uniqueCode      String            @unique
   referredBy      String?
+  paymentId       String?
   purchaseStatus  PurchaseStatus    @default(PENDING)
   verified        Boolean           @default(false)
   user            User              @relation("Buyer", fields: [userId], references: [id])
