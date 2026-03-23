@@ -52,21 +52,7 @@ export async function POST(req: Request) {
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
-      const orderRequest :CashfreeOrderRequest = {
-        order_amount: pass.price,
-        order_currency: "INR",
-        order_id: `order_${Date.now()}_${userId.slice(-4)}`,
-        customer_details:{
-          customer_id: userId,
-          customer_phone: userWithDetails?.mobileNumber || "9999999999",
-          customer_email: session.user.email || ""
-        },
-        order_meta: {
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/purchase/status`
-      }
-      }
-            const cfResponse = await cashfree.PGCreateOrder(orderRequest);
-            const orderData = cfResponse.data
+
     let friend = null
 
     if (friendCode) {
@@ -135,12 +121,33 @@ export async function POST(req: Request) {
         uniqueCode,
         referredBy: friend?.id,
         purchaseStatus:"PENDING",
-        paymentId: orderData.order_id,
         teammates: {
           connect: teammateConnect
         }
       }
     })
+
+          const orderRequest :CashfreeOrderRequest = {
+        order_amount: pass.price,
+        order_currency: "INR",
+        order_id: `order_${Date.now()}_${userId.slice(-4)}`,
+        customer_details:{
+          customer_id: userId,
+          customer_phone: userWithDetails?.mobileNumber || "9999999999",
+          customer_email: session.user.email || ""
+        },
+        order_meta: {
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/purchase/status?order_id={order_id}&purchase_id=${purchase.id}`
+      }
+      }
+
+
+            const cfResponse = await cashfree.PGCreateOrder(orderRequest);
+            const orderData = cfResponse.data
+await prisma.purchase.update({
+  where: { id: purchase.id },
+  data: { paymentId: orderData.order_id }
+});
     return Response.json({
       paymentSessionId: orderData.payment_session_id,
       orderId: orderData.order_id,

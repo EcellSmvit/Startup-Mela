@@ -7,7 +7,7 @@ export default function PurchaseStatus() {
   const router = useRouter();
   const orderId = searchParams.get("order_id");
   const purchaseId = searchParams.get("purchase_id");
-
+  console.log("Verifying:", { orderId, purchaseId });
   useEffect(() => {
     const verify = async () => {
       if (!orderId || !purchaseId) return;
