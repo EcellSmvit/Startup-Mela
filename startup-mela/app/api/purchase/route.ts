@@ -11,6 +11,21 @@ const cashfree = new Cashfree(
   process.env.CASHFREE_SECRET_KEY!
 );
 
+interface CashfreeOrderRequest {
+  order_amount: number;
+  order_currency: string;
+  order_id?: string;
+  customer_details: {
+    customer_id: string;
+    customer_name?: string;
+    customer_email: string;
+    customer_phone: string;
+  };
+  order_meta?: {
+    return_url: string;
+  };
+  order_note?: string;
+}
 
 export async function POST(req: Request) {
   try {
@@ -32,11 +47,10 @@ export async function POST(req: Request) {
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
-      const orderRequest = {
+      const orderRequest :CashfreeOrderRequest = {
         order_amount: pass.price,
         order_currency: "INR",
         order_id: `order_${Date.now()}_${userId.slice(-4)}`,
-        receipt:`receipt_${Date.now()},${userId.slice(-4)}`,
         customer_details:{
           customer_id: userId,
           customer_phone: userWithDetails?.mobileNumber || "9999999999",
