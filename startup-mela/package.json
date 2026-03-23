@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
+    "@cashfreepayments/cashfree-js": "^1.0.6",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.5.0",
     "bcryptjs": "^3.0.3",

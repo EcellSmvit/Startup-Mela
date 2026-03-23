@@ -3,12 +3,8 @@
 import { useEffect, useState } from "react";
 import Button from "./button";
 import InviteTeammate from "./InviteTeammate";
+import { load } from "@cashfreepayments/cashfree-js";
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
 interface Pass {
   id: string;
   title: string;
@@ -41,102 +37,52 @@ export default function Pass() {
     fetchPasses();
   }, []);
 
-const handleFinalPurchase = async (teammateCodes: string[]) => {
-  if (!selectedPass) return;
+  const handleFinalPurchase = async (teammateCodes: string[]) => {
+    if (!selectedPass) return;
 
-  setLoadingId(selectedPass.id);
+    setLoadingId(selectedPass.id);
 
-  try {
-    const res = await fetch("/api/purchase", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        passId: selectedPass.id,
-        teammateCodes,
-        friendCode,
-      }),
-    });
-
-    const orderData = await res.json();
-
-    if (!res.ok) {
-      alert(orderData.error || "Failed to initialize purchase");
-      return;
-    }
-    if (typeof window === "undefined") {
-      alert("Window not available");
-      return;
-    }
-    console.log("Razorpay object:", (window as any).Razorpay);
-
-    const Razorpay = (window as any).Razorpay;
-
-    if (!Razorpay) {
-      alert("Razorpay SDK not loaded. Please refresh.");
-      return;
-    }
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: orderData.amount,
-      currency: "INR",
-      name: "Startup Mela",
-      description: `Purchase for ${selectedPass.title}`,
-      order_id: orderData.orderId,
-
-      handler: async function (response: any) {
-        try {
-          const verifyRes = await fetch("/api/purchase/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              purchaseId: orderData.purchaseId,
-            }),
-          });
-
-          const verifyData = await verifyRes.json();
-
-          if (verifyRes.ok) {
-            alert("✅ Payment Successful!");
-            window.location.reload();
-          } else {
-            alert(verifyData.error || "Payment verification failed.");
-          }
-        } catch (err) {
-          console.error("Verification error:", err);
-          alert("Verification failed.");
-        }
-      },
-
-      prefill: {
-        name: "",
-        email: "",
-      },
-
-      theme: {
-        color: "#014E87",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.on("payment.failed", async function(response: any){
-      await fetch("/api/purchase/fail",{
-        method:"POST",
-        body: JSON.stringify({ purchaseId: orderData.purchaseId }),
+    try {
+      // 1. Initialize Cashfree SDK
+      const cashfree = await load({
+        mode: "sandbox", // Change to "production" for live site
       });
-      alert("payment failed: " + response.error.description);
-    })
-    rzp.open();
 
-  } catch (error) {
-    console.error("Purchase error:", error);
-    alert("Something went wrong during purchase.");
-  } finally {
-    setLoadingId(null);
-  }
-};
+      // 2. Call your backend to create an order
+      const res = await fetch("/api/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          passId: selectedPass.id,
+          teammateCodes,
+          friendCode,
+        }),
+      });
+
+      const orderData = await res.json();
+
+      if (!res.ok) {
+        alert(orderData.error || "Failed to initialize purchase");
+        return;
+      }
+
+      // 3. Trigger Cashfree Checkout using paymentSessionId
+      const checkoutOptions = {
+        paymentSessionId: orderData.paymentSessionId,
+        redirectTarget: "_self", // Redirects in the same tab
+      };
+
+      // This will redirect the user to Cashfree's secure payment page.
+      // After payment, they will be sent to the return_url defined in your API.
+      await cashfree.checkout(checkoutOptions);
+
+    } catch (error) {
+      console.error("Purchase error:", error);
+      alert("Something went wrong during purchase.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -225,7 +171,6 @@ const handleFinalPurchase = async (teammateCodes: string[]) => {
                         : "Buy Pass"
                     }
                     onClick={() => setSelectedPass(pass)}
-                    // disabled={soldOut || loadingId !== null}
                   />
                 </div>
               </div>

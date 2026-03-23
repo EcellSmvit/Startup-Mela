@@ -31,8 +31,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>{children}</Providers>
-        <Script
-          src="https://sdk.cashfree.com/js/v3/cashfree.js"
+        <Script 
+          src="https://sdk.cashfree.com/js/v3/cashfree.js" 
+          strategy="beforeInteractive" 
         />
         <Footer/>
       </body>
