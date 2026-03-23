@@ -1,4 +1,3 @@
-// app/purchase/status/page.tsx
 "use client";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,7 +6,7 @@ export default function PurchaseStatus() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get("order_id");
-  const purchaseId = searchParams.get("purchase_id"); // Get purchase_id from URL
+  const purchaseId = searchParams.get("purchase_id");
 
   useEffect(() => {
     const verify = async () => {
@@ -16,7 +15,7 @@ export default function PurchaseStatus() {
       const res = await fetch("/api/purchase/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId, purchaseId }) // Send both IDs
+        body: JSON.stringify({ orderId, purchaseId })
       });
 
       if (res.ok) {

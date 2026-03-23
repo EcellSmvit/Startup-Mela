@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   try {
     const { orderId, purchaseId } = await req.json();
 
-    // 🔒 Validate purchase exists and matches the order
+    // 1. Validate purchase exists and matches the order
     const purchase = await prisma.purchase.findUnique({
       where: { id: purchaseId },
     });
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       return Response.json({ error: "Invalid purchase record" }, { status: 400 });
     }
 
-    // 💳 Fetch payment details from Cashfree
+    // 2. Fetch payment details from Cashfree
     const response = await cashfree.PGOrderFetchPayments("2023-08-01", orderId);
     const payments = response.data || [];
 
@@ -34,13 +34,15 @@ export async function POST(req: Request) {
       return Response.json({ error: "Payment not completed" }, { status: 400 });
     }
 
-    // Atomic transaction to update status and increment sold count
+    // 3. Atomic transaction to update status and increment sold count
     await prisma.$transaction(async (tx) => {
+      // Update Purchase Status to COMPLETED
       await tx.purchase.update({
         where: { id: purchaseId },
         data: { purchaseStatus: "COMPLETED" },
       });
 
+      // Increment the 'sold' count on the Pass model
       await tx.pass.update({
         where: { id: purchase.passId },
         data: { sold: { increment: 1 } },

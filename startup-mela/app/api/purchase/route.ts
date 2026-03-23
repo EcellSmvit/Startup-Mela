@@ -62,7 +62,7 @@ export async function POST(req: Request) {
           customer_email: session.user.email || ""
         },
         order_meta: {
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?order_id={order_id}`
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/purchase/status`
       }
       }
             const cfResponse = await cashfree.PGCreateOrder(orderRequest);
