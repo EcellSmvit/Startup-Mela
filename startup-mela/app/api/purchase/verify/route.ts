@@ -1,47 +1,36 @@
 import prisma from "@/lib/prisma";
-import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils";
+import { Cashfree } from "cashfree-pg";
 
 export async function POST(req: Request) {
   try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-      purchaseId,
-    } = await req.json();
+    const { orderId, purchaseId } = await req.json();
 
-    const isValid = validatePaymentVerification(
-  { order_id: razorpay_order_id, payment_id: razorpay_payment_id },
-  razorpay_signature,
-  process.env.RAZORPAY_KEY_SECRET!
-);
+    // Fetch order details from Cashfree
+    const response = await Cashfree.PGOrderFetchPayments("2023-08-01", orderId);
+    
+    // Validate if any successful payment exists for this order
+    const isPaid = response.data.some((p: any) => p.payment_status === "SUCCESS");
 
-if (!isValid) {
-  return Response.json({ error: "Invalid signature" }, { status: 400 });
-}
+    if (!isPaid) {
+      return Response.json({ error: "Payment not completed" }, { status: 400 });
+    }
 
     await prisma.$transaction(async(tx) => {
       const purchase = await tx.purchase.update({
-        where:{ id: purchaseId },
-        data:{ purchaseStatus: "COMPLETED" },
+        where: { id: purchaseId },
+        data: { purchaseStatus: "COMPLETED" },
       });
 
       await tx.pass.update({
         where: { id: purchase.passId },
-        data:{
-          sold: { increment: 1 },
-        }
-      })
-    })
-
+        data: { sold: { increment: 1 } }
+      });
+    });
 
     return Response.json({ success: true });
 
   } catch (error) {
     console.error("VERIFY_ERROR:", error);
-    return Response.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

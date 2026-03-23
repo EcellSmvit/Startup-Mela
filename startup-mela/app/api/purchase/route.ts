@@ -1,12 +1,22 @@
 import prisma from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { randomBytes } from "crypto"
-import Razorpay from "razorpay";
+import { Cashfree , CFEnvironment } from "cashfree-pg";
+// import Razorpay from "razorpay";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID!,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET!,
+// });
+
+const cashfree = new Cashfree(
+  process.env.CASHFREE_ENV === "PRODUCTION"
+    ? CFEnvironment.PRODUCTION
+    : CFEnvironment.SANDBOX,
+  process.env.CASHFREE_APP_ID!,
+  process.env.CASHFREE_SECRET_KEY!
+);
+
 
 export async function POST(req: Request) {
   try {
@@ -24,12 +34,27 @@ export async function POST(req: Request) {
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
-      const razorpayOrder = await razorpay.orders.create({
-        amount: Math.round(pass.price * 100),
-        currency:"INR",
-        receipt:`receipt_${Date.now()}`
-      })
-
+      // const razorpayOrder = await razorpay.orders.create({
+      //   amount: Math.round(pass.price * 100),
+      //   currency:"INR",
+      //   receipt:`receipt_${Date.now()}`
+      // })
+      const cfResponse = await cashfree.PGCreateOrder(orderRequest);
+      const orderData = cfResponse.data
+      const orderRequest = {
+        order_amount: pass.price,
+        order_currency: "INR",
+        order_id: `order_${Date.now()}_${userId.slice(-4)}`,
+        customer_details:{
+          customer_id: userId,
+          customer_phone: session.user.phone || "9999999999",
+          customer_email: session.user.email || ""
+        },
+        order_meta: {
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/purchase/verify?purchase_id={order_id}`
+      }
+      }
+      
     let friend = null
 
     if (friendCode) {
@@ -98,6 +123,7 @@ export async function POST(req: Request) {
         uniqueCode,
         referredBy: friend?.id,
         purchaseStatus:"PENDING",
+        paymentId: orderData.cf_order_id,
         teammates: {
           connect: teammateConnect
         }
@@ -109,14 +135,14 @@ export async function POST(req: Request) {
     // })
 
     return Response.json({
-      orderId:razorpayOrder.id,
-      amount: razorpayOrder.amount,
+      paymentSessionId: orderData.payment_session_id,
+      orderId: orderData.order_id,
       purchaseId: purchase.id
     })
 
   } catch (error) {
-    console.error("PURCHASE_POST_ERROR:", error)
-    return Response.json({ error: "Internal Server Error" }, { status: 500 })
+    console.error("CASHFREE_ORDER_ERROR:", error)
+    return Response.json({ error: "Payment initiation failed" }, { status: 500 })
   }
 }
 
