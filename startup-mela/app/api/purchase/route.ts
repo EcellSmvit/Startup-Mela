@@ -65,7 +65,7 @@ export async function POST(req: Request) {
         return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?order_id={order_id}`
       }
       }
-            const cfResponse =  cashfree.PGCreateOrder(orderRequest);
+            const cfResponse = await cashfree.PGCreateOrder(orderRequest);
             const orderData = cfResponse.data
     let friend = null
 
@@ -141,11 +141,6 @@ export async function POST(req: Request) {
         }
       }
     })
-    // await prisma.pass.update({
-    //   where: { id: passId },
-    //   data: { sold: { increment: 1 } }
-    // })
-
     return Response.json({
       paymentSessionId: orderData.payment_session_id,
       orderId: orderData.order_id,
