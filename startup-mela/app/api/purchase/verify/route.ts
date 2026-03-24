@@ -51,7 +51,7 @@ await prisma.$transaction(async (tx) => {
     data: { sold: { increment: 1 } },
   });
 });
-  console.log("PAYMENT RESPONSE:", response);
+
     return Response.json({ success: true });
   } catch (error: any) {
     console.error("VERIFY_ERROR:", error.response?.data || error);

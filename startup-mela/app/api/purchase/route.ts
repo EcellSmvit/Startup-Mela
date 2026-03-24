@@ -137,9 +137,9 @@ export async function POST(req: Request) {
 
 
             const cfResponse = await cashfree.PGCreateOrder(orderRequest);
-            console.log("CF RESPONSE:", cfResponse);
+
             if (!cfResponse || !cfResponse.data || !cfResponse.data.order_id) {
-  console.error("Cashfree order creation failed:", cfResponse);
+
   
   return Response.json(
     { error: "Payment gateway error. Try again." },
