@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Button from "./button";
 import InviteTeammate from "./InviteTeammate";
 //@ts-ignore
 import { load } from "@cashfreepayments/cashfree-js";
@@ -44,12 +43,10 @@ export default function Pass() {
     setLoadingId(selectedPass.id);
 
     try {
-      // 1. Initialize Cashfree SDK
       const cashfree = await load({
-        mode: "production", // Change to "production" for live site
+        mode: "production",
       });
 
-      // 2. Call your backend to create an order
       const res = await fetch("/api/purchase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,15 +64,10 @@ export default function Pass() {
         return;
       }
 
-      // 3. Trigger Cashfree Checkout using paymentSessionId
-      const checkoutOptions = {
+      await cashfree.checkout({
         paymentSessionId: orderData.paymentSessionId,
-        redirectTarget: "_self", // Redirects in the same tab
-      };
-
-      // This will redirect the user to Cashfree's secure payment page.
-      // After payment, they will be sent to the return_url defined in your API.
-      await cashfree.checkout(checkoutOptions);
+        redirectTarget: "_self",
+      });
 
     } catch (error) {
       console.error("Purchase error:", error);
@@ -103,11 +95,13 @@ export default function Pass() {
           ← Back to Passes
         </button>
 
-        <div className="bg-[#262626] border border-white/10 rounded-3xl p-8 mb-8">
+        <div className="bg-black/70 backdrop-blur-xl border border-white/10 rounded-3xl p-8 mb-8">
           <h2 className="text-xl font-bold text-white mb-2">
             Checkout: {selectedPass.title}
           </h2>
-          <p className="text-gray-400 text-sm">Amount: ₹{selectedPass.price}</p>
+          <p className="text-gray-400 text-sm">
+            Amount: ₹{selectedPass.price}
+          </p>
         </div>
 
         <InviteTeammate
@@ -120,7 +114,7 @@ export default function Pass() {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 place-items-center">
         {passes.map((pass) => {
           const slotsLeft = pass.limit - pass.sold;
           const soldOut = slotsLeft <= 0;
@@ -128,22 +122,38 @@ export default function Pass() {
           return (
             <div
               key={pass.id}
-              className="w-full min-w-[280px] max-w-[380px] mx-auto relative rounded-3xl p-[1px] bg-gradient-to-br from-yellow-500/40 to-orange-500/40 hover:scale-[1.03] transition-all duration-300"
+              className="group w-full min-w-[280px] max-w-[380px] mx-auto relative"
             >
-              <div className="bg-[#262626] rounded-3xl p-8 h-full flex flex-col justify-between border border-white/5">
+              {/* Glow */}
+              <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
+
+              <div className="relative h-full rounded-3xl bg-black/80 backdrop-blur-xl border border-white/10 p-8 flex flex-col justify-between transition-all duration-300 group-hover:scale-[1.05] group-hover:border-[#014E87]/50 overflow-hidden">
+
+                {/* Top Accent */}
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent"></div>
+
+                {/* Content */}
                 <div className="flex flex-col gap-4">
-                  <h2 className="text-2xl font-bold text-white tracking-tight">
+
+                  <h2 className="text-2xl font-bold text-white group-hover:text-[#014E87] transition">
                     {pass.title}
                   </h2>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
                     {pass.description}
                   </p>
-                  <p className="text-gray-400 text-sm font-medium">
-                    👥 Team Size: {pass.teamSize}
+
+                  <p className="text-sm text-gray-400">
+                    👥 Team Size:{" "}
+                    <span className="text-white font-medium">
+                      {pass.teamSize}
+                    </span>
                   </p>
 
-                  <div className="flex items-center justify-between bg-black/30 px-4 py-3 rounded-xl border border-white/5">
-                    <span className="text-gray-400 text-sm">Slots Remaining</span>
+                  <div className="flex items-center justify-between bg-black/40 px-4 py-3 rounded-xl border border-white/5">
+                    <span className="text-gray-400 text-sm">
+                      Slots Left
+                    </span>
                     <span
                       className={`font-semibold ${
                         soldOut ? "text-red-400" : "text-green-400"
@@ -154,26 +164,36 @@ export default function Pass() {
                   </div>
                 </div>
 
+                {/* Bottom */}
                 <div className="flex items-center justify-between mt-8">
+
                   <div>
-                    <p className="text-gray-500 text-sm">Price</p>
-                    <p className="text-3xl font-bold text-white">
+                    <p className="text-gray-500 text-xs">Price</p>
+                    <p className="text-3xl font-bold text-white group-hover:text-[#014E87] transition">
                       ₹{pass.price}
                     </p>
                   </div>
 
-                  <Button
-                    variant="primary"
-                    text={
-                      loadingId === pass.id
+                  <button
+                    disabled={soldOut}
+                    onClick={() => setSelectedPass(pass)}
+                    className="relative overflow-hidden text-sm font-medium text-white px-5 py-2 rounded-lg bg-[#014E87] transition-all duration-300 hover:bg-[#0163aa] shadow-md hover:shadow-[#014E87]/40 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                  >
+                    {/* Shine */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition duration-700"></span>
+
+                    <span className="relative z-10">
+                      {loadingId === pass.id
                         ? "Processing..."
                         : soldOut
                         ? "Sold Out"
-                        : "Buy Pass"
-                    }
-                    onClick={() => setSelectedPass(pass)}
-                  />
+                        : "Buy Pass"}
+                    </span>
+                  </button>
                 </div>
+
+                {/* Grid texture */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:20px_20px]"></div>
               </div>
             </div>
           );

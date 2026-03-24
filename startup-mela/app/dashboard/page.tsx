@@ -64,7 +64,7 @@ useEffect(() => {
             <h2 className="text-xl font-semibold border-l-4 border-[#014E87] pl-4">
               Available Passes
             </h2>
-            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+            <div className="w-full">
               <Pass />
             </div>
           </section>
