@@ -19,6 +19,7 @@ export default function CompleteProfile() {
 
   const [formData, setFormData] = useState({
     usn: "",
+    name:"",
     mobile: "",
     isSmvit: "true",
     otherCollege: "",
@@ -58,6 +59,7 @@ export default function CompleteProfile() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           usn: formData.usn,
+          name: formData.name,
           mobileNumber: formData.mobile,
           isSmvit: formData.isSmvit === "true",
           collegeName:
@@ -128,6 +130,17 @@ export default function CompleteProfile() {
           <div className="space-y-4">
 
             {/* USN */}
+            <div className="relative group">
+              
+              <input
+                type="text"
+                placeholder="Name"
+                className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-[#014E87] outline-none"
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+              />
+            </div>
             <div className="relative group">
               <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-[#014E87]" />
               <input

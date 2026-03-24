@@ -4,10 +4,10 @@ import { useEffect, useState, cloneElement } from "react";
 import { GraduationCap, MapPin, Hash, Phone } from "lucide-react";
 
 interface UserProfile {
-  name: string;
   uniqueUserCode: string;
   userDetails: {
     usn: string;
+    name: string;
     collegeName: string;
     year: string;
     mobileNumber: string;
@@ -34,12 +34,12 @@ export default function ProfileCard() {
       {/* Top */}
       <div className="flex items-center gap-3">
         <div className="h-12 w-12 rounded-lg bg-[#014E87] flex items-center justify-center text-white font-bold">
-          {profile.name?.charAt(0).toUpperCase()}
+          {profile.userDetails?.name?.charAt(0).toUpperCase()}
         </div>
 
         <div>
           <h2 className="text-sm font-semibold text-white leading-tight">
-            {profile.name}
+            {profile.userDetails?.name}
           </h2>
           <p className="text-xs text-zinc-400">
             {profile.uniqueUserCode}

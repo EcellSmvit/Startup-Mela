@@ -33,6 +33,7 @@ model Session {
 
 model UserDetails {
   id           String     @id @default(cuid())
+  name         String?
   usn          String
   mobileNumber String
   isSmvit      Boolean    @default(true)

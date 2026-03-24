@@ -48,7 +48,7 @@ useEffect(() => {
         <div className="flex items-center gap-4">
           <AdminButton />
           <Button
-            variant="warning"
+            variant="secondary"
             text="Logout"
             onClick={() => signOut({ callbackUrl: "/" })}
           />

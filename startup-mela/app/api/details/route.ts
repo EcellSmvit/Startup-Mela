@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { usn, mobileNumber, isSmvit, collegeName, year } =
+    const { usn, mobileNumber, isSmvit, collegeName, year, name } =
       await req.json();
 
     if (!usn || !mobileNumber || !year) {
@@ -35,6 +35,7 @@ export async function POST(req: Request) {
       data: {
         usn: usn.trim().toUpperCase(),
         mobileNumber,
+        name: name?.trim() || undefined,
         isSmvit: Boolean(isSmvit),
         collegeName: isSmvit
           ? "Sir M. Visvesvaraya Institute of Technology"
