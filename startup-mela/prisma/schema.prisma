@@ -88,6 +88,24 @@ model Purchase{
   teammates       User[]            @relation("Teammates")
 }
 
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String   
+  email     String   
+  phone     String?  
+  subject   String   
+  message   String   @db.Text 
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime @default(now())
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
 enum Role{
   USER
   ADMIN

@@ -22,8 +22,8 @@ export default function Herosection() {
       </div>
       <div className="absolute z-20 flex items-center justify-between w-full p-4 pointer-events-auto">
         <img
-          className="w-[12vw]"
-          src="https://ik.imagekit.io/es6xialea/Logo.svg"
+          className="w-[24vw]"
+          src="https://ik.imagekit.io/es6xialea/StartupmekaXecellXsmvit.svg"
           alt="logo"
         />
         <Button variant="primary" text="Register" link="/signup" />

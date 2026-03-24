@@ -15,7 +15,7 @@ export default function Competition() {
           type="Technical"
           phase="Rs 22,000"
           link="/competition/StartupSurvival"
-          image="https://images.unsplash.com/photo-1581092335397-9583eb92d232"
+          image="https://images.unsplash.com/photo-1731051054492-e32733af7b52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyOXxpVUlzblZ0akIwWXx8ZW58MHx8fHx8"
         />
 
         <PremiumEventCard
