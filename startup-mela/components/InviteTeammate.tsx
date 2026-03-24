@@ -22,8 +22,9 @@ export default function InviteTeammate({
     newCodes[index] = value.trim();
     setCodes(newCodes);
   };
-
-  const isComplete = codes.every((code) => code.length > 0);
+  const filledCodesCount = codes.filter((code) => code.length > 0).length;
+  const minRequiredCount = Math.max(0, requiredTeammates - 1);
+  const isComplete = filledCodesCount >= minRequiredCount;
   if (requiredTeammates === 0) {
     return (
       <div className="relative rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 text-center shadow-[0_0_30px_rgba(1,78,135,0.1)] z-20">
