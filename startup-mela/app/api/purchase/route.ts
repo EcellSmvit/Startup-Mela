@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     })
 
     const userWithDetails = await prisma.userDetails.findUnique({
-      where: { id: userId },
+      where: { userId: userId },
     })
 
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
