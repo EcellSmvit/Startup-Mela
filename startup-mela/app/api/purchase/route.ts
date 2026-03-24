@@ -29,13 +29,7 @@ interface CashfreeOrderRequest {
 
 export async function POST(req: Request) {
   try {
-    console.log("ENV CHECK:", {
-      appId: process.env.CASHFREE_APP_ID,
-      secret: process.env.CASHFREE_SECRET_KEY,
-      env: process.env.CASHFREE_ENV,
-    });
     const session = await auth()
-
     if (!session || !session.user?.id)
       return Response.json({ error: "Unauthorized" }, { status: 401 })
     
@@ -165,7 +159,7 @@ await prisma.purchase.update({
     })
 
   } catch (error) {
-   console.error("CASHFREE FULL ERROR:", error.response?.data || error);
+   console.error("CASHFREE FULL ERROR:", error);
     return Response.json({ error: "Payment initiation failed" }, { status: 500 })
   }
 }
