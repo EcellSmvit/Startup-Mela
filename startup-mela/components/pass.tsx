@@ -124,15 +124,10 @@ export default function Pass() {
               key={pass.id}
               className="group w-full min-w-[280px] max-w-[380px] mx-auto relative"
             >
-              {/* Glow */}
               <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
               <div className="relative h-full rounded-3xl bg-black/80 backdrop-blur-xl border border-white/10 p-8 flex flex-col justify-between transition-all duration-300 group-hover:scale-[1.05] group-hover:border-[#014E87]/50 overflow-hidden">
-
-                {/* Top Accent */}
                 <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent"></div>
-
-                {/* Content */}
                 <div className="flex flex-col gap-4">
 
                   <h2 className="text-2xl font-bold text-white group-hover:text-[#014E87] transition">
@@ -144,7 +139,7 @@ export default function Pass() {
                   </p>
 
                   <p className="text-sm text-gray-400">
-                    👥 Team Size:{" "}
+                     Team Size:{" "}
                     <span className="text-white font-medium">
                       {pass.teamSize}
                     </span>
@@ -163,8 +158,6 @@ export default function Pass() {
                     </span>
                   </div>
                 </div>
-
-                {/* Bottom */}
                 <div className="flex items-center justify-between mt-8">
 
                   <div>
@@ -179,7 +172,6 @@ export default function Pass() {
                     onClick={() => setSelectedPass(pass)}
                     className="relative overflow-hidden text-sm font-medium text-white px-5 py-2 rounded-lg bg-[#014E87] transition-all duration-300 hover:bg-[#0163aa] shadow-md hover:shadow-[#014E87]/40 disabled:bg-gray-600 disabled:cursor-not-allowed"
                   >
-                    {/* Shine */}
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition duration-700"></span>
 
                     <span className="relative z-10">
@@ -191,8 +183,6 @@ export default function Pass() {
                     </span>
                   </button>
                 </div>
-
-                {/* Grid texture */}
                 <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:20px_20px]"></div>
               </div>
             </div>

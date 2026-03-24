@@ -56,8 +56,9 @@ useEffect(() => {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
-        <div>
+        <div className="grid lg:grid-cols-3 gap-10 mb-16">
           <ProfileCard/>
+          <PurchaseInfo />
         </div>
         <div className="grid lg:grid-cols-3 gap-10">
           <section className="lg:col-span-2 space-y-8">
@@ -68,15 +69,6 @@ useEffect(() => {
               <Pass />
             </div>
           </section>
-          <aside className="space-y-8">
-            <h2 className="text-xl font-semibold border-l-4 border-purple-500 pl-4">
-              Your Subscriptions
-            </h2>
-            <div className="sticky top-6">
-               <PurchaseInfo />
-            </div>
-          </aside>
-
         </div>
       </main>
     </div>
