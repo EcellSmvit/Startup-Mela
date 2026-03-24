@@ -133,7 +133,7 @@ export async function POST(req: Request) {
         order_id: `order_${Date.now()}_${userId.slice(-4)}`,
         customer_details:{
           customer_id: userId,
-          customer_phone: userWithDetails?.mobileNumber || "9999999999",
+          customer_phone: userWithDetails?.mobileNumber || "9876543210",
           customer_email: session.user.email || ""
         },
         order_meta: {
@@ -143,6 +143,16 @@ export async function POST(req: Request) {
 
 
             const cfResponse = await cashfree.PGCreateOrder(orderRequest);
+            console.log("CF RESPONSE:", cfResponse);
+            if (!cfResponse || !cfResponse.data || !cfResponse.data.order_id) {
+  console.error("Cashfree order creation failed:", cfResponse);
+  
+  return Response.json(
+    { error: "Payment gateway error. Try again." },
+    { status: 500 }
+  );
+}
+
             const orderData = cfResponse.data
 await prisma.purchase.update({
   where: { id: purchase.id },

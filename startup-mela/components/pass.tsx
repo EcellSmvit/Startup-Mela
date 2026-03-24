@@ -46,7 +46,7 @@ export default function Pass() {
     try {
       // 1. Initialize Cashfree SDK
       const cashfree = await load({
-        mode: "sandbox", // Change to "production" for live site
+        mode: "production", // Change to "production" for live site
       });
 
       // 2. Call your backend to create an order
