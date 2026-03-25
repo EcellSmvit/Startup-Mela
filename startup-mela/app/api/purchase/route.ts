@@ -62,13 +62,14 @@ export async function POST(req: Request) {
         return Response.json({ error: "You cannot refer yourself." }, { status: 400 })
       }
     }
-    const requiredTeammates = (pass.teamSize || 1) - 1
+    const maxTeammates = (pass.teamSize || 1) - 1;
+    const providedTeammates = teammateCodes ? teammateCodes.filter((code: string) => code.trim() !== "") : [];
     let teammateConnect: { id: string }[] = []
 
-    if (requiredTeammates > 0) {
-      if (!teammateCodes || teammateCodes.length !== requiredTeammates) {
+    if (maxTeammates > 0) {
+      if (providedTeammates.length > maxTeammates) {
         return Response.json(
-          { error: `Exactly ${requiredTeammates} teammate(s) required.` },
+          { error: `Maximum ${maxTeammates} teammate(s) allowed.` },
           { status: 400 }
         )
       }
@@ -92,21 +93,22 @@ export async function POST(req: Request) {
         )
       }
 
-      const teammates = await prisma.user.findMany({
-        where: {
-          uniqueUserCode: { in: teammateCodes }
-        }
-      })
-
-      if (teammates.length !== requiredTeammates) {
-        return Response.json(
-          { error: "Invalid teammate codes." },
-          { status: 400 }
-        )
+if (providedTeammates.length > 0) {
+    const teammates = await prisma.user.findMany({
+      where: {
+        uniqueUserCode: { in: providedTeammates }
       }
+    });
 
-      teammateConnect = teammates.map(t => ({ id: t.id }))
+    if (teammates.length !== providedTeammates.length) {
+      return Response.json(
+        { error: "One or more teammate codes are invalid." },
+        { status: 400 }
+      );
     }
+    teammateConnect = teammates.map(t => ({ id: t.id }));
+  }
+}
     const uniqueCode = `MV${randomBytes(4).toString("hex").toUpperCase()}`
     const purchase = await prisma.purchase.create({
       data: {
