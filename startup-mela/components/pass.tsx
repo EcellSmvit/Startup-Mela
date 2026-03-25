@@ -117,7 +117,7 @@ export default function Pass() {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
         {passes.map((pass) => {
           const slotsLeft = pass.limit - pass.sold;
           const soldOut = slotsLeft <= 0;
@@ -125,7 +125,7 @@ export default function Pass() {
           return (
             <div
               key={pass.id}
-              className="group w-full min-w-[380px] max-w-[380px] mx-auto relative"
+              className="group w-[400px] flex relative"
             >
               <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
