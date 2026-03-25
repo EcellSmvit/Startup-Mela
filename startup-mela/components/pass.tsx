@@ -13,6 +13,7 @@ interface Pass {
   sold: number;
   price: number;
   teamSize: number;
+  requiresEvent: boolean;
 }
 
 export default function Pass() {
@@ -105,7 +106,7 @@ export default function Pass() {
         </div>
 
         <InviteTeammate
-          pass={Pass}
+          pass={selectedPass}
           teamSize={selectedPass.teamSize}
           onComplete={handleFinalPurchase}
         />

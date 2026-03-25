@@ -27,10 +27,10 @@ export async function POST(req:Request){
         return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    const {title,description,price,limit,forSmvit,requiresEvent} = await req.json()
+    const {title,description,price,limit,forSmvit,teamSize,requiresEvent} = await req.json()
 
     const pass = await prisma.pass.create({
-        data:{title,description,price,limit,teamSize:1,forSmvit,requiresEvent: requiresEvent || false}
+        data:{title,description,price,limit,teamSize:teamSize || 1,forSmvit,requiresEvent: requiresEvent || false}
     })
 
     return Response.json(pass)

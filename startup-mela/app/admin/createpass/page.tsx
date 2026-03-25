@@ -12,11 +12,11 @@ export default function Createpass() {
     limit: 0,
     teamSize: 1,
     forSmvit: true,
+    requiresEvent: false,
   });
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,14 +59,9 @@ export default function Createpass() {
     <div className="w-full min-h-screen text-white bg-black relative overflow-hidden flex items-center justify-center px-4">
 
       <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:26px_26px]"></div>
-
-      {/* Glow */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[#014E87]/20 blur-[140px] rounded-full"></div>
-
-      {/* Glass Card */}
       <div className="relative w-full max-w-lg rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 p-8 flex flex-col gap-6 shadow-[0_0_40px_rgba(1,78,135,0.1)]">
 
-        {/*  Title */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white tracking-wide">
             Create Pass
@@ -76,17 +71,13 @@ export default function Createpass() {
           </p>
         </div>
 
-        {/*  Error */}
         {error && (
           <p className="text-red-400 text-sm text-center bg-red-500/10 py-2 rounded-lg border border-red-500/20">
             {error}
           </p>
         )}
 
-        {/*  Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
-          {/* Inputs */}
           <div className="flex flex-col gap-4">
 
             <InputField
@@ -157,8 +148,13 @@ export default function Createpass() {
             />
             SMVIT students only
           </label>
+              <label className="flex items-center gap-3 cursor-pointer text-sm text-white/70">
+              <input type="checkbox" checked={formData.requiresEvent}
+                onChange={(e) => setFormData({ ...formData, requiresEvent: e.target.checked })} />
+              Requires Event Selection
+            </label>
 
-          {/* 🚀 Button */}
+
           <button
             type="submit"
             disabled={loading}
