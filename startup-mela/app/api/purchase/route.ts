@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 })
     
     const userId = session.user.id
-    const { passId, friendCode, teammateCodes,selectedEvent } = await req.json()
+    const { passId, friendCode, teammateCodes,selectedEvents } = await req.json()
     const pass = await prisma.pass.findUnique({
       where: { id: passId }
     })
@@ -44,15 +44,17 @@ export async function POST(req: Request) {
     })
 
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 });
-    if (pass.requiresEvent && !selectedEvent) {
-      return Response.json({ error: "Please select an event for this pass." }, { status: 400 });
-    
+
+    if (pass.requiresEvent) {
+      if (!Array.isArray(selectedEvents) || selectedEvents.length !== 2) {
+        return Response.json({ error: "Please select exactly two events." }, { status: 400 });
+      }
     }
 
-    if (selectedEvent) {
+    if (selectedEvents && selectedEvents.length > 0) {
       await prisma.userDetails.update({
         where: { userId: userId },
-        data: { selectedEvent: selectedEvent } //
+        data: { selectedEvents: selectedEvents } //
       });
     }
 

@@ -38,7 +38,7 @@ export default function Pass() {
     fetchPasses();
   }, []);
 
-  const handleFinalPurchase = async (teammateCodes: string[]) => {
+  const handleFinalPurchase = async (teammateCodes: string[],selectedEvents: string[]) => {
     if (!selectedPass) return;
 
     setLoadingId(selectedPass.id);
@@ -55,6 +55,7 @@ export default function Pass() {
           passId: selectedPass.id,
           teammateCodes,
           friendCode,
+          selectedEvents
         }),
       });
 
