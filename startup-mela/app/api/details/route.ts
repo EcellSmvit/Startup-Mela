@@ -10,9 +10,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { usn, mobileNumber, isSmvit, collegeName, year, name } =
-      await req.json();
+    const { usn, mobileNumber, isSmvit, collegeName, year, name, selectedEvent } = await req.json();
 
+  
     if (!usn || !mobileNumber || !year) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -42,6 +42,7 @@ export async function POST(req: Request) {
           : collegeName || "Other",
         year: String(year),
         userId: session.user.id,
+        selectedEvent: selectedEvent || null,
       },
     });
 

@@ -32,15 +32,16 @@ model Session {
 }
 
 model UserDetails {
-  id           String     @id @default(cuid())
-  name         String?
-  usn          String
-  mobileNumber String
-  isSmvit      Boolean    @default(true)
-  collegeName  String   
-  year         String
-  userId       String     @unique
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String     @id @default(cuid())
+  name            String?
+  usn             String
+  mobileNumber    String
+  isSmvit         Boolean    @default(true)
+  collegeName     String   
+  year            String
+  selectedEvent   String?
+  userId          String     @unique
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
