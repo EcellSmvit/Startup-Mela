@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 });
 
     if (pass.requiresEvent) {
-      if (!Array.isArray(selectedEvents) || selectedEvents.length !== 2) {
+      if (!Array.isArray(selectedEvents) || selectedEvents.length !== 1) {
         return Response.json({ error: "Please select exactly two events." }, { status: 400 });
       }
     }
