@@ -134,7 +134,7 @@ export default function Pass() {
                     {pass.title}
                   </h2>
 
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                  <p className="text-gray-400 text-sm leading-relaxed ">
                     {pass.description}
                   </p>
 
