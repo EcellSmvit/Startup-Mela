@@ -32,7 +32,7 @@ const faqs = [
     a: "Startup Mela is a fully offline event held at Sir M. Visvesvaraya Institute of Technology.",
   },
   {
-    q: "What do winners get?",
+    q: "What do winners get at Startup Mela?",
     a: "Each competition has its own prize pool. Visit individual competition pages for exact prize details.",
   },
   {
@@ -46,16 +46,10 @@ export default function FAQSection() {
 
   return (
     <div className="w-full min-h-screen bg-black relative overflow-hidden px-6 py-20">
-
-      {/* 🔲 Grid Background */}
       <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:22px_22px]"></div>
-
-      {/* 🔥 Glow */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[#014E87]/20 blur-[140px] rounded-full"></div>
 
       <div className="max-w-4xl mx-auto relative z-10 flex flex-col gap-10">
-
-        {/* 🔝 Heading */}
         <div className="text-center flex flex-col gap-3">
           <h1 className="text-4xl md:text-5xl font-black text-white uppercase">
             FAQs
@@ -64,8 +58,6 @@ export default function FAQSection() {
             Everything you need to know before participating
           </p>
         </div>
-
-        {/* ❓ FAQ Items */}
         <div className="flex flex-col gap-4">
           {faqs.map((faq, i) => (
             <div
@@ -73,7 +65,6 @@ export default function FAQSection() {
               onClick={() => setActive(active === i ? null : i)}
               className="group cursor-pointer rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 p-5 transition-all duration-300 hover:border-[#014E87]/40"
             >
-              {/* Question */}
               <div className="flex justify-between items-center">
                 <h3 className="text-white font-medium text-sm md:text-base">
                   {faq.q}
@@ -83,8 +74,6 @@ export default function FAQSection() {
                   {active === i ? "−" : "+"}
                 </span>
               </div>
-
-              {/* Answer */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   active === i ? "max-h-40 mt-3" : "max-h-0"

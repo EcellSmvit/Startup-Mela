@@ -114,7 +114,7 @@ export default function Pass() {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 place-items-center">
+      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 place-items-center">
         {passes.map((pass) => {
           const slotsLeft = pass.limit - pass.sold;
           const soldOut = slotsLeft <= 0;

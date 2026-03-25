@@ -60,13 +60,13 @@ export default function Createpass() {
 
       <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:26px_26px]"></div>
 
-      {/* 🔥 Glow */}
+      {/* Glow */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[#014E87]/20 blur-[140px] rounded-full"></div>
 
-      {/* 🧊 Glass Card */}
+      {/* Glass Card */}
       <div className="relative w-full max-w-lg rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 p-8 flex flex-col gap-6 shadow-[0_0_40px_rgba(1,78,135,0.1)]">
 
-        {/* ✨ Title */}
+        {/*  Title */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white tracking-wide">
             Create Pass
@@ -76,14 +76,14 @@ export default function Createpass() {
           </p>
         </div>
 
-        {/* ❌ Error */}
+        {/*  Error */}
         {error && (
           <p className="text-red-400 text-sm text-center bg-red-500/10 py-2 rounded-lg border border-red-500/20">
             {error}
           </p>
         )}
 
-        {/* 📝 Form */}
+        {/*  Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
           {/* Inputs */}
@@ -98,12 +98,11 @@ export default function Createpass() {
               }
             />
 
-            <InputField
-              variant="primary"
-              type="text"
-              placeholder="Description"
+            <textarea
+              placeholder="Description (Supports Markdown: **bold**, \n for new lines, - for bullets)"
+              className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#014E87] min-h-[120px]"
               onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+              setFormData({ ...formData, description: e.target.value })
               }
             />
 

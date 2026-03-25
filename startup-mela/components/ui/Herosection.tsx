@@ -38,8 +38,8 @@ export default function Herosection() {
           <span className="text-white">Elevate.</span>
         </h1>
 
-        <p className="text-white font-bold max-w-2xl">
-          SMVIT’s biggest startup event - 2 days of competitions, mentor/investor meets, speaker sessions and startup exposure.
+        <p className="text-white font-medium max-w-3xl text-xl">
+          SMVIT’s Biggest Startup Event - 2 Days Of Competitions, Mentor/Investor Meets, Speaker Sessions and Startup Exposure.
         </p>
 
         <div className="relative z-20 pointer-events-auto flex items-center justify-center gap-4">

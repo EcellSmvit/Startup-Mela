@@ -28,12 +28,13 @@ export default function EventHighlights() {
           
           <Eventcard
             eventType="Competitions"
-            eventDetails="Four business competitions across strategy, consulting, investment and live auctions. Rs. 80,000 in prize money across all events."
+            eventDetails="Four competitions in strategy, consulting, investment & auctions - ₹80,000 in prizes."
           />
 
           <Eventcard
             eventType="Startup Exhibition"
-            eventDetails="Startups from across the city exhibiting on campus across both days. Meet founders, explore products and find opportunities you would not find in a classroom"
+            eventDetails="City startups on campus for two days-meet founders, explore, and discover beyond the classroom.
+"
           />
 
           <Eventcard
@@ -50,8 +51,8 @@ export default function EventHighlights() {
             eventDetails="Open-format panels with mentors and founders, followed by live audience Q&A."
           />
           <Eventcard
-            eventType="Startup Ecosystem Access"
-            eventDetails="Two days of direct access to the people, ideas and conversations that do not happen inside a college campus."
+            eventType="Startup Ecosystem"
+            eventDetails="Two days of access to people, ideas, and conversations beyond campus."
           />
         </div>
       </div>

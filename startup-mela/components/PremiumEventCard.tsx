@@ -39,11 +39,6 @@ export default function PremiumEventCard({
           {type.toUpperCase()}
         </p>
       </div>
-      <div className="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 pointer-events-none">
-        <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-        <div className="w-1 h-1 bg-white/60 rounded-full"></div>
-        <div className="w-1 h-1 bg-white/20 rounded-full"></div>
-      </div>
       <div className="absolute bottom-0 p-6 text-white">
         
         <h2 className="text-2xl font-semibold tracking-wide">
