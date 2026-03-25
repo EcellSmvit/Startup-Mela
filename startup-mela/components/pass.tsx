@@ -5,6 +5,7 @@ import InviteTeammate from "./InviteTeammate";
 //@ts-ignore
 import { load } from "@cashfreepayments/cashfree-js";
 import ReactMarkdown from "react-markdown";
+
 interface Pass {
   id: string;
   title: string;
@@ -38,15 +39,16 @@ export default function Pass() {
     fetchPasses();
   }, []);
 
-  const handleFinalPurchase = async (teammateCodes: string[],selectedEvents: string[]) => {
+  const handleFinalPurchase = async (
+    teammateCodes: string[],
+    selectedEvents: string[]
+  ) => {
     if (!selectedPass) return;
 
     setLoadingId(selectedPass.id);
 
     try {
-      const cashfree = await load({
-        mode: "production",
-      });
+      const cashfree = await load({ mode: "production" });
 
       const res = await fetch("/api/purchase", {
         method: "POST",
@@ -55,7 +57,7 @@ export default function Pass() {
           passId: selectedPass.id,
           teammateCodes,
           friendCode,
-          selectedEvents
+          selectedEvents,
         }),
       });
 
@@ -70,7 +72,6 @@ export default function Pass() {
         paymentSessionId: orderData.paymentSessionId,
         redirectTarget: "_self",
       });
-
     } catch (error) {
       console.error("Purchase error:", error);
       alert("Something went wrong during purchase.");
@@ -89,7 +90,7 @@ export default function Pass() {
 
   if (selectedPass) {
     return (
-      <div className="w-full max-w-2xl mx-auto py-10">
+      <div className="w-full max-w-2xl mx-auto py-10 px-4">
         <button
           onClick={() => setSelectedPass(null)}
           className="text-gray-400 hover:text-white mb-6 flex items-center gap-2 transition-colors"
@@ -108,7 +109,6 @@ export default function Pass() {
 
         <InviteTeammate
           pass={selectedPass}
-          // teamSize={selectedPass.teamSize}
           onComplete={handleFinalPurchase}
         />
       </div>
@@ -116,33 +116,40 @@ export default function Pass() {
   }
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
+    <div className="w-full px-6 lg:px-12 xl:px-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12">
+
         {passes.map((pass) => {
           const slotsLeft = pass.limit - pass.sold;
           const soldOut = slotsLeft <= 0;
 
           return (
-            <div
-              key={pass.id}
-              className="group w-[400px] flex relative"
-            >
-              <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <div key={pass.id} className="group relative w-full">
 
-              <div className="relative h-full rounded-3xl bg-black/80 backdrop-blur-xl border border-white/10 p-8 flex flex-col justify-between transition-all duration-300 group-hover:scale-[1.05] group-hover:border-[#014E87]/50 overflow-hidden">
+              {/* Glow */}
+              <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/30 via-transparent to-[#014E87]/30 opacity-0 group-hover:opacity-100 blur-md transition duration-500"></div>
+
+              {/* Card */}
+              <div className="relative h-full min-h-[460px] flex flex-col justify-between rounded-3xl bg-black/80 backdrop-blur-xl border border-white/10 p-8 transition-all duration-300 hover:border-[#014E87]/40">
+
+                {/* Top Accent */}
                 <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#014E87] to-transparent"></div>
-                <div className="flex flex-col gap-4">
 
-                  <h2 className="text-2xl font-bold text-white group-hover:text-[#014E87] transition">
+                {/* Content */}
+                <div className="flex flex-col gap-5">
+
+                  <h2 className="text-2xl lg:text-3xl font-semibold text-white group-hover:text-[#014E87] transition leading-snug">
                     {pass.title}
                   </h2>
 
-                  <ReactMarkdown>
-                    {pass.description.replace(/\\n/g, "\n")}
-                  </ReactMarkdown>
+                  <div className="text-sm text-gray-300 leading-relaxed space-y-2">
+                    <ReactMarkdown>
+                      {pass.description.replace(/\\n/g, "\n")}
+                    </ReactMarkdown>
+                  </div>
 
                   <p className="text-sm text-gray-400">
-                     Team Size:{" "}
+                    Team Size:{" "}
                     <span className="text-white font-medium">
                       {pass.teamSize}
                     </span>
@@ -161,7 +168,9 @@ export default function Pass() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between mt-8">
+
+                {/* Bottom */}
+                <div className="flex items-center justify-between mt-6">
 
                   <div>
                     <p className="text-gray-500 text-xs">Price</p>
@@ -173,7 +182,7 @@ export default function Pass() {
                   <button
                     disabled={soldOut}
                     onClick={() => setSelectedPass(pass)}
-                    className="relative overflow-hidden text-sm font-medium text-white px-5 py-2 rounded-lg bg-[#014E87] transition-all duration-300 hover:bg-[#0163aa] shadow-md hover:shadow-[#014E87]/40 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                    className="relative overflow-hidden text-sm font-medium text-white px-6 py-2.5 rounded-lg bg-[#014E87] transition-all duration-300 hover:bg-[#0163aa] shadow-md hover:shadow-[#014E87]/40 disabled:bg-gray-600 disabled:cursor-not-allowed"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition duration-700"></span>
 
@@ -186,6 +195,8 @@ export default function Pass() {
                     </span>
                   </button>
                 </div>
+
+                {/* Grid Texture */}
                 <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:20px_20px]"></div>
               </div>
             </div>

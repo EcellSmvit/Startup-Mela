@@ -60,8 +60,8 @@ useEffect(() => {
           <ProfileCard/>
           <PurchaseInfo />
         </span>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <section className="lg:col-span-2 space-y-8">
+        <div className="w-full px-6 lg:px-10">
+          <section className="w-full space-y-8">
             <h2 className="text-xl font-semibold border-l-4 border-[#014E87] pl-4">
               Available Passes
             </h2>
