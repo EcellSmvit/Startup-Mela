@@ -105,6 +105,7 @@ export default function Pass() {
         </div>
 
         <InviteTeammate
+          pass={Pass}
           teamSize={selectedPass.teamSize}
           onComplete={handleFinalPurchase}
         />

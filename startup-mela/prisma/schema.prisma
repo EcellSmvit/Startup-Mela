@@ -71,6 +71,7 @@ model Pass {
   teamSize    Int
   sold        Int               @default(0)
   forSmvit    Boolean           @default(true)
+  requiresEvent   Boolean           @default(false)
   purchases   Purchase[]
   createdAt   DateTime          @default(now())
 }

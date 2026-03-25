@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 })
     
     const userId = session.user.id
-    const { passId, friendCode, teammateCodes } = await req.json()
+    const { passId, friendCode, teammateCodes,selectedEvent } = await req.json()
     const pass = await prisma.pass.findUnique({
       where: { id: passId }
     })
@@ -43,7 +43,19 @@ export async function POST(req: Request) {
       where: { userId: userId },
     })
 
-    if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 })
+    if (!pass) return Response.json({ error: "Pass not found" }, { status: 404 });
+    if (pass.requiresEvent && !selectedEvent) {
+      return Response.json({ error: "Please select an event for this pass." }, { status: 400 });
+    
+    }
+
+    if (selectedEvent) {
+      await prisma.userDetails.update({
+        where: { userId: userId },
+        data: { selectedEvent: selectedEvent } //
+      });
+    }
+
     if (pass.sold >= pass.limit) return Response.json({ error: "Pass Sold Out" }, { status: 400 })
 
 
@@ -149,6 +161,7 @@ if (providedTeammates.length > 0) {
   );
 }
 
+
             const orderData = cfResponse.data
 await prisma.purchase.update({
   where: { id: purchase.id },
@@ -159,7 +172,7 @@ await prisma.purchase.update({
       orderId: orderData.order_id,
       purchaseId: purchase.id
     })
-
+    
   } catch (error) {
    console.error("CASHFREE FULL ERROR:", error);
     return Response.json({ error: "Payment initiation failed" }, { status: 500 })
