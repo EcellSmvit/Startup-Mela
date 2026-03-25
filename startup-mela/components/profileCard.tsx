@@ -29,7 +29,7 @@ export default function ProfileCard() {
   if (!profile) return null;
 
   return (
-    <div className="w-[320px] bg-[#111] border border-white/10 rounded-xl p-4 shadow-lg mb-4">
+    <div className="w-[320px] h-[250px] bg-[#111] border border-white/10 rounded-xl p-4 shadow-lg mb-4">
       
       {/* Top */}
       <div className="flex items-center gap-3">

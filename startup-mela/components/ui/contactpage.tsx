@@ -57,7 +57,7 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 gap-10">
           <div className="flex flex-col gap-8">
             <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-6">
-              <p className="text-white/50 text-sm">General Email</p>
+              <p className="text-white text-sm">General Email</p>
               <p className="text-white font-medium mt-1">
                 ecellsmvit@gmail.com
               </p>
@@ -75,7 +75,7 @@ export default function ContactPage() {
                 <div key={i} className="flex justify-between text-sm text-white/70">
                   <div>
                     <p className="text-white">{item.role}</p>
-                    <p className="text-white/50 text-xs">{item.name}</p>
+                    <p className="text-white text-lg">{item.name}</p>
                   </div>
                   <p>{item.contact}</p>
                 </div>
@@ -84,14 +84,37 @@ export default function ContactPage() {
 
             <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-6 flex flex-col gap-3">
               <h3 className="text-white font-semibold">Social Media</h3>
-
-              <a
+              <div className="flex items-center justify-between">
+                <a
                 href="https://linktr.ee/ecellsmvit"
                 target="_blank"
-                className="text-white/70 hover:text-[#014E87] transition"
+                className="text-white hover:text-[#014E87] transition"
               >
                 Linktree
               </a>
+              <a
+                href="https://www.linkedin.com/company/e-cell-sirmvit/"
+                target="_blank"
+                className="text-white hover:text-[#014E87] transition"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://www.instagram.com/ecell_smvit/"
+                target="_blank"
+                className="text-white hover:text-[#014E87] transition"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://www.ecellsmvit.in/"
+                target="_blank"
+                className="text-white hover:text-[#014E87] transition"
+              >
+                Website
+              </a>
+              </div>
+              
 
               <p className="text-white/70">
                 WhatsApp: Satvik - <span className="text-white">7338620007</span>
@@ -156,12 +179,12 @@ export default function ContactPage() {
           <h3 className="text-white font-semibold text-lg">
             Venue
           </h3>
-          <p className="text-white/70 text-sm">
+          <p className="text-white text-sm">
             Sir M. Visvesvaraya Institute of Technology <br />
             International Airport Road, Hunasamaranahalli, Yelahanka, Bengaluru, Karnataka 562157
           </p>
           <a
-            href="https://share.google/I29QxIFvIrkDhSIj9"
+            href="https://maps.app.goo.gl/pzLqsySZ36qXMWTK6"
             target="_blank"
             className="text-[#014E87] text-sm hover:underline"
           >

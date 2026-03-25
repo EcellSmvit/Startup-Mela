@@ -125,7 +125,7 @@ export default function Pass() {
           return (
             <div
               key={pass.id}
-              className="group w-full min-w-[280px] max-w-[380px] mx-auto relative"
+              className="group w-full min-w-[380px] max-w-[380px] mx-auto relative"
             >
               <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
 

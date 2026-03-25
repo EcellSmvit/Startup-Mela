@@ -43,7 +43,7 @@ export default function PurchaseInfo() {
   }
 
   return (
-    <div className="w-full flex flex-wrap gap-8 p-8 justify-center">
+    <div className="w-full flex flex-wrap gap-8 p-4 justify-center">
       {purchaseDetails.map((item) => (
         <div
           key={item.uniqueCode}

@@ -18,32 +18,32 @@ export default function Footer() {
                 alt="logo"
               />
 
-              <p className="text-white/60 text-sm">
+              <p className="text-white text-lg">
                 E-Cell SMVIT
               </p>
 
-              <p className="text-white/40 text-xs max-w-xs leading-relaxed">
+              <p className="text-white/80 text-md max-w-xs leading-relaxed">
                 Sir M. Visvesvaraya Institute Of Technology
               </p>
             </div>
             <div className="flex flex-col gap-3 text-sm">
-              <p className="text-white/80 font-medium tracking-wide">
+              <p className="text-white/80 font-medium tracking-wide text-lg">
                 CONTACT
               </p>
 
-              <p className="text-white/60 hover:text-white transition cursor-pointer">
+              <p className="text-white/60 hover:text-white transition cursor-pointer text-lg">
                 ecellsmvit@gmail.com
               </p>
 
-              <p className="text-white/60">
-                Satvik - <span className="text-white">7338620007</span>
+              <p className="text-white/60 text-lg">
+                Satvik Gupta - <span className="text-white">7338620007</span>
               </p>
 
-              <p className="text-white/60">
-                Bhoomi - <span className="text-white">9008708350</span>
+              <p className="text-white/60 text-lg">
+                Bhoomi Nayak - <span className="text-white">9008708350</span>
               </p>
             </div>
-            <div className="flex flex-col gap-3 text-sm">
+            <div className="flex flex-col gap-3 text-lg">
               <p className="text-white/80 font-medium tracking-wide">
                 SOCIALS
               </p>
@@ -74,8 +74,8 @@ export default function Footer() {
               © E-Cell SMVIT. All Rights Reserved.
             </p>
 
-            <p className="tracking-[0.3em] text-white/30">
-              BUILD • INNOVATE • LEAD
+            <p className="tracking-[0.3em] text-white/80">
+              INNOVATE • CONNECT • ELEVATE
             </p>
           </div>
         </div>

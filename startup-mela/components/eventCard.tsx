@@ -12,6 +12,12 @@ export default function Eventcard({
   return (
     <div className="group relative w-full max-w-sm h-[420px] rounded-2xl overflow-hidden z-20">
       <div className="absolute inset-0 bg-gradient-to-br from-black via-black/90 to-[#014E87]/20" />
+       <div className="absolute z-20 inset-0 flex items-center justify-center pointer-events-none ">
+      <img
+        src="https://ik.imagekit.io/es6xialea/Logo.svg"
+        alt="logo"
+        className="w-40 h-40 object-contain opacity-10 group-hover:opacity-20 transition duration-500"/>
+  </div>
       <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#014E87]/40 via-transparent to-[#014E87]/40 blur-xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
       <div className="relative h-full rounded-2xl bg-black/60 backdrop-blur-2xl border border-white/10 p-6 flex flex-col justify-between overflow-hidden transition-all duration-300 group-hover:scale-[1.04] group-hover:border-[#014E87]">
         <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:18px_18px]"></div>

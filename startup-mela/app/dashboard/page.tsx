@@ -56,10 +56,10 @@ useEffect(() => {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid lg:grid-cols-3 gap-10 mb-16">
+        <span className="grid lg:grid-cols-3 gap-10 mb-16">
           <ProfileCard/>
           <PurchaseInfo />
-        </div>
+        </span>
         <div className="grid lg:grid-cols-3 gap-10">
           <section className="lg:col-span-2 space-y-8">
             <h2 className="text-xl font-semibold border-l-4 border-[#014E87] pl-4">

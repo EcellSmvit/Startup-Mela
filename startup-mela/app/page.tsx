@@ -4,6 +4,7 @@ import ContactPage from "@/components/ui/contactpage";
 import Eventhighlights from "@/components/ui/eventhighlight";
 import FAQSection from "@/components/ui/faq";
 import Herosection from "@/components/ui/Herosection";
+import SpeakerComingSoon from "@/components/ui/speaker";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <AboutEvent/>
         <Eventhighlights/>
         <Competition/>
+        <SpeakerComingSoon/>
         <FAQSection/>
         <ContactPage/>
     </div>
