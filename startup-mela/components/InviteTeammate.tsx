@@ -3,10 +3,9 @@
 import { useState } from "react";
 
 const VALID_EVENTS = [
-  "The Investor's Dilemma",
   "REBOOTX",
   "Startup Survival Game",
-  "IPL Auction"
+  // "IPL Auction"
 ];
 
 interface InviteProps {
