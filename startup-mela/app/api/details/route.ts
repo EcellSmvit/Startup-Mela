@@ -42,7 +42,7 @@ export async function POST(req: Request) {
           : collegeName || "Other",
         year: String(year),
         userId: session.user.id,
-        selectedEvent: selectedEvent || null,
+        selectedEvents: selectedEvent ? [selectedEvent] : [],
       },
     });
 
