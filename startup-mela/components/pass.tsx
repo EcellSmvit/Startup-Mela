@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import InviteTeammate from "./InviteTeammate";
 //@ts-ignore
 import { load } from "@cashfreepayments/cashfree-js";
-
+import ReactMarkdown from "react-markdown";
 interface Pass {
   id: string;
   title: string;
@@ -137,9 +137,9 @@ export default function Pass() {
                     {pass.title}
                   </h2>
 
-                  <p className="text-gray-400 text-sm leading-relaxed ">
-                    {pass.description}
-                  </p>
+                  <ReactMarkdown>
+                    {pass.description.replace(/\\n/g, "\n")}
+                  </ReactMarkdown>
 
                   <p className="text-sm text-gray-400">
                      Team Size:{" "}
