@@ -5,7 +5,8 @@ import { useState } from "react";
 const VALID_EVENTS = [
   "REBOOTX",
   "Startup Survival Game",
-  // "IPL Auction"
+  "IPL Auction",
+  "The Investor's Dilemma"
 ];
 
 interface InviteProps {
@@ -46,8 +47,10 @@ export default function InviteTeammate({
     if (selectedEvents.includes(event)) {
       setSelectedEvents(selectedEvents.filter((e) => e !== event));
     } else {
-        setSelectedEvents([event]);
-    }
+        if (selectedEvents.length < 2) {
+          setSelectedEvents([...selectedEvents, event]);
+        }
+      }
   };
 
   const mandatoryCodesFilled = codes
@@ -55,7 +58,7 @@ export default function InviteTeammate({
     .every(code => code.length > 0);
     
   const isTeammatesComplete = mandatoryCodesFilled;
-  const isEventComplete = !pass.requiresEvent || selectedEvents.length === 1;
+  const isEventComplete = !pass.requiresEvent || selectedEvents.length === 2;
   const isComplete = isTeammatesComplete && isEventComplete;
 
   const renderEventSelector = () => {
@@ -64,16 +67,16 @@ export default function InviteTeammate({
       <div className="flex flex-col gap-3 mb-4 text-left animate-in fade-in slide-in-from-top-2 duration-300">
         <div className="flex justify-between items-center ml-1">
           <label className="text-white/60 text-xs font-medium uppercase tracking-wider">
-            Select One Events <span className="text-red-500">*</span>
+            Select Two Events <span className="text-red-500">*</span>
           </label>
           <span className="text-[10px] text-white/40 uppercase tracking-widest">
-            {selectedEvents.length}/1 selected
+            {selectedEvents.length}/2 selected
           </span>
         </div>
         <div className="grid grid-cols-1 gap-2">
           {VALID_EVENTS.map((event) => {
             const isSelected = selectedEvents.includes(event);
-            const isDisabled = false;
+            const isDisabled = !isSelected && selectedEvents.length >= 2;;
             return (
               <button
                 key={event}
@@ -152,7 +155,7 @@ export default function InviteTeammate({
         {!isComplete && !isLoading && (
           <p className="mt-3 text-[11px] text-red-400 text-center font-medium">
             {pass.requiresEvent && selectedEvents.length < 2
-              ? `⚠ Please select ${1 - selectedEvents.length} more event(s)` 
+              ? `⚠ Please select ${2 - selectedEvents.length} more event(s)` 
               : `⚠ Please fill the ${mandatoryCount} mandatory teammate code(s)`}
           </p>
         )}

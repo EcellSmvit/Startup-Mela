@@ -29,7 +29,7 @@ export default function StartupSurvival() {
           </h2>
 
           <div className="flex flex-wrap justify-center gap-4 mt-4">
-            <Button variant="primary" text="Register for This Competition" />
+            <Button variant="primary" text="Register for This Competition" link="/dashboard" />
             <Button variant="secondary" text="Form Link" />
           </div>
         </div>

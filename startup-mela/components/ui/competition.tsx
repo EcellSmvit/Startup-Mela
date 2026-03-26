@@ -6,7 +6,7 @@ export default function Competition() {
       <span className="font-black text-4xl uppercase bg-[#014E87] px-6 py-3 text-white">
         Competition
       </span>
-
+      <p className=" text-red-300 font-mono text-xs w-2/3 p-4 ">* No Real Money Involved .This IPL Auction is a simulated experience. No real-money betting or gambling is allowed.</p>
       <div className="w-full max-w-7xl flex flex-wrap justify-center gap-8">
         <PremiumEventCard
           title="Startup Survival Game"
@@ -15,7 +15,7 @@ export default function Competition() {
           type="STARUPMELA"
           phase="Rs 22,000"
           link="/competition/StartupSurvival"
-          image="https://images.unsplash.com/photo-1731051054492-e32733af7b52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyOXxpVUlzblZ0akIwWXx8ZW58MHx8fHx8"
+          image="https://images.unsplash.com/photo-1626908013351-800ddd734b8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHRlY2h8ZW58MHx8MHx8fDA%3D"
         />
 
         <PremiumEventCard
@@ -25,7 +25,7 @@ export default function Competition() {
           type="STARTUPMELA"
           phase="Rs 22,000"
           link="/competition/Rebootx"
-          image="https://plus.unsplash.com/premium_photo-1675432656807-216d786dd468?w=600&auto=format&fit=crop&q=60"
+          image="https://images.unsplash.com/photo-1626908013351-800ddd734b8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHRlY2h8ZW58MHx8MHx8fDA%3D"
         />
 
         <PremiumEventCard
@@ -35,7 +35,7 @@ export default function Competition() {
           type="STARTUPMELA"
           phase="Rs 22,000"
           link="/competition/InvestorDilemma"
-          image="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&auto=format&fit=crop&q=60"
+          image="https://images.unsplash.com/photo-1626908013351-800ddd734b8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHRlY2h8ZW58MHx8MHx8fDA%3D"
         />
 
         <PremiumEventCard
@@ -45,7 +45,7 @@ export default function Competition() {
           type="STARTUPMELA"
           phase="Rs 14,000"
           link="/competition/IPLAuction"
-          image="https://images.unsplash.com/photo-1565787154274-c8d076ad34e7?w=600&auto=format&fit=crop&q=60"
+          image="https://images.unsplash.com/photo-1626908013351-800ddd734b8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHRlY2h8ZW58MHx8MHx8fDA%3D"
         />
       </div>
     </div>
