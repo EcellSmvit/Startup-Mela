@@ -4,9 +4,8 @@ export default function Competition() {
   return (
     <div id="competitions" className="w-full min-h-screen bg-black flex flex-col items-center px-6 py-12 gap-10">
       <span className="font-black text-4xl uppercase bg-[#014E87] px-6 py-3 text-white">
-        Competition
+        Competitions
       </span>
-      <p className=" text-red-300 font-mono text-xs w-2/3 p-4 ">* No Real Money Involved .This IPL Auction is a simulated experience. No real-money betting or gambling is allowed.</p>
       <div className="w-full max-w-7xl flex flex-wrap justify-center gap-8">
         <PremiumEventCard
           title="Startup Survival Game"

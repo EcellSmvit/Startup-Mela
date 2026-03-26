@@ -9,10 +9,11 @@ export default function IplAuction(){
                               <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#014E87]/20 blur-[160px] rounded-full"></div>
                               <div className="max-w-6xl mx-auto relative z-10 flex flex-col gap-14">
                                 <div className="text-center flex flex-col gap-4">
+                                  
                                   <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-wide">
                                     IPL Auction
                                   </h1>
-                        
+                                  <p className=" text-red-300 font-mono text-xs w-full p-4 ">* No Real Money Involved .This IPL Auction is a simulated experience. No real-money betting or gambling is allowed.</p>
                                   <p className="text-[#014E87] text-lg md:text-xl font-semibold">
                                     Where strategy meets adrenaline.
                                   </p>
@@ -86,6 +87,7 @@ export default function IplAuction(){
                                   <div className="relative">
                                     <div className="rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 flex flex-col gap-4 h-full">
                                       <h3 className="text-white text-xl font-semibold">
+                                        Judged On
                                       </h3>
                         
                                       <div className="flex flex-wrap gap-3">

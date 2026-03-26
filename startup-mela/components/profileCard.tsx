@@ -30,25 +30,22 @@ export default function ProfileCard() {
 
   return (
     <div className="w-[320px] h-[250px] bg-[#111] border border-white/10 rounded-xl p-4 shadow-lg mb-4">
-      
-      {/* Top */}
       <div className="flex items-center gap-3">
         <div className="h-12 w-12 rounded-lg bg-[#014E87] flex items-center justify-center text-white font-bold">
           {profile.userDetails?.name?.charAt(0).toUpperCase()}
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold text-white leading-tight">
+          <h2 className="text-xl font-semibold text-white leading-tight">
             {profile.userDetails?.name}
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-lg text-white font-mono mt-1">
             {profile.uniqueUserCode}
           </p>
         </div>
       </div>
 
-      {/* Details */}
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-2 ">
         <Detail icon={<Hash />} value={profile.userDetails?.usn} />
         <Detail icon={<MapPin />} value={profile.userDetails?.collegeName} />
         <Detail icon={<GraduationCap />} value={profile.userDetails?.year} />
@@ -66,7 +63,7 @@ function Detail({
   value?: string;
 }) {
   return (
-    <div className="flex items-center gap-2 text-xs text-zinc-300">
+    <div className="flex items-center gap-2 font-medium text-white">
       <div className="text-[#014E87]">
         {cloneElement(icon as React.ReactElement)}
       </div>

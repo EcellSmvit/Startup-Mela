@@ -42,7 +42,7 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-  const [active, setActive] = useState<number | null>(0);
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <div className="w-full min-h-screen bg-black relative overflow-hidden px-6 py-20">

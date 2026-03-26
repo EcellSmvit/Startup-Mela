@@ -65,14 +65,25 @@ export default function InviteTeammate({
     if (!pass.requiresEvent) return null;
     return (
       <div className="flex flex-col gap-3 mb-4 text-left animate-in fade-in slide-in-from-top-2 duration-300">
-        <div className="flex justify-between items-center ml-1">
-          <label className="text-white/60 text-xs font-medium uppercase tracking-wider">
+                  <label className="text-white/60 text-xs font-medium uppercase tracking-wider">
             Select Two Events <span className="text-red-500">*</span>
           </label>
-          <span className="text-[10px] text-white/40 uppercase tracking-widest">
+        <div className="flex justify-between items-center ml-1">
+        <p className="text-sm text-yellow-300 bg-yellow-500/10 border border-yellow-500/30 p-3 rounded-lg">
+          <span className="font-semibold text-yellow-400">Note:</span> 
+              From <strong>REBOOTX</strong> or <strong>Startup Survival Game</strong>, you can select only one event for Day 1. 
+                For Day 2, you may select any one event from <strong>IPL Auction</strong> or <strong>The Investor’s Dilemma</strong>.
+              <br />
+            <span className="text-red-400 font-medium">
+            Failure to follow these guidelines will result in team disqualification.
+            </span>
+        </p>
+          
+
+        </div>
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest">
             {selectedEvents.length}/2 selected
           </span>
-        </div>
         <div className="grid grid-cols-1 gap-2">
           {VALID_EVENTS.map((event) => {
             const isSelected = selectedEvents.includes(event);

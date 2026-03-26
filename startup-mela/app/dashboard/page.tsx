@@ -40,7 +40,7 @@ useEffect(() => {
           <h1 className="text-2xl font-bold text-white">
             Welcome, {session?.user?.name || "Innovator"}!
           </h1>
-          <p className="text-gray-400 text-sm font-mono mt-1">
+          <p className="text-white text-xl font-semibold font-mono mt-1">
             User ID: {session?.user?.uniqueUserCode || "Loading..."}
           </p>
         </div>

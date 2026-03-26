@@ -86,6 +86,7 @@ export default function InvestorDilemma(){
                           <div className="relative">
                             <div className="rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-6 flex flex-col gap-4 h-full">
                               <h3 className="text-white text-xl font-semibold">
+                                Judged On
                               </h3>
                 
                               <div className="flex flex-wrap gap-3">

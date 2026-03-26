@@ -38,8 +38,8 @@ export default function EventHighlights() {
           />
 
           <Eventcard
-            eventType="Investor and Mentor"
-            eventDetails="A closed-door session connecting startups directly with investors."
+            eventType="Mentor Connect"
+            eventDetails="An open session connecting startups directly with investors."
           />
 
           <Eventcard

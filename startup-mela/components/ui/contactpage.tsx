@@ -68,7 +68,7 @@ export default function ContactPage() {
               </h3>
 
               {[
-                { role: "Events Head", name: "Bhoomi", contact: "9008708350" },
+                { role: "Events Head", name: "Bhoomi Nayak", contact: "9008708350" },
                 { role: "Corporate Relations / Startups Head", name: "Satvik Gupta", contact: "7338620007" },
                 { role: "Technical Head", name: "Bikesh Kumar", contact: "7903897660" },
               ].map((item, i) => (
@@ -114,15 +114,8 @@ export default function ContactPage() {
                 Website
               </a>
               </div>
-              
-
-              <p className="text-white/70">
-                WhatsApp: Satvik - <span className="text-white">7338620007</span>
-              </p>
             </div>
           </div>
-
-          {/* Form added around existing inputs */}
           <form onSubmit={handleSubmit} className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-6 flex flex-col gap-4">
             <h3 className="text-white font-semibold text-lg">
               Send a Message
