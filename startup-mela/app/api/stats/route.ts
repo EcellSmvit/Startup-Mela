@@ -13,8 +13,10 @@ export async function GET(req: Request) {
       id: true,
       name: true,
       email: true,
-      uniqueUserCode:true,
+      uniqueUserCode: true,
       role: true,
+      emailVerified: true,
+      userDetails: true,
       purchases: {
         select: {
           uniqueCode: true,
@@ -23,6 +25,12 @@ export async function GET(req: Request) {
           pass: {
             select: {
               title: true,
+            }
+          },
+          teammates: {
+            select: {
+              name: true,
+              email: true,
             }
           }
         }
