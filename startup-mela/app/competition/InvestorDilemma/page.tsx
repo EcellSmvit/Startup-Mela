@@ -22,8 +22,8 @@ export default function InvestorDilemma(){
                           </h2>
                 
                           <div className="flex flex-wrap justify-center gap-4 mt-4">
-                            <Button variant="primary" text="Register for This Competition" />
-                            <Button variant="secondary" text="Form Link" />
+                            <Button variant="primary" text="Register for This Competition" link="/dashboard" />
+                            <Button variant="secondary" text="Form Link"  />
                           </div>
                         </div>
                         <div className="max-w-3xl mx-auto text-center text-white/70 leading-relaxed">
