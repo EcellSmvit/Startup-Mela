@@ -21,21 +21,32 @@ export default function Herosection() {
         ))}
       </div>
       <div className="absolute z-20 flex items-center justify-between w-full p-4 pointer-events-auto">
+        {/* <img
+          className="w-[35vw]"
+          src="https://ik.imagekit.io/es6xialea/Group%201.svg"
+          alt="logo"
+        /> */}
         <img
-          className="w-[24vw]"
+          className="w-[20vw]"
           src="https://ik.imagekit.io/es6xialea/StartupmekaXecellXsmvit.svg"
           alt="logo"
         />
+<span className="text-white uppercase font-medium 
+                text-lg sm:text-sm md:text-2xl lg:text-3xl xl:text-4xl 
+                text-center leading-snug">
+  <span className="block sm:hidden">SIRMVIT</span>
+  <span className="hidden sm:block">Sir M. Visvesvaraya Institute of Technology</span>
+</span>
         <Button variant="primary" text="Register" link="/signup" />
       </div>
 
       {/* Content */}
       <div className="relative z-30 flex items-center justify-center w-full h-screen flex-col gap-6 text-center px-4 pointer-events-none">
         
-        <h1 className="text-5xl md:text-7xl font-black uppercase flex flex-wrap justify-center leading-tight">
-          <span className="text-white">Innovate.&nbsp;</span>
-          <span className="text-[#014E87]">Connect.&nbsp;</span>
-          <span className="text-white">Elevate.</span>
+        <h1 className="text-5xl md:text-7xl font-black uppercase flex flex-wrap justify-center leading-tight  p-2">
+          <span className="text-white ">Innovate.&nbsp;</span>
+          <span className="text-[#014E87] bg-white">Connect.</span>
+          <span className="text-white  "> &nbsp; Elevate.</span>
         </h1>
 
         <p className="text-white font-medium max-w-3xl text-xl">

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Startup Mela",
-  description: "Startup Mela is the flagship entrepreneurship fest organized by E-Cell SMVIT, aimed at fostering innovation, startup culture, and connecting founders with investors. This repository contains the official web platform built with a modern full-stack architecture. ",
+  description: "Startup Mela is the entrepreneurship fest organized by E-Cell SMVIT, aimed at fostering innovation, startup culture, and connecting founders with investors. This repository contains the official web platform built with a modern full-stack architecture. ",
 };
 
 export default function RootLayout({
