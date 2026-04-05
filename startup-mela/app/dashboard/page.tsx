@@ -36,11 +36,11 @@ useEffect(() => {
   return (
     <div className="bg-black min-h-screen w-full text-white overflow-x-hidden">
       <header className="flex items-center justify-between px-10 py-6 border-b border-white/5">
-        <div>
-          <h1 className="text-2xl font-bold text-white">
+        <div className="flex flex-col gap-1 sm:gap-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
             Welcome, {session?.user?.name || "Innovator"}!
           </h1>
-          <p className="text-white text-xl font-semibold font-mono mt-1">
+          <p className="text-white text-base sm:text-lg lg:text-xl font-semibold font-mono mt-0.5 sm:mt-1">
             User ID: {session?.user?.uniqueUserCode || "Loading..."}
           </p>
         </div>

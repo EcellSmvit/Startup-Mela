@@ -11,14 +11,36 @@ interface ButtonProps {
   disable?: string;
 }
 
+
 const variantClasses = {
   primary: "bg-[#014E87] text-white",
   secondary: "border-[#ffffff] border text-[#ececec]",
   warning: "bg-red-500 text-[#ececec]",
 };
 
-const defaultStyle =
-  "font-semibold px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer inline-block";
+const responsiveStyle = `
+  w-full 
+  sm:w-auto 
+  font-semibold
+  px-4 py-2
+  text-base
+  rounded-lg
+  shadow-md
+  hover:shadow-lg
+  hover:scale-105
+  active:scale-95
+  transition-all duration-200
+  cursor-pointer
+  inline-block
+
+  /* Responsive changes */
+  sm:px-5 sm:py-2.5
+  md:px-6 md:py-3
+  text-sm
+  sm:text-base
+  md:text-lg
+  sm:rounded-xl
+`;
 
 export default function Button({
   variant,
@@ -35,13 +57,13 @@ export default function Button({
     }
   };
 
-  // 👉 SCROLL CASE
+  // SCROLL CASE
   if (link?.startsWith("#")) {
     return (
       <button
         type="button"
         onClick={handleScroll}
-        className={variantClasses[variant] + " " + defaultStyle}
+        className={`${variantClasses[variant]} ${responsiveStyle}`}
       >
         {text}
       </button>
@@ -50,7 +72,7 @@ export default function Button({
 
   if (link) {
     return (
-      <Link href={link} className={variantClasses[variant] + " " + defaultStyle}>
+      <Link href={link} className={`${variantClasses[variant]} ${responsiveStyle}`}>
         {text}
       </Link>
     );
@@ -60,7 +82,7 @@ export default function Button({
     <button
       type={type}
       onClick={onClick}
-      className={variantClasses[variant] + " " + defaultStyle}
+      className={`${variantClasses[variant]} ${responsiveStyle}`}
     >
       {text}
     </button>

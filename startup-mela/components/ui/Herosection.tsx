@@ -35,9 +35,12 @@ export default function Herosection() {
                 text-lg sm:text-sm md:text-2xl lg:text-3xl xl:text-4xl 
                 text-center leading-snug">
   <span className="block sm:hidden">SIRMVIT</span>
-  <span className="hidden sm:block">Sir M. Visvesvaraya Institute of Technology</span>
-</span>
-        <Button variant="primary" text="Register" link="/signup" />
+  <   span className="hidden sm:block">Sir M. Visvesvaraya Institute of Technology</span>
+    </span>
+    <span>
+    <Button variant="primary" text="Register" link="/signup" />
+    </span>
+        
       </div>
 
       {/* Content */}
@@ -55,7 +58,7 @@ export default function Herosection() {
 
         <div className="relative z-20 pointer-events-auto flex items-center justify-center gap-4">
           <Button variant="primary" text="Register Now" link="/signup" />
-          <Button variant="secondary" text="View Competitions" link="#competitions" />
+          <Button variant="secondary" text="Competitions" link="#competitions" />
         </div>
 
         <h2 className="text-white uppercase font-semibold text-sm md:text-xl bg-[#014E87] px-4 py-2 tracking-wide">
